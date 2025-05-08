@@ -4,6 +4,10 @@
 
 { config, lib, pkgs, ... }:
 
+let 
+  username = "fred";
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -44,6 +48,19 @@ boot.loader = {
 # User setup #
 ##############
 users.users.fred = { isNormalUser = true; initialPassword = "123"; extraGroups = [ "wheel" "networkmanager" ];};
+
+system.activationScripts.fix-nixos-perms = ''
+    chown -R ${username}:users /etc/nixos/.git
+    chmod -R g+rw /etc/nixos/.git
+  '';
+  
+#############
+# git setup #
+#############
+environment.etc."gitconfig".text = ''
+  [safe]
+    directory = /etc/nixos
+'';
 
 ########################
 # User personalisation #
