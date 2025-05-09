@@ -104,11 +104,21 @@ environment.systemPackages = with pkgs; [
 	discord-ptb
 	git
 	vlc
+	jellyfin
+	jellyfin-web
+	jellyfin-ffmpeg
+	qbittorrent
 ];
 
 # Steam
 programs.steam = {
 	enable = true;
+};
+
+# Jellyfin service
+services.jellyfin = {
+	enable = true;
+	openFirewall = true;
 };
 
 # Noisetorch
