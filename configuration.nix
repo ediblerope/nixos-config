@@ -40,7 +40,7 @@ boot.loader = {
 	systemd-boot.enable = true;
 	efi = {
 		canTouchEfiVariables = true;
-		efiSysMountPoint = "/boot/efi";
+		#efiSysMountPoint = "/boot/efi";
 	};
 };
 
@@ -103,6 +103,7 @@ environment.systemPackages = with pkgs; [
 	gnomeExtensions.pop-shell
 	discord-ptb
 	git
+	vlc
 ];
 
 # Steam
@@ -110,5 +111,9 @@ programs.steam = {
 	enable = true;
 };
 
+# Noisetorch
+programs.noisetorch.enable = true;
+
+#######################################################
 system.stateVersion = "24.11";
 }
