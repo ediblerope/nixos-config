@@ -1,0 +1,6 @@
+# Exclude hardware-specific files
+hardware-configuration.nix
+/system
+/__pycache__
+*.qcow2
+*.img
