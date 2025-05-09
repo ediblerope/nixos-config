@@ -18,8 +18,8 @@ in
 # Macbook required setup #
 ##########################
 nixpkgs.config.allowUnfree = true;
-boot.kernelModules = [ "wl" ];
-boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+#boot.kernelModules = [ "wl" ];
+#boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 networking.networkmanager.enable = true;
 networking.wireless.enable = false;
 
@@ -91,6 +91,8 @@ environment.gnome.excludePackages = (with pkgs; [
 
 # systemPackages
 environment.systemPackages = with pkgs; [
+	gnomeExtensions.blur-my-shell
+	gnomeExtensions.pop-shell
 	discord-ptb
 	git
 ];
