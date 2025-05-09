@@ -44,6 +44,8 @@ boot.loader = {
 	};
 };
 
+systemd.services.check-mountpoints.enable = false;
+
 ##############
 # User setup #
 ##############
@@ -70,7 +72,13 @@ environment.etc."gitconfig".text = ''
 services.xserver = {
 	enable = true;
 	displayManager.gdm.enable = true;
-	desktopManager.gnome.enable = true;
+	desktopManager.gnome = {
+		enable = true;
+		extraGSettingsOverrides = ''
+		[org.gnome.desktop.interface]
+		color-scheme='prefer-dark'
+		'';
+	};
 };
 
 environment.gnome.excludePackages = (with pkgs; [
