@@ -95,12 +95,12 @@ environment.gnome.excludePackages = (with pkgs; [
 	simple-scan
 	yelp
 	totem # video player
+	epiphany #web browser - using chrome
 ]);
 
 # systemPackages
 environment.systemPackages = with pkgs; [
 	gnomeExtensions.blur-my-shell
-	gnomeExtensions.pop-shell
 	discord-ptb
 	git
 	vlc
@@ -108,6 +108,7 @@ environment.systemPackages = with pkgs; [
 	jellyfin-web
 	jellyfin-ffmpeg
 	qbittorrent
+	google-chrome
 ];
 
 # Steam
