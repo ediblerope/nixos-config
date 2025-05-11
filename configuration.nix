@@ -94,10 +94,22 @@ environment.gnome.excludePackages = (with pkgs; [
 	epiphany #web browser - using chrome
 ]);
 
+programs.dconf.profiles.user = {
+    databases = [{
+      lockAll = true;
+      settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          clock-format = "24h";
+          clock-show-weekday = true;
+        };
+      };
+    }];
+  };
+
 # systemPackages
 environment.systemPackages = with pkgs; [
 	gnomeExtensions.blur-my-shell
-	gnomeExtensions.pop-shell
 	discord-ptb
 	git
 	vlc
