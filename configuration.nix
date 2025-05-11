@@ -74,10 +74,6 @@ services.xserver = {
 	displayManager.gdm.enable = true;
 	desktopManager.gnome = {
 		enable = true;
-		extraGSettingsOverrides = ''
-		[org.gnome.desktop.interface]
-		color-scheme='prefer-dark'
-		'';
 	};
 };
 
@@ -101,6 +97,7 @@ environment.gnome.excludePackages = (with pkgs; [
 # systemPackages
 environment.systemPackages = with pkgs; [
 	gnomeExtensions.blur-my-shell
+	gnomeExtensions.pop-shell
 	discord-ptb
 	git
 	vlc
