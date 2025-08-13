@@ -4,136 +4,22 @@
 
 { config, lib, pkgs, ... }:
 
-let 
-  username = "fred";
+let
+	hostname = "nixos-gaming";
 in
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./modules/base.nix
+      (./modules + "/${hostname}.nix")  # Uses hostname from environment
+      ./modules/kde.nix
+      ./modules/krisp-patcher.nix
+      #<home-manager/nixos>
     ];
-
-##########################
-# Macbook required setup #
-##########################
-nixpkgs.config.allowUnfree = true;
-#boot.kernelModules = [ "wl" ];
-#boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-networking.networkmanager.enable = true;
-networking.wireless.enable = false;
-
-###################
-# System settings #
-###################
-i18n.defaultLocale = "en_GB.UTF-8";
-time.timeZone = "Europe/London";
-
-##################
-# Hardware setup #
-##################
-
-###############
-# Boot loader #
-###############
-boot.loader = {
-	systemd-boot.enable = true;
-	efi = {
-		canTouchEfiVariables = true;
-		#efiSysMountPoint = "/boot/efi";
-	};
-};
-
-systemd.services.check-mountpoints.enable = false;
-
-##############
-# User setup #
-##############
-users.users.fred = { isNormalUser = true; initialPassword = "123"; extraGroups = [ "wheel" "networkmanager" ];};
-
-system.activationScripts.fix-nixos-perms = ''
-    chown -R ${username}:users /etc/nixos/.git
-    chmod -R g+rw /etc/nixos/.git
-  '';
-  
-#############
-# git setup #
-#############
-environment.etc."gitconfig".text = ''
-  [safe]
-    directory = /etc/nixos
-'';
-
-########################
-# User personalisation #
-########################
-
-# GNOME
-services.xserver = {
-	enable = true;
-	displayManager.gdm.enable = true;
-	desktopManager.gnome = {
-		enable = true;
-	};
-};
-
-environment.gnome.excludePackages = (with pkgs; [
-	geary # email reader
-	gnome-music
-	gnome-photos
-	gnome-tour
-	gnome-calendar
-	gnome-weather
-	gnome-clocks
-	gnome-contacts
-	gnome-maps
-	pkgs.gnome-connections
-	simple-scan
-	yelp
-	totem # video player
-	epiphany #web browser - using chrome
-]);
-
-programs.dconf.profiles.user = {
-    databases = [{
-      lockAll = true;
-      settings = {
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-          clock-format = "24h";
-          clock-show-weekday = true;
-        };
-      };
-    }];
-  };
-
-# systemPackages
-environment.systemPackages = with pkgs; [
-	gnomeExtensions.blur-my-shell
-	discord-ptb
-	git
-	vlc
-	jellyfin
-	jellyfin-web
-	jellyfin-ffmpeg
-	qbittorrent
-	google-chrome
-];
-
-# Steam
-programs.steam = {
-	enable = true;
-};
-
-# Jellyfin service
-services.jellyfin = {
-	enable = true;
-	openFirewall = true;
-};
-
-# Noisetorch
-programs.noisetorch.enable = true;
+	networking.hostName = "${hostname}";
 
 #######################################################
-system.stateVersion = "24.11";
+system.stateVersion = "25.05";
 }
