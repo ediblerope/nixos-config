@@ -1,8 +1,8 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
     ./common.nix
-    ./hosts/${config.networking.hostName}.nix
-  ];
+  ] ++ lib.optional (builtins.pathExists ./hosts/${config.networking.hostName}.nix)
+    ./hosts/${config.networking.hostName}.nix;
 }
