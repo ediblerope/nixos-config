@@ -5,7 +5,7 @@
   imports = [
     ./common.nix
     ./hosts/FredOS-Gaming.nix
-    ./hosts/laptop.nix
+    ./hosts/FredOS-Macbook.nix
     # Add all your hosts here
   ];
 }
