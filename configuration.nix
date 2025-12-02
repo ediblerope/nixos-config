@@ -1,18 +1,20 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
+let
+  # Fetch your config from GitHub
+  gitConfig = builtins.fetchGit {
+    url = "https://github.com/ediblerope/nixos-config";
+    ref = "main";
+  };
+in
 {
-imports = [
-	./hardware-configuration.nix
-	./base.nix
-];
+  imports = [
+    ./hardware-configuration.nix  # This stays local (machine-specific)
+    "${gitConfig}/git.nix"        # Your main config from GitHub
+  ];
 
-# Bootloader.
-boot.loader.grub.enable = true;
-boot.loader.grub.device = "/dev/vda";
-boot.loader.grub.useOSProber = true;
-
-networking.hostName = "FredOS-gaming";
-
-system.stateVersion = "25.11";
-
+  # ONLY thing that changes per machine
+  networking.hostName = "";  # Change this per machine
+  
+  system.stateVersion = "25.11";
 }
