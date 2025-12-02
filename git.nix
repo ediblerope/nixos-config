@@ -1,8 +1,11 @@
+# git.nix
 { config, pkgs, lib, ... }:
 
 {
   imports = [
     ./common.nix
-  ] ++ lib.optional (builtins.pathExists ./hosts/${config.networking.hostName}.nix)
-    ./hosts/${config.networking.hostName}.nix;
+    ./hosts/FredOS-Gaming.nix
+    ./hosts/laptop.nix
+    # Add all your hosts here
+  ];
 }
