@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-  # Fetch your config from GitHub
   gitConfig = builtins.fetchGit {
     url = "https://github.com/ediblerope/nixos-config";
     ref = "main";
@@ -9,12 +8,15 @@ let
 in
 {
   imports = [
-    ./hardware-configuration.nix  # This stays local (machine-specific)
-    "${gitConfig}/git.nix"        # Your main config from GitHub
+    ./hardware-configuration.nix
+    "${gitConfig}/git.nix"
   ];
-
-  # ONLY thing that changes per machine
-  networking.hostName = "";  # Change this per machine
+  
+  networking.hostName = "FredOS-Gaming";
+  
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.useOSProber = true;
   
   system.stateVersion = "25.11";
 }
