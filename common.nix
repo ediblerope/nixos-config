@@ -23,18 +23,7 @@ environment.shellAliases = {
 # Add packages
 environment.systemPackages = with pkgs; [
 	git
-	gnomeExtensions.blur-my-shell
-	gnomeExtensions.just-perfection
-	gnomeExtensions.appindicator
-	gnomeExtensions.hot-edge
 ];
- 
-# GNOME + Keybinds
-# Enable the X11 windowing system.
-services.xserver.enable = true;
-services.displayManager.gdm.enable = true;
-services.desktopManager.gnome.enable = true;
-
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
