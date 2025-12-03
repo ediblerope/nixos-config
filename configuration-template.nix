@@ -19,9 +19,7 @@ in
   
   networking.hostName = "FredOS-Gaming";
   
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
+## Space for boot loader settings
   
   system.stateVersion = "25.11";
 }
