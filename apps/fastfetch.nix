@@ -42,7 +42,7 @@
         },
         {
           "type": "os",
-          "key": "󰣇 ",
+          "key": "❄ ",
           "keyColor": "blue"
         },
         {
