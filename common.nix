@@ -40,10 +40,16 @@ programs.dconf = {
 	enable = true;
 	profiles.user.databases = [{
 		settings = {
-			"org/gnome/settings-daemon/plugins/media-keys/home" = [ "<Super>e" ];
-			"org/gnome/settings-daemon/plugins/media-keys/control-center" = [ "<Super>i" ];
-			"org/gnome/desktop/wm/keybindings/close" =  [ "<Super>q" ];
-			"org/gnome/desktop/interface/color-scheme" = "prefer-dark";
+			"org/gnome/settings-daemon/plugins/media-keys" = {
+				home = "<Super>e";
+				control-center = "<Super>i";
+			};
+			"org/gnome/desktop/wm/keybindings" = {
+				close = [ "<Super>q" ];
+			};
+			"org/gnome/desktop/interface" = {
+				color-scheme = "prefer-dark";
+			};
 		};
 	}];
 };
