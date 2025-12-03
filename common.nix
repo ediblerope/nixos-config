@@ -2,22 +2,14 @@
 { config, pkgs, lib, ... }:
 
 let
-  vesktopDark = pkgs.stdenv.mkDerivation rec {
-    pname = "vesktop-dark";
-    version = "1.0";
-
+  vesktopDark = pkgs.runCommand "vesktop-dark" {
     buildInputs = [ pkgs.makeWrapper ];
-
-    src = null; # no source, we just wrap
-
-    installPhase = ''
-      mkdir -p $out/bin
-      wrapProgram ${pkgs.vesktop}/bin/vesktop \
-        --set GTK_THEME Adwaita:dark \
-        --prefix PATH : ${pkgs.glib}/bin \
-        -o $out/bin/vesktop
-    '';
-  };
+  } ''
+    mkdir -p $out/bin
+    wrapProgram ${pkgs.vesktop}/bin/vesktop \
+      --set GTK_THEME Adwaita:dark \
+      -o $out/bin/vesktop
+  '';
 in
 
 {
