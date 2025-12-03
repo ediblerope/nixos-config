@@ -8,7 +8,7 @@ imports = [
 	./settings/locale.nix
 	./settings/audio.nix
 	./settings/users.nix
-	./software/fastfetch.nix
+	./apps/fastfetch.nix
     # Add all your hosts here
   ];
 
