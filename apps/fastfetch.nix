@@ -6,7 +6,7 @@
     fastfetch
   ];
 
-  # Create the fastfetch config file
+  # Create the fastfetch config file with unicode icons
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
@@ -18,7 +18,7 @@
         }
       },
       "display": {
-        "separator": " → ",
+        "separator": " ",
         "color": {
           "keys": "blue",
           "title": "cyan"
@@ -35,77 +35,77 @@
         },
         {
           "type": "os",
-          "key": "OS",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "host",
-          "key": "Host",
+          "key": "󰌢 ",
           "keyColor": "blue"
         },
         {
           "type": "kernel",
-          "key": "Kernel",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "uptime",
-          "key": "Uptime",
+          "key": "󰔟 ",
           "keyColor": "blue"
         },
         {
           "type": "packages",
-          "key": "Packages",
+          "key": "󰏖 ",
           "keyColor": "blue"
         },
         {
           "type": "shell",
-          "key": "Shell",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "terminal",
-          "key": "Terminal",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "de",
-          "key": "DE",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "wm",
-          "key": "WM",
+          "key": " ",
           "keyColor": "blue"
         },
         {
           "type": "wmtheme",
-          "key": "Theme",
+          "key": "󰉼 ",
           "keyColor": "blue"
         },
         {
           "type": "icons",
-          "key": "Icons",
+          "key": "󰀻 ",
           "keyColor": "blue"
         },
         {
           "type": "cpu",
-          "key": "CPU",
+          "key": "󰻠 ",
           "keyColor": "green"
         },
         {
           "type": "gpu",
-          "key": "GPU",
+          "key": "󰍛 ",
           "keyColor": "green"
         },
         {
           "type": "memory",
-          "key": "Memory",
+          "key": "󰑭 ",
           "keyColor": "yellow"
         },
         {
           "type": "disk",
-          "key": "Disk",
+          "key": "󰋊 ",
           "keyColor": "yellow"
         },
         {
@@ -121,11 +121,39 @@
     }
   '';
 
-  # Set up bash to run fastfetch on start
+  # Set up bash with fastfetch and a nice prompt
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start (but not in non-interactive shells)
     if [[ $- == *i* ]]; then
       ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc
     fi
+
+    # Color definitions
+    RESET="\[\033[0m\]"
+    BOLD="\[\033[1m\]"
+    
+    # Colors
+    CYAN="\[\033[0;36m\]"
+    BLUE="\[\033[0;34m\]"
+    PURPLE="\[\033[0;35m\]"
+    GREEN="\[\033[0;32m\]"
+    YELLOW="\[\033[0;33m\]"
+    RED="\[\033[0;31m\]"
+    
+    # Bold colors
+    BCYAN="\[\033[1;36m\]"
+    BBLUE="\[\033[1;34m\]"
+    BPURPLE="\[\033[1;35m\]"
+    BGREEN="\[\033[1;32m\]"
+    
+    # Function to get git branch
+    parse_git_branch() {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    }
+    
+    # Stylish prompt with icons
+    # Shows: ╭─ user@host  ~/current/directory (git-branch)
+    #        ╰─❯ 
+    PS1="${RESET}${BCYAN}╭─${RESET} ${BPURPLE}\u${RESET}${CYAN}@${RESET}${BBLUE}\h${RESET} ${BGREEN} \w${RESET}${YELLOW}\$(parse_git_branch)${RESET}\n${BCYAN}╰─${BPURPLE}❯${RESET} "
   '';
 }
