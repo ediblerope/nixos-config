@@ -72,14 +72,18 @@ systemd.user.services.gnomeSettings = {
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
-	isNormalUser = true;
-	description = "fred";
-	extraGroups = [ "networkmanager" "wheel" ];
-	packages = with pkgs; [
-		bazaar
-		fastfetch
-		vesktop
-	];
+  isNormalUser = true;
+  description = "fred";
+  extraGroups = [ "networkmanager" "wheel" ];
+  packages = with pkgs; [
+    bazaar
+    fastfetch
+    vesktop
+  ];
+  shellInit = ''
+    # Force GTK dark theme for Electron apps like vesktop
+    export GTK_THEME=Adwaita:dark
+  '';
 };
  
 # Allow unfree packages
