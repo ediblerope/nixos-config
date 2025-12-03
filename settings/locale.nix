@@ -1,4 +1,4 @@
-# Common.nix
+# locale.nix
 { config, pkgs, lib, ... }:
 
 {
