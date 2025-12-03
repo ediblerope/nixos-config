@@ -7,7 +7,9 @@ boot.kernelPackages = pkgs.linuxPackages_latest;
 
 # Shell aliases
 environment.shellAliases = {
-  update = "sudo nixos-rebuild switch --option tarball-ttl 0";
+  update = "sudo nixos-rebuild switch --upgrade --option tarball-ttl 0";
+  clean = "sudo nix-collect-garbage -d";  # Clean old generations
+  ll = "ls -alh";
 };
 
 # Add packages
@@ -21,23 +23,20 @@ services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 
-programs.dconf = {
-	enable = true;
-	profiles.user.databases = [{
-		settings = {
-			"org/gnome/settings-daemon/plugins/media-keys" = {
-				home = "<Super>e";
-				control-center = "<Super>i";
-			};
-			"org/gnome/desktop/wm/keybindings" = {
-				close = [ "<Super>q" ];
-			};
-			"org/gnome/desktop/interface" = {
-				color-scheme = "prefer-dark";
-			};
+programs.dconf.profiles.user.databases = [{
+	settings = {
+		"org/gnome/settings-daemon/plugins/media-keys" = {
+			home = "<Super>e";
+			control-center = "<Super>i";
 		};
-	}];
-};
+		"org/gnome/desktop/wm/keybindings" = {
+			close = [ "<Super>q" ];
+		};
+		"org/gnome/desktop/interface" = {
+			color-scheme = "prefer-dark";
+		};
+	};
+}];
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
