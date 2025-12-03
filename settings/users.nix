@@ -1,3 +1,7 @@
+# users.nix
+{ config, pkgs, lib, ... }:
+
+{
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
     isNormalUser = true;
@@ -8,3 +12,4 @@ users.users.fred = {
       fastfetch
     ];
   };
+}
