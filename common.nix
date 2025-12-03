@@ -22,10 +22,9 @@ environment.systemPackages = [
 services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
-programs.dconf.enable = true;
 
 programs.dconf = {
-  enable = true;  # THIS WAS MISSING!
+  enable = true;
   profiles.user.databases = [{
     settings = {
       "org/gnome/settings-daemon/plugins/media-keys" = {
