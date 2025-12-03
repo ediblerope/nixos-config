@@ -24,20 +24,23 @@ services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 programs.dconf.enable = true;
 
-programs.dconf.profiles.user.databases = [{
-	settings = {
-		"org/gnome/settings-daemon/plugins/media-keys" = {
-			home = "<Super>e";
-			control-center = "<Super>i";
-		};
-		"org/gnome/desktop/wm/keybindings" = {
-			close = [ "<Super>q" ];
-		};
-		"org/gnome/desktop/interface" = {
-			color-scheme = "prefer-dark";
-		};
-	};
-}];
+programs.dconf = {
+  enable = true;  # THIS WAS MISSING!
+  profiles.user.databases = [{
+    settings = {
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        home = "<Super>e";
+        control-center = "<Super>i";
+      };
+      "org/gnome/desktop/wm/keybindings" = {
+        close = [ "<Super>q" ];
+      };
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  }];
+};
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
