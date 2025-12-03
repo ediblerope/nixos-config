@@ -23,29 +23,16 @@ services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 
-programs.dconf = {
-  enable = true;
-  profiles.user.databases = [{
-    settings = {
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        home = "<Super>e";
-        control-center = "<Super>i";
-      };
-      "org/gnome/desktop/wm/keybindings" = {
-        close = [ "<Super>q" ];
-      };
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        gtk-theme = "Adwaita-dark";
-      };
-    };
-  }];
-};
-
-# Ensure dconf profile is used
-environment.variables = {
-  DCONF_PROFILE = "user";
-};
+# Apply GNOME settings on login
+environment.etc."profile.d/gnome-settings.sh".text = ''
+  if [ "$XDG_SESSION_DESKTOP" = "gnome" ]; then
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']"
+  fi
+'';
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
