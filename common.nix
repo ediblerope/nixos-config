@@ -27,27 +27,30 @@ services.desktopManager.gnome.enable = true;
 systemd.user.services.gnomeSettings = {
   description = "Apply GNOME custom settings";
   wantedBy = [ "default.target" ];
-  after = [ "graphical-session.target" "dbus.service" ];
+  after = [
+    "graphical-session.target"
+    "gnome-session.target"
+    "gnome-settings-daemon.service"
+  ];
   serviceConfig = {
     Type = "oneshot";
     ExecStart = pkgs.writeShellScript "apply-gnome-settings" ''
       LOG=~/gnome-settings.log
+
       echo "---- RUN $(date) ----" >> "$LOG"
 
-      # Add gsettings to PATH
       export PATH=${pkgs.glib}/bin:$PATH
-
-      echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE" >> "$LOG"
-      echo "XDG_SESSION_DESKTOP=$XDG_SESSION_DESKTOP" >> "$LOG"
-      echo "DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" >> "$LOG"
-      echo "Runtime dir: $XDG_RUNTIME_DIR" >> "$LOG"
-
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 
+      # Ensure GNOME is fully ready
+      sleep 5
+
       echo "Running settings..." >> "$LOG"
+
       gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' >> "$LOG" 2>&1
       gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >> "$LOG" 2>&1
-      gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']" >> "$LOG" 2>&1
+
+      # These schemas require gnome-settings-daemon to be ready
       gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
       gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
 
