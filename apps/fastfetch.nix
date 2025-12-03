@@ -14,17 +14,15 @@
   ];
 
   # Create a wrapper script that chooses a random logo
-  environment.etc."fastfetch/random-logo.sh".text = ''
-    #!/bin/sh
-    logos=("RavynOS" "PuffOS" "PearOS" "locos" "GNOME" "eweOS" "DarkOS" "BredOS" "AmogOS")
-    random_logo=''${logos[$RANDOM % ''${#logos[@]}]}
-    ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc --logo $random_logo
-  '';
-
-  # Make the script executable
-  system.activationScripts.fastfetchScript = ''
-    chmod +x /etc/fastfetch/random-logo.sh
-  '';
+  environment.etc."fastfetch/random-logo.sh" = {
+    text = ''
+      #!/bin/sh
+      logos=("RavynOS" "PuffOS" "PearOS" "locos" "GNOME" "eweOS" "DarkOS" "BredOS" "AmogOS")
+      random_logo=''${logos[$RANDOM % ''${#logos[@]}]}
+      ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc --logo $random_logo
+    '';
+    mode = "0755";
+  };
 
   # Create the fastfetch config file with unicode icons
   environment.etc."fastfetch/config.jsonc".text = ''
