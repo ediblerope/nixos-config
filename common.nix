@@ -53,6 +53,7 @@ systemd.user.services.gnomeSettings = {
       # These schemas require gnome-settings-daemon to be ready
       gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
       gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
+      gsettings set org.gnome.desktop.interface accent-color "purple" >> "$LOG" 2>&1
 
       echo "DONE" >> "$LOG"
     '';
