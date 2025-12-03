@@ -29,7 +29,7 @@
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
       "logo": {
-        "source": "nixos_small",
+        "source": "DarkOS",
         "padding": {
           "top": 1,
           "left": 2
@@ -152,9 +152,9 @@
   '';
 
   programs.bash.interactiveShellInit = ''
-    # Run fastfetch with random logo on terminal start
+    # Run fastfetch on terminal start
     if [[ $- == *i* ]]; then
-      /etc/fastfetch/random-logo.sh
+      ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc
     fi
   '';
 }
