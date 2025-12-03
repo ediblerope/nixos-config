@@ -6,9 +6,11 @@ let
     buildInputs = [ pkgs.makeWrapper ];
   } ''
     mkdir -p $out/bin
-    wrapProgram ${pkgs.vesktop}/bin/vesktop \
-      --set GTK_THEME Adwaita:dark \
-      -o $out/bin/vesktop
+    cat > $out/bin/vesktop <<'EOF'
+#!/bin/sh
+GTK_THEME=Adwaita:dark exec ${pkgs.vesktop}/bin/vesktop "$@"
+EOF
+    chmod +x $out/bin/vesktop
   '';
 in
 
