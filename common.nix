@@ -1,8 +1,8 @@
-#common.nix
+# Common.nix
 { config, pkgs, lib, ... }:
 
 {
-
+# Use latest kernel
 boot.kernelPackages = pkgs.linuxPackages_latest;
  
 # Enable networking
@@ -25,11 +25,23 @@ i18n.extraLocaleSettings = {
 	LC_TIME = "en_GB.UTF-8";
 };
  
-# GNOME
+# GNOME + Keybinds
 # Enable the X11 windowing system.
 services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
+
+programs.dconf = {
+	enable = true;
+	profiles.user.databases = [{
+		settings = {
+			"org/gnome/settings-daemon/plugins/media-keys/home" = [ "<Super>e" ];
+			"org/gnome/settings-daemon/plugins/media-keys/control-center" = [ "<Super>i" ];
+			"org/gnome/desktop/wm/keybindings/close" =  [ "<Super>q" ];
+			"org/gnome/desktop/interface/color-scheme" = "prefer-dark";
+		};
+	}];
+};
  
 # Configure keymap in X11
 services.xserver.xkb = {
