@@ -1,6 +1,20 @@
 # Common.nix
 { config, pkgs, lib, ... }:
 
+let
+  vesktopDark = pkgs.vesktop.overrideAttrs (old: {
+    installPhase = ''
+      mkdir -p $out/bin
+      cat > $out/bin/vesktop <<EOF
+#!/bin/sh
+# Wrapper to force dark GTK theme for vesktop
+GTK_THEME=Adwaita:dark exec ${old}/bin/vesktop "\$@"
+EOF
+      chmod +x $out/bin/vesktop
+    '';
+  });
+in
+
 {
 # Use latest kernel
 boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -72,25 +86,15 @@ systemd.user.services.gnomeSettings = {
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
-  isNormalUser = true;
-  description = "fred";
-  extraGroups = [ "networkmanager" "wheel" ];
-  packages = with pkgs; [
-    bazaar
-    fastfetch
-  ];
-};
-
-environment.systemPackages = with pkgs; [
-  (vesktop.overrideAttrs (old: {
-    installPhase = ''
-      mkdir -p $out/bin
-      echo '#!/bin/sh' > $out/bin/vesktop
-      echo 'GTK_THEME=Adwaita:dark exec ${old}/bin/vesktop "$@"' >> $out/bin/vesktop
-      chmod +x $out/bin/vesktop
-    '';
-  }))
-];
+    isNormalUser = true;
+    description = "fred";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      bazaar
+      fastfetch
+      vesktopDark
+    ];
+  };
 
 # Allow unfree packages
 nixpkgs.config.allowUnfree = true;
