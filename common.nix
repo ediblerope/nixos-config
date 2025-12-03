@@ -23,23 +23,23 @@ services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 
-# System-wide GNOME settings
-environment.etc."dconf/db/local.d/01-custom".text = ''
-  [org/gnome/settings-daemon/plugins/media-keys]
-  home='<Super>e'
-  control-center='<Super>i'
-
-  [org/gnome/desktop/wm/keybindings]
-  close=['<Super>q']
-
-  [org/gnome/desktop/interface]
-  color-scheme='prefer-dark'
-'';
-
-# Update dconf database
-system.activationScripts.dconfUpdate = ''
-  ${pkgs.dconf}/bin/dconf update
-'';
+programs.dconf = {
+  enable = true;
+  profiles.user.databases = [{
+    settings = {
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        home = "<Super>e";
+        control-center = "<Super>i";
+      };
+      "org/gnome/desktop/wm/keybindings" = {
+        close = [ "<Super>q" ];
+      };
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  }];
+};
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
