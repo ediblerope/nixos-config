@@ -13,8 +13,8 @@ environment.shellAliases = {
 };
 
 # Add packages
-environment.systemPackages = [
-	pkgs.git
+environment.systemPackages = with pkgs; [
+	git
 	gnomeExtensions.blur-my-shell
 	gnomeExtensions.just-perfection
 ];
