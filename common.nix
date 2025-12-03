@@ -4,6 +4,11 @@
 {
 # Use latest kernel
 boot.kernelPackages = pkgs.linuxPackages_latest;
+
+# Add packages
+environment.systemPackages = [
+	pkgs.git
+];
  
 # Enable networking
 networking.networkmanager.enable = true;
