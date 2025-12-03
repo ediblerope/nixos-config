@@ -42,7 +42,7 @@
         },
         {
           "type": "os",
-          "key": " ",
+          "key": "󰣇 ",
           "keyColor": "blue"
         },
         {
@@ -52,7 +52,7 @@
         },
         {
           "type": "kernel",
-          "key": " ",
+          "key": "󰌽 ",
           "keyColor": "blue"
         },
         {
@@ -67,22 +67,22 @@
         },
         {
           "type": "shell",
-          "key": " ",
+          "key": "󰆍 ",
           "keyColor": "blue"
         },
         {
           "type": "terminal",
-          "key": " ",
+          "key": "󰆍 ",
           "keyColor": "blue"
         },
         {
           "type": "de",
-          "key": " ",
+          "key": "󰧨 ",
           "keyColor": "blue"
         },
         {
           "type": "wm",
-          "key": " ",
+          "key": "󱂬 ",
           "keyColor": "blue"
         },
         {
