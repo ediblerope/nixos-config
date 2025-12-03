@@ -27,21 +27,28 @@ services.desktopManager.gnome.enable = true;
 systemd.user.services.gnomeSettings = {
   description = "Apply GNOME custom settings";
   wantedBy = [ "default.target" ];
-  after = [ "graphical-session.target" ];
+  after = [ "graphical-session.target" "dbus.service" ];
   serviceConfig = {
     Type = "oneshot";
     ExecStart = pkgs.writeShellScript "apply-gnome-settings" ''
-      echo "Running GNOME settings script..." >> /home/fred/gnome-settings.log
-      export DBUS_SESSION_BUS_ADDRESS=unix:path=$XDG_RUNTIME_DIR/bus
+      LOG=~/gnome-settings.log
+      echo "---- RUN $(date) ----" >> "$LOG"
 
-      gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-      gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
-      gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"
-      gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']"
-    '';
-  };
-};
+      # Debug info
+      echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE" >> "$LOG"
+      echo "XDG_SESSION_DESKTOP=$XDG_SESSION_DESKTOP" >> "$LOG"
+      echo "DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" >> "$LOG"
+      echo "Runtime dir: $XDG_RUNTIME_DIR" >> "$LOG"
+
+      export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+
+      echo "Running settings..." >> "$LOG"
+      gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' >> "$LOG" 2>&1
+      gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >> "$LOG" 2>&1
+      gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']" >> "$LOG" 2>&1
+      gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
+      gsettings set org.gnome.settings-daemon.plugins.media-keys cont
+
 
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
