@@ -78,17 +78,20 @@ users.users.fred = {
   packages = with pkgs; [
     bazaar
     fastfetch
-    vesktop
   ];
 };
 
-# User-specific environment variables
-users.mutableUsers = true; # usually true
-environment.variables = {
-  GTK_THEME = "Adwaita:dark";
-};
+environment.systemPackages = with pkgs; [
+  (vesktop.overrideAttrs (old: {
+    installPhase = ''
+      mkdir -p $out/bin
+      echo '#!/bin/sh' > $out/bin/vesktop
+      echo 'GTK_THEME=Adwaita:dark exec ${old}/bin/vesktop "$@"' >> $out/bin/vesktop
+      chmod +x $out/bin/vesktop
+    '';
+  }))
+];
 
- 
 # Allow unfree packages
 nixpkgs.config.allowUnfree = true;
  
