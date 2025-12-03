@@ -9,6 +9,15 @@ services.xserver.enable = true;
 services.displayManager.gdm.enable = true;
 services.desktopManager.gnome.enable = true;
 
+# Add extensions
+# Add packages
+environment.systemPackages = with pkgs; [
+	gnomeExtensions.blur-my-shell
+	gnomeExtensions.just-perfection
+	gnomeExtensions.appindicator
+	gnomeExtensions.hot-edge
+];
+
 # Apply GNOME settings on login and log
 systemd.user.services.gnomeSettings = {
   description = "Apply GNOME custom settings";
@@ -28,7 +37,7 @@ systemd.user.services.gnomeSettings = {
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 
       # Ensure GNOME is fully ready
-      sleep 30
+      sleep 5
       echo "Running settings..." >> "$LOG"
 
       # Interface / theme
