@@ -8,7 +8,9 @@
 
   # Install Nerd Fonts for icon support
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "Meslo" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.meslo-lg
   ];
 
   # Create the fastfetch config file with unicode icons
