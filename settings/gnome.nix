@@ -3,7 +3,13 @@
 
 {
 
-# Apply GNOME settings on login
+# Enable Gnome
+# Enable the X11 windowing system.
+services.xserver.enable = true;
+services.displayManager.gdm.enable = true;
+services.desktopManager.gnome.enable = true;
+
+# Apply GNOME settings on login and log
 systemd.user.services.gnomeSettings = {
   description = "Apply GNOME custom settings";
   wantedBy = [ "default.target" ];
