@@ -6,6 +6,7 @@
 imports = [
     ./settings/gnome.nix
 	./settings/locale.nix
+	./settings/audio.nix
     # Add all your hosts here
   ];
 
@@ -58,13 +59,4 @@ services.flatpak.enable = true;
 # Enable networking
 networking.networkmanager.enable = true;
 
-# Enable sound with pipewire.
-services.pulseaudio.enable = false;
-security.rtkit.enable = true;
-services.pipewire = {
-	enable = true;
-	alsa.enable = true;
-	alsa.support32Bit = true;
-	pulse.enable = true;
-};
 }
