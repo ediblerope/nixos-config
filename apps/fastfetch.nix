@@ -13,6 +13,19 @@
     nerd-fonts.meslo-lg
   ];
 
+  # Create a wrapper script that chooses a random logo
+  environment.etc."fastfetch/random-logo.sh".text = ''
+    #!/bin/sh
+    logos=("RavynOS" "PuffOS" "PearOS" "locos" "GNOME" "eweOS" "DarkOS" "BredOS" "AmogOS")
+    random_logo=''${logos[$RANDOM % ''${#logos[@]}]}
+    ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc --logo $random_logo
+  '';
+
+  # Make the script executable
+  system.activationScripts.fastfetchScript = ''
+    chmod +x /etc/fastfetch/random-logo.sh
+  '';
+
   # Create the fastfetch config file with unicode icons
   environment.etc."fastfetch/config.jsonc".text = ''
     {
@@ -141,9 +154,9 @@
   '';
 
   programs.bash.interactiveShellInit = ''
-    # Run fastfetch on terminal start
+    # Run fastfetch with random logo on terminal start
     if [[ $- == *i* ]]; then
-      ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc
+      /etc/fastfetch/random-logo.sh
     fi
   '';
 }
