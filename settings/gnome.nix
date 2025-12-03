@@ -1,4 +1,4 @@
-# Common.nix
+# gnome.nix
 { config, pkgs, lib, ... }:
 
 {
