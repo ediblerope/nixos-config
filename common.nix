@@ -15,6 +15,8 @@ environment.shellAliases = {
 # Add packages
 environment.systemPackages = [
 	pkgs.git
+	gnomeExtensions.blur-my-shell
+	gnomeExtensions.just-perfection
 ];
  
 # GNOME + Keybinds
