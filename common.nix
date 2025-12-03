@@ -34,7 +34,9 @@ systemd.user.services.gnomeSettings = {
       LOG=~/gnome-settings.log
       echo "---- RUN $(date) ----" >> "$LOG"
 
-      # Debug info
+      # Add gsettings to PATH
+      export PATH=${pkgs.glib}/bin:$PATH
+
       echo "XDG_SESSION_TYPE=$XDG_SESSION_TYPE" >> "$LOG"
       echo "XDG_SESSION_DESKTOP=$XDG_SESSION_DESKTOP" >> "$LOG"
       echo "DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" >> "$LOG"
