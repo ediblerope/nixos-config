@@ -40,24 +40,40 @@ systemd.user.services.gnomeSettings = {
     Type = "oneshot";
     ExecStart = pkgs.writeShellScript "apply-gnome-settings" ''
       LOG=~/gnome-settings.log
-
       echo "---- RUN $(date) ----" >> "$LOG"
 
       export PATH=${pkgs.glib}/bin:$PATH
       export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
 
-      # Ensure GNOME is fully ready
       sleep 5
-
       echo "Running settings..." >> "$LOG"
 
+      # General interface
       gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' >> "$LOG" 2>&1
       gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >> "$LOG" 2>&1
+      gsettings set org.gnome.desktop.interface accent-color 'purple' >> "$LOG" 2>&1
 
-      # These schemas require gnome-settings-daemon to be ready
+      # Media keys
       gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
       gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
-      gsettings set org.gnome.desktop.interface accent-color "purple" >> "$LOG" 2>&1
+
+      # Extensions
+      gsettings set org.gnome.shell enabled-extensions "['blur-my-shell@aunetx']" >> "$LOG" 2>&1
+      gsettings set org.gnome.shell enabled-extensions "['blur-my-shell@aunetx','just-perfection-desktop@just-perfection']" >> "$LOG" 2>&1
+
+      # Blur My Shell settings
+      gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock blur true >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.appfolder.brightness 0.6 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.appfolder.sigma 30 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock.brightness 0.6 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock.sigma 30 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock.static-blur true >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock.style-dash-to-dock 0 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.panel.brightness 0.6 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.panel.sigma 30 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.settings-version 2 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.window-list.brightness 0.6 >> "$LOG" 2>&1
+      gsettings set org.gnome.shell.extensions.blur-my-shell.window-list.sigma 30 >> "$LOG" 2>&1
 
       echo "DONE" >> "$LOG"
     '';
