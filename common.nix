@@ -41,6 +41,21 @@ programs.dconf = {
   }];
 };
 
+# Ensure dconf profile is used
+environment.variables = {
+  DCONF_PROFILE = "user";
+};
+
+# Compile dconf databases
+systemd.services.dconf-update = {
+  description = "Update dconf databases";
+  wantedBy = [ "multi-user.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = "${pkgs.dconf}/bin/dconf update";
+  };
+};
+
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
 	isNormalUser = true;
