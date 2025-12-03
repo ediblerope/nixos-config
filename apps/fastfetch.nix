@@ -154,6 +154,6 @@
     # Stylish prompt with icons
     # Shows: ╭─ user@host  ~/current/directory (git-branch)
     #        ╰─❯ 
-    PS1="${RESET}${BCYAN}╭─${RESET} ${BPURPLE}\u${RESET}${CYAN}@${RESET}${BBLUE}\h${RESET} ${BGREEN} \w${RESET}${YELLOW}\$(parse_git_branch)${RESET}\n${BCYAN}╰─${BPURPLE}❯${RESET} "
+    PS1="''${RESET}''${BCYAN}╭─''${RESET} ''${BPURPLE}\u''${RESET}''${CYAN}@''${RESET}''${BBLUE}\h''${RESET} ''${BGREEN} \w''${RESET}''${YELLOW}\$(parse_git_branch)''${RESET}\n''${BCYAN}╰─''${BPURPLE}❯''${RESET} "
   '';
 }
