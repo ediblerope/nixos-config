@@ -26,6 +26,7 @@ services.desktopManager.gnome.enable = true;
 programs.dconf = {
   enable = true;
   profiles.user.databases = [{
+	lockAll = true
     settings = {
       "org/gnome/settings-daemon/plugins/media-keys" = {
         home = "<Super>e";
