@@ -54,15 +54,18 @@ systemd.user.services.gnomeSettings = {
       gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >> "$LOG" 2>&1
       gsettings set org.gnome.desktop.interface accent-color 'purple' >> "$LOG" 2>&1
 
-		# Media keys
-		gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
-		gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
-		
-		# Custom keybinding: Super+T → kgx
-		gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']" >> "$LOG" 2>&1
-		gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal' >> "$LOG" 2>&1
-		gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kgx' >> "$LOG" 2>&1
-		gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>t' >> "$LOG" 2>&1
+	  # Media keys
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
+	
+      # Custom keybinding: Super+T → kgx
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']" >> "$LOG" 2>&1
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Terminal' >> "$LOG" 2>&1
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kgx' >> "$LOG" 2>&1
+	  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>t' >> "$LOG" 2>&1
+
+	  # Mouse acceleration
+	  gsettings set org.gnome.desktop.peripherals.mouse accel-profile "flat" >> "$LOG" 2>&1
 
       echo "DONE" >> "$LOG"
     '';
