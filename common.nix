@@ -2,17 +2,22 @@
 { config, pkgs, lib, ... }:
 
 let
-  vesktopDark = pkgs.vesktop.overrideAttrs (old: {
+  vesktopDark = pkgs.stdenv.mkDerivation {
+    pname = "vesktop-dark";
+    version = "1.0";
+
+    buildInputs = [ pkgs.makeWrapper ];
+
+    unpackPhase = "true";
     installPhase = ''
       mkdir -p $out/bin
-      cat > $out/bin/vesktop <<EOF
-#!/bin/sh
-# Wrapper to force dark GTK theme for vesktop
-GTK_THEME=Adwaita:dark exec ${old}/bin/vesktop "\$@"
-EOF
-      chmod +x $out/bin/vesktop
+      wrapProgram ${pkgs.vesktop}/bin/vesktop \
+        --set GTK_THEME Adwaita:dark \
+        --prefix PATH : ${pkgs.coreutils}/bin \
+        --prefix PATH : ${pkgs.glib}/bin \
+        -o $out/bin/vesktop
     '';
-  });
+  };
 in
 
 {
@@ -86,15 +91,15 @@ systemd.user.services.gnomeSettings = {
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
-    isNormalUser = true;
-    description = "fred";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      bazaar
-      fastfetch
-      vesktopDark
-    ];
-  };
+  isNormalUser = true;
+  description = "fred";
+  extraGroups = [ "networkmanager" "wheel" ];
+  packages = with pkgs; [
+    bazaar
+    fastfetch
+    vesktopDark
+  ];
+};
 
 # Allow unfree packages
 nixpkgs.config.allowUnfree = true;
