@@ -17,6 +17,8 @@ environment.systemPackages = with pkgs; [
 	git
 	gnomeExtensions.blur-my-shell
 	gnomeExtensions.just-perfection
+	gnomeExtensions.appindicator
+	gnomeExtensions.hot-edge
 ];
  
 # GNOME + Keybinds
