@@ -47,9 +47,12 @@ systemd.user.services.gnomeSettings = {
       gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' >> "$LOG" 2>&1
       gsettings set org.gnome.desktop.wm.keybindings close "['<Super>q']" >> "$LOG" 2>&1
       gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']" >> "$LOG" 2>&1
-      gsettings set org.gnome.settings-daemon.plugins.media-keys cont
+      gsettings set org.gnome.settings-daemon.plugins.media-keys control-center "['<Super>i']" >> "$LOG" 2>&1
 
-
+      echo "DONE" >> "$LOG"
+    '';
+  };
+};
 
 # Define a user account. Don't forget to set a password with ‘passwd’.
 users.users.fred = {
