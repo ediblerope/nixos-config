@@ -29,6 +29,9 @@
         "color": {
           "keys": "blue",
           "title": "cyan"
+        },
+        "key": {
+          "type": "icon"
         }
       },
       "modules": [
@@ -42,77 +45,62 @@
         },
         {
           "type": "os",
-          "key": "❋ ",
           "keyColor": "blue"
         },
         {
           "type": "host",
-          "key": "󰌢 ",
           "keyColor": "blue"
         },
         {
           "type": "kernel",
-          "key": "󰌽 ",
           "keyColor": "blue"
         },
         {
           "type": "uptime",
-          "key": "󰔟 ",
           "keyColor": "blue"
         },
         {
           "type": "packages",
-          "key": "󰏖 ",
           "keyColor": "blue"
         },
         {
           "type": "shell",
-          "key": "󰆍 ",
           "keyColor": "blue"
         },
         {
           "type": "terminal",
-          "key": "󰆍 ",
           "keyColor": "blue"
         },
         {
           "type": "de",
-          "key": "󰧨 ",
           "keyColor": "blue"
         },
         {
           "type": "wm",
-          "key": "󱂬 ",
           "keyColor": "blue"
         },
         {
           "type": "wmtheme",
-          "key": "󰉼 ",
           "keyColor": "blue"
         },
         {
           "type": "icons",
-          "key": "󰀻 ",
           "keyColor": "blue"
         },
         {
           "type": "cpu",
-          "key": "󰻠 ",
           "keyColor": "green"
         },
         {
           "type": "gpu",
-          "key": "󰍛 ",
           "keyColor": "green"
         },
         {
           "type": "memory",
-          "key": "󰑭 ",
           "keyColor": "yellow"
         },
         {
           "type": "disk",
-          "key": "󰋊 ",
           "keyColor": "yellow"
         },
         {
