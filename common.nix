@@ -80,11 +80,14 @@ users.users.fred = {
     fastfetch
     vesktop
   ];
-  shellInit = ''
-    # Force GTK dark theme for Electron apps like vesktop
-    export GTK_THEME=Adwaita:dark
-  '';
 };
+
+# User-specific environment variables
+users.mutableUsers = true; # usually true
+environment.variables = {
+  GTK_THEME = "Adwaita:dark";
+};
+
  
 # Allow unfree packages
 nixpkgs.config.allowUnfree = true;
