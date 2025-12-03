@@ -1,19 +1,6 @@
 # Common.nix
 { config, pkgs, lib, ... }:
 
-let
-  vesktopDark = pkgs.runCommand "vesktop-dark" {
-    buildInputs = [ pkgs.makeWrapper ];
-  } ''
-    mkdir -p $out/bin
-    cat > $out/bin/vesktop <<'EOF'
-#!/bin/sh
-GTK_THEME=Adwaita:dark exec ${pkgs.vesktop}/bin/vesktop "$@"
-EOF
-    chmod +x $out/bin/vesktop
-  '';
-in
-
 {
 # Use latest kernel
 boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -91,7 +78,6 @@ users.users.fred = {
     packages = with pkgs; [
       bazaar
       fastfetch
-      vesktopDark
     ];
   };
 
