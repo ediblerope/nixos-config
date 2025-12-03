@@ -25,6 +25,7 @@ services.desktopManager.gnome.enable = true;
 
 # Apply GNOME settings on login
 environment.etc."profile.d/gnome-settings.sh".text = ''
+  echo "Running GNOME settings script..." >> /home/fred/gnome-settings.log
   if [ "$XDG_SESSION_DESKTOP" = "gnome" ]; then
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
