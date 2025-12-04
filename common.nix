@@ -26,10 +26,16 @@ networking.networkmanager.enable = true;
 
 # Shell aliases
 environment.shellAliases = {
-    # NEW Flake-based command
-    update = "sudo nixos-rebuild switch --flake .#FredOS-Gaming";
-    clean = "sudo nix-collect-garbage -d";
-    ll = "ls -alh";
+  update = ''
+    if ! nix-channel --list | grep -q "nixos.*nixos-unstable"; then
+      echo "Switching to nixos-unstable channel..."
+      sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+      sudo nix-channel --update
+    fi
+    sudo nixos-rebuild switch --upgrade --option tarball-ttl 0
+  '';
+  clean = "sudo nix-collect-garbage -d";
+  ll = "ls -alh";
 };
 
 # Add packages
