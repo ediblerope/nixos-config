@@ -14,5 +14,5 @@ in
   
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.fred = import ./home.nix;
+  home-manager.users.fred = import ./home-manager/home.nix;
 }
