@@ -25,11 +25,12 @@ services.flatpak.enable = true;
 networking.networkmanager.enable = true;
 
 # Shell aliases
-#environment.shellAliases = {
-#  update = "sudo nixos-rebuild switch --upgrade --option tarball-ttl 0";
-#  clean = "sudo nix-collect-garbage -d";  # Clean old generations
-#  ll = "ls -alh";
-#};
+environment.shellAliases = {
+    # NEW Flake-based command
+    update = "sudo nixos-rebuild switch --flake .#FredOS-Gaming";
+    clean = "sudo nix-collect-garbage -d";
+    ll = "ls -alh";
+};
 
 # Add packages
 environment.systemPackages = with pkgs; [
