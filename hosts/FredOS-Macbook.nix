@@ -1,12 +1,11 @@
 # hosts/FredOS-Macbook.nix
 { config, pkgs, lib, ... }:
-
 {
+  imports = lib.mkIf (config.networking.hostName == "FredOS-Macbook") [
+    ../settings/gnome.nix
+  ];
+  
   config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
-    imports = [
-      ../settings/gnome.nix
-    ];
-
     environment.systemPackages = with pkgs; [
       # Package names here
     ];
@@ -19,7 +18,7 @@
       };
       
       # Enable Broadcom WL for Macbook
-      extraModulePackages = [ pkgs.linuxPackages.broadcom_sta ];  # Use pkgs, not config
+      extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
       
       blacklistedKernelModules = [
         "b43"
