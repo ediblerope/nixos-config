@@ -27,6 +27,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
   
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-59-6.18"  # Updated version number
+    "broadcom-sta-6.30.223.271-59-6.12.60"
   ];
 };
 }
