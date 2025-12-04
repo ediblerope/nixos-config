@@ -9,7 +9,6 @@ imports = [
 	./settings/audio.nix
 	./settings/users.nix
 	./apps/fastfetch.nix
-	./home-manager/hm-config.nix
     # Add all your hosts here
   ];
 
