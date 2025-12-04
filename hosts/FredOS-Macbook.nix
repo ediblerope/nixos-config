@@ -1,7 +1,7 @@
 # hosts/FredOS-Macbook.nix
 { config, pkgs, lib, ... }:
 {
-  imports = lib.mkIf (config.networking.hostName == "FredOS-Macbook") [
+  imports = lib.optionals (config.networking.hostName == "FredOS-Macbook") [
     ../settings/gnome.nix
   ];
   
