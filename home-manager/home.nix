@@ -52,12 +52,5 @@ dconf.settings = {
     accel-profile = "flat";
   };
 };
-
-  # Aliases
-  programs.bash.enable = true; # Or programs.zsh.enable = true;
-  programs.bash.shellAliases = {
-    clean = "sudo nix-collect-garbage -d"; # Still needs sudo for system collection
-    ll = "ls -alh";
-    clear = "command clear && fastfetch --config /etc/fastfetch/config.jsonc";
-  };
+  
 }
