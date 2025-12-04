@@ -21,7 +21,7 @@ nixpkgs.config.allowUnfree = true;
 # Services
 services.flatpak.enable = true;
 
-# Enable networking
+# Enable network-manager
 networking.networkmanager.enable = true;
 
 # Shell aliases
