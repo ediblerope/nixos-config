@@ -1,7 +1,7 @@
 # hosts/FredOS-Gaming.nix
 { config, pkgs, lib, ... }:
 {
-  imports = lib.mkIf (config.networking.hostName == "FredOS-Gaming") [
+  imports = lib.optionals (config.networking.hostName == "FredOS-Gaming") [
     ../settings/gnome.nix
   ];
   
