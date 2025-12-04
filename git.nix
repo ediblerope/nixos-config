@@ -1,3 +1,4 @@
+# git.nix
 { config, pkgs, lib, ... }:
 let
   home-manager = builtins.fetchTarball {
