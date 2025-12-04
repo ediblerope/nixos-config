@@ -37,6 +37,7 @@ environment.shellAliases = {
   '';
   clean = "sudo nix-collect-garbage -d";
   ll = "ls -alh";
+  clear = "command clear && fastfetch --config /etc/fastfetch/config.jsonc";
 };
 
 # Add packages
