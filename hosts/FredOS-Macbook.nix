@@ -14,7 +14,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
     };
     
     # Enable Broadcom WL for Macbook
-    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    extraModulePackages = [ pkgs.linuxPackages.broadcom_sta ];  # Use pkgs, not config
     
     blacklistedKernelModules = [
       "b43"
@@ -26,7 +26,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
   hardware.enableRedistributableFirmware = true;
   
   nixpkgs.config.permittedInsecurePackages = [
-    "broadcom-sta-6.30.223.271-59-6.17.9"
+    "broadcom-sta-6.30.223.271-59-6.18"  # Updated version number
   ];
 };
 }
