@@ -1,11 +1,11 @@
-# FredOS-Gaming.nix
+# hosts/FredOS-Gaming.nix
 { config, pkgs, lib, ... }:
 {
+  imports = lib.mkIf (config.networking.hostName == "FredOS-Gaming") [
+    ../settings/gnome.nix
+  ];
+  
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
-    imports = [
-      ../settings/gnome.nix
-    ];
-    
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
@@ -27,7 +27,7 @@
     system.autoUpgrade = {
       enable = true;
       dates = "daily";
-      persistent = true;  # Run on next boot if the scheduled time was missed
+      persistent = true;
       allowReboot = false;
       flags = [
         "--upgrade"
