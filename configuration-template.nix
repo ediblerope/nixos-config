@@ -3,8 +3,6 @@
 ## IMPORTANT: On a fresh NixOS install, run this command first:                                                                                                   ##
 ##   nix-shell -p git --run "sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nix-channel --update && sudo nixos-rebuild switch"    ##
 ##                                                                                                                                                                ##
-## Then copy this file to /etc/nixos/configuration.nix and run:                                                                                                   ##
-##   sudo nixos-rebuild switch                                                                                                                                    ##
 ####################################################################################################################################################################
 
 { config, pkgs, lib, ... }:
