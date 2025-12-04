@@ -58,6 +58,6 @@ dconf.settings = {
   programs.bash.shellAliases = {
     clean = "sudo nix-collect-garbage -d"; # Still needs sudo for system collection
     ll = "ls -alh";
-    clear = "command clear && fastfetch";
+    clear = "command clear && fastfetch --config /etc/fastfetch/config.jsonc";
   };
 }
