@@ -4,6 +4,7 @@
 {
 
 imports = [
+	./settings/gnome.nix
 	./settings/locale.nix
 	./settings/audio.nix
 	./settings/users.nix
