@@ -27,7 +27,8 @@ networking.networkmanager.enable = true;
 # Shell aliases
 environment.shellAliases = {
   update = ''
-    if ! nix-channel --list | grep -q "nixos.*nixos-unstable"; then
+    CHANNEL=$(sudo nix-channel --list | grep "^nixos " | awk '{print $2}')
+    if [[ "$CHANNEL" != *"nixos-unstable"* ]]; then
       echo "Switching to nixos-unstable channel..."
       sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
       sudo nix-channel --update
