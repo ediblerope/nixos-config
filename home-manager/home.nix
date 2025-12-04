@@ -53,11 +53,11 @@ dconf.settings = {
   };
 };
 
-  # --- Aliases (Moved from system-wide common.nix) ---
-  # These aliases are now defined for the user's shell (e.g., bash/zsh).
+  # Aliases
   programs.bash.enable = true; # Or programs.zsh.enable = true;
   programs.bash.shellAliases = {
     clean = "sudo nix-collect-garbage -d"; # Still needs sudo for system collection
     ll = "ls -alh";
+    clear = "command clear && fastfetch"
   };
 }
