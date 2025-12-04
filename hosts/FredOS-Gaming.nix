@@ -1,38 +1,34 @@
 # hosts/FredOS-Gaming.nix
 { config, pkgs, lib, ... }:
 {
-  imports = lib.optionals (config.networking.hostName == "FredOS-Gaming") [
-    ../settings/gnome.nix
+config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    #Package name
+    lutris
   ];
   
-  config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
-    environment.systemPackages = with pkgs; [
-      #Package name
-      lutris
-    ];
-    
-    programs.steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-      package = pkgs.steam.override {
-        extraPkgs =
-          pkgs: with pkgs; [
-            kdePackages.breeze
-          ];
-      };
-    };
-    
-    system.autoUpgrade = {
-      enable = true;
-      dates = "daily";
-      persistent = true;
-      allowReboot = false;
-      flags = [
-        "--upgrade"
-        "--option" "tarball-ttl" "0"
-      ];
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    package = pkgs.steam.override {
+      extraPkgs =
+        pkgs: with pkgs; [
+          kdePackages.breeze
+        ];
     };
   };
+  
+  system.autoUpgrade = {
+    enable = true;
+    dates = "daily";
+    persistent = true;
+    allowReboot = false;
+    flags = [
+      "--upgrade"
+      "--option" "tarball-ttl" "0"
+    ];
+  };
+};
 }
