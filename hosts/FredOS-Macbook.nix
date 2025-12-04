@@ -3,6 +3,10 @@
 
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
+    imports = [
+      ../settings/gnome.nix
+    ];
+
     environment.systemPackages = with pkgs; [
       # Package names here
     ];
