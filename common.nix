@@ -9,6 +9,7 @@ imports = [
 	./settings/audio.nix
 	./settings/users.nix
 	./apps/fastfetch.nix
+	./home-manager/hm-config.nix
     # Add all your hosts here
   ];
 
@@ -25,11 +26,11 @@ services.flatpak.enable = true;
 networking.networkmanager.enable = true;
 
 # Shell aliases
-environment.shellAliases = {
-  update = "sudo nixos-rebuild switch --upgrade --option tarball-ttl 0";
-  clean = "sudo nix-collect-garbage -d";  # Clean old generations
-  ll = "ls -alh";
-};
+#environment.shellAliases = {
+#  update = "sudo nixos-rebuild switch --upgrade --option tarball-ttl 0";
+#  clean = "sudo nix-collect-garbage -d";  # Clean old generations
+#  ll = "ls -alh";
+#};
 
 # Add packages
 environment.systemPackages = with pkgs; [
