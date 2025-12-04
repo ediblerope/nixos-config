@@ -1,10 +1,13 @@
-########################################################################
-# Template file used to set up git fetch. Run using 'nix-shell -p git' #
-########################################################################
-
+# configuration-template.nix
+###############################################################################################################
+## IMPORTANT: On a fresh NixOS install, run this command first:                                              ##
+##   sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nix-channel --update     ##
+##                                                                                                           ##
+## Then copy this file to /etc/nixos/configuration.nix and run:                                              ##
+##   sudo nixos-rebuild switch                                                                               ##
+###############################################################################################################
 
 { config, pkgs, lib, ... }:
-
 let
   gitConfig = builtins.fetchGit {
     url = "https://github.com/ediblerope/nixos-config";
@@ -17,13 +20,11 @@ imports = [
   "${gitConfig}/git.nix"
 ];
 
-networking.hostName = "FredOS-Gaming";
+networking.hostName = "HOSTNAME-HERE";  # Change this!
+  
+######################################################
+## Add Nixos-default generated boot loader settings ##
+######################################################
 
-# Enable flakes for nix-unstable integration
-nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-####################################
-## Space for boot loader settings ##
-####################################
-  system.stateVersion = "25.11";
+system.stateVersion = "25.11";
 }
