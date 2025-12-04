@@ -1,28 +1,32 @@
-# configuration-template.nix
-####################################################################################################################################################################
-## IMPORTANT: On a fresh NixOS install, run this command first:                                                                                                   ##
-##   nix-shell -p git --run "sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos && sudo nix-channel --update && sudo nixos-rebuild switch"    ##
-##                                                                                                                                                                ##
-####################################################################################################################################################################
-
+# hosts/FredOS-Macbook.nix
 { config, pkgs, lib, ... }:
-let
-  gitConfig = builtins.fetchGit {
-    url = "https://github.com/ediblerope/nixos-config";
-    ref = "main";
-  };
-in
 {
-imports = [
-  ./hardware-configuration.nix
-  "${gitConfig}/git.nix"
-];
-
-networking.hostName = "HOSTNAME-HERE";  # Change this!
+config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
+  environment.systemPackages = with pkgs; [
+    # Package names here
+  ];
   
-######################################################
-## Add Nixos-default generated boot loader settings ##
-######################################################
-
-system.stateVersion = "25.11";
+  # Bootloader
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    
+    # Enable Broadcom WL for Macbook
+    extraModulePackages = [ pkgs.linuxPackages.broadcom_sta ];  # Use pkgs, not config
+    
+    blacklistedKernelModules = [
+      "b43"
+      "bcma"
+      "ssb"
+    ];
+  };
+  
+  hardware.enableRedistributableFirmware = true;
+  
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-59-6.18"  # Updated version number
+  ];
+};
 }
