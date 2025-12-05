@@ -10,11 +10,12 @@
     #
   ];
   
-  # --- Download wallpaper to home directory ---
-  home.file.".local/share/backgrounds/wallpaper.jpg".source = pkgs.fetchurl {
-    url = "https://share.nordhammer.it/api/shares/KCkDFACI/files/ffd480b9-4d9e-4410-8489-eb1c32e06307";
-    sha256 = "1hbl4z3b43v9yh1i2dxz9wm52ff1hpv0kwck5afabifhh1b9nlz1";
-  };
+  # --- Download wallpaper from your GitHub repo ---
+  home.file.".local/share/backgrounds/wallpaper.png".source = 
+    "${builtins.fetchGit {
+      url = "https://github.com/ediblerope/nixos-config";
+      ref = "main";
+    }}/walls/wallpaper.png";
   
   # --- GNOME/dconf Settings via Home Manager ---
   dconf.settings = {
@@ -28,8 +29,8 @@
     
     # Wallpaper settings
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/fred/.local/share/backgrounds/wallpaper.jpg";
-      picture-uri-dark = "file:///home/fred/.local/share/backgrounds/wallpaper.jpg";
+      picture-uri = "file:///home/fred/.local/share/backgrounds/wallpaper.png";
+      picture-uri-dark = "file:///home/fred/.local/share/backgrounds/wallpaper.png";
     };
     
     # Window manager keybindings
