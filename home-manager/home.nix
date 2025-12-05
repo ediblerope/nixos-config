@@ -29,9 +29,10 @@
     
     # Wallpaper settings
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///home/fred/.local/share/backgrounds/wallpaper.png";
-      picture-uri-dark = "file:///home/fred/.local/share/backgrounds/wallpaper.png";
-    };
+      picture-uri = "file://${config.home.homeDirectory}/.local/share/backgrounds/wallpaper.png";
+      picture-uri-dark = "file://${config.home.homeDirectory}/.local/share/backgrounds/wallpaper.png";
+      picture-options = "zoom";
+};
     
     # Window manager keybindings
     "org/gnome/desktop/wm/keybindings" = {
