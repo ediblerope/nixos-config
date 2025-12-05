@@ -4,6 +4,7 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
     environment.systemPackages = with pkgs; [
       # Package names here
+      tlp
     ];
     
     # Bootloader
