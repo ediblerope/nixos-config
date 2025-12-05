@@ -18,6 +18,7 @@ dconf.settings = {
     color-scheme = "prefer-dark";
     gtk-theme = "Adwaita-dark";
     enable-hot-corners = false;
+    accent-color = "purple";
   };
 
 
