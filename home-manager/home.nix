@@ -66,19 +66,19 @@
     
     # Rounded Window Corners extension
     "org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
-      padding = lib.hm.gvariant.mkDictionaryEntry [
-        [ "left" (lib.hm.gvariant.mkUint32 2) ]
-        [ "right" (lib.hm.gvariant.mkUint32 2) ]
-        [ "top" (lib.hm.gvariant.mkUint32 2) ]
-        [ "bottom" (lib.hm.gvariant.mkUint32 2) ]
-      ];
-      keepRoundedCorners = lib.hm.gvariant.mkDictionaryEntry [
-        [ "maximized" true ]
-        [ "fullscreen" true ]
-      ];
-      borderRadius = lib.hm.gvariant.mkUint32 7;
-      smoothing = 0.0;
-      enabled = true;
-    };
+    padding = lib.hm.gvariant.mkDictionaryEntry [
+      (lib.hm.gvariant.mkDictionaryEntry [ "left" (lib.hm.gvariant.mkUint32 2) ])
+      (lib.hm.gvariant.mkDictionaryEntry [ "right" (lib.hm.gvariant.mkUint32 2) ])
+      (lib.hm.gvariant.mkDictionaryEntry [ "top" (lib.hm.gvariant.mkUint32 2) ])
+      (lib.hm.gvariant.mkDictionaryEntry [ "bottom" (lib.hm.gvariant.mkUint32 2) ])
+    ];
+    keepRoundedCorners = lib.hm.gvariant.mkDictionaryEntry [
+      (lib.hm.gvariant.mkDictionaryEntry [ "maximized" true ])
+      (lib.hm.gvariant.mkDictionaryEntry [ "fullscreen" true ])
+    ];
+    borderRadius = lib.hm.gvariant.mkUint32 7;
+    smoothing = 0.0;
+    enabled = true;
+  };
   };
 }
