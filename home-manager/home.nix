@@ -1,11 +1,10 @@
 # settings/home.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:  # Add lib here!
 {
   # Define the state version for Home Manager
   home.stateVersion = "25.11";
   
   # --- Packages for the user ---
-  # These are packages installed for the user only, not system-wide.
   home.packages = with pkgs; [
     #
   ];
@@ -32,7 +31,7 @@
       picture-uri = "file://${config.home.homeDirectory}/.local/share/backgrounds/wallpaper.png";
       picture-uri-dark = "file://${config.home.homeDirectory}/.local/share/backgrounds/wallpaper.png";
       picture-options = "zoom";
-};
+    };
     
     # Window manager keybindings
     "org/gnome/desktop/wm/keybindings" = {
@@ -64,23 +63,22 @@
     "org/gnome/desktop/peripherals/mouse" = {
       accel-profile = "flat";
     };
-
-    # Rounded Window Corners Reborn extension settings
-  "org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
-    padding = {
-      left = 2;
-      right = 2;
-      top = 2;
-      bottom = 2;
-    };
-    keepRoundedCorners = {
-      maximized = true;
-      fullscreen = true;
-    };
-    borderRadius = 7;
-    smoothing = 0.0;
-    borderColor = [0.5 0.5 0.5 1.0];  # Array for the tuple
-    enabled = true;
+    
+    # Rounded Window Corners extension
+    "org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
+      padding = lib.hm.gvariant.mkDictionaryEntry [
+        [ "left" (lib.hm.gvariant.mkUint32 2) ]
+        [ "right" (lib.hm.gvariant.mkUint32 2) ]
+        [ "top" (lib.hm.gvariant.mkUint32 2) ]
+        [ "bottom" (lib.hm.gvariant.mkUint32 2) ]
+      ];
+      keepRoundedCorners = lib.hm.gvariant.mkDictionaryEntry [
+        [ "maximized" true ]
+        [ "fullscreen" true ]
+      ];
+      borderRadius = lib.hm.gvariant.mkUint32 7;
+      smoothing = 0.0;
+      enabled = true;
     };
   };
 }
