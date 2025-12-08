@@ -1,5 +1,5 @@
 # settings/home.nix
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   # Define the state version for Home Manager
   home.stateVersion = "25.11";
