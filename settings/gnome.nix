@@ -16,6 +16,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		gnomeExtensions.just-perfection
 		gnomeExtensions.appindicator
 		gnomeExtensions.hot-edge
+		gnomeExtensions.rounded-window-corners-reborn
 	];
 };
 }
