@@ -64,5 +64,23 @@
     "org/gnome/desktop/peripherals/mouse" = {
       accel-profile = "flat";
     };
+
+    # Rounded Window Corners Reborn extension settings
+  "org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
+    padding = {
+      left = 2;
+      right = 2;
+      top = 2;
+      bottom = 2;
+    };
+    keepRoundedCorners = {
+      maximized = true;
+      fullscreen = true;
+    };
+    borderRadius = 7;
+    smoothing = 0.0;
+    borderColor = [0.5 0.5 0.5 1.0];  # Array for the tuple
+    enabled = true;
+    };
   };
 }
