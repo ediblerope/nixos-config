@@ -65,34 +65,43 @@
     };
     
     # Rounded Window Corners extension
-    "org/gnome/shell/extensions/rounded-window-corners-reborn" = {
-      global-rounded-corner-settings = {
-        # 1. Padding: A Variant containing a Dictionary of Uint32s
-        padding = lib.hm.gvariant.mkVariant {
-          left = lib.hm.gvariant.mkUint32 2;
-          right = lib.hm.gvariant.mkUint32 2;
-          top = lib.hm.gvariant.mkUint32 2;
-          bottom = lib.hm.gvariant.mkUint32 2;
-        };
+    "org/gnome/shell/extensions/rounded-window-corners-reborn" = let
+      # Helpers to keep the config clean
+      mkUint32 = lib.hm.gvariant.mkUint32;
+      mkVariant = lib.hm.gvariant.mkVariant;
+      mkTuple = lib.hm.gvariant.mkTuple;
+      
+      # Helper to create a Dictionary Entry from a key and value
+      mkEntry = name: value: lib.hm.gvariant.mkDictionaryEntry [name value];
+      
+      # Helper to create a Variant containing a Dictionary (a{sv} or similar)
+      # Usage: mkDict { key = value; key2 = value2; }
+      mkDict = attrs: mkVariant (
+        lib.mapAttrsToList (name: value: mkEntry name value) attrs
+      );
+      
+    in {
+      global-rounded-corner-settings = [
+        (mkEntry "padding" (mkDict {
+          left = mkUint32 2;
+          right = mkUint32 2;
+          top = mkUint32 2;
+          bottom = mkUint32 2;
+        }))
 
-        # 2. Keep Corners: A Variant containing a Dictionary of Booleans
-        keepRoundedCorners = lib.hm.gvariant.mkVariant {
+        (mkEntry "keepRoundedCorners" (mkDict {
           maximized = true;
           fullscreen = true;
-        };
+        }))
 
-        # 3. Border Radius: A Variant containing a Uint32
-        borderRadius = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkUint32 7);
+        (mkEntry "borderRadius" (mkVariant (mkUint32 7)))
 
-        # 4. Smoothing: A Variant containing a Double
-        smoothing = lib.hm.gvariant.mkVariant 0.0;
+        (mkEntry "smoothing" (mkVariant 0.0))
 
-        # 5. Border Color: A Variant containing a Tuple of Doubles
-        borderColor = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkTuple [ 0.5 0.5 0.5 1.0 ]);
+        (mkEntry "borderColor" (mkVariant (mkTuple [ 0.5 0.5 0.5 1.0 ])))
 
-        # 6. Enabled: A Variant containing a Boolean
-        enabled = lib.hm.gvariant.mkVariant true;
-      };
+        (mkEntry "enabled" (mkVariant true))
+      ];
     };
   };
 }
