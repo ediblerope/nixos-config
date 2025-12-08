@@ -66,7 +66,7 @@
     
     # Rounded Window Corners extension
     "/org/gnome/shell/extensions/rounded-window-corners-reborn" = {
-      global-rounded-corner-settings = {'padding': <{'left': uint32 2, 'right': 2, 'top': 1, 'bottom': 2}>, 'keepRoundedCorners': <{'maximized': true, 'fullscreen': true}>, 'borderRadius': <uint32 7>, 'smoothing': <0.0>, 'borderColor': <(0.5, 0.5, 0.5, 1.0)>, 'enabled': <true>};
+      global-rounded-corner-settings = #{'padding': <{'left': uint32 2, 'right': 2, 'top': 1, 'bottom': 2}>, 'keepRoundedCorners': <{'maximized': true, 'fullscreen': true}>, 'borderRadius': <uint32 7>, 'smoothing': <0.0>, 'borderColor': <(0.5, 0.5, 0.5, 1.0)>, 'enabled': <true>};
     };
 
     #"org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
