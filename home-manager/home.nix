@@ -65,24 +65,34 @@
     };
     
     # Rounded Window Corners extension
-    "/org/gnome/shell/extensions/rounded-window-corners-reborn" = {
-      #global-rounded-corner-settings = #{'padding': <{'left': uint32 2, 'right': 2, 'top': 1, 'bottom': 2}>, 'keepRoundedCorners': <{'maximized': true, 'fullscreen': true}>, 'borderRadius': <uint32 7>, 'smoothing': <0.0>, 'borderColor': <(0.5, 0.5, 0.5, 1.0)>, 'enabled': <true>};
-    };
+    "org/gnome/shell/extensions/rounded-window-corners-reborn" = {
+      global-rounded-corner-settings = {
+        # 1. Padding: A Variant containing a Dictionary of Uint32s
+        padding = lib.hm.gvariant.mkVariant {
+          left = lib.hm.gvariant.mkUint32 2;
+          right = lib.hm.gvariant.mkUint32 2;
+          top = lib.hm.gvariant.mkUint32 2;
+          bottom = lib.hm.gvariant.mkUint32 2;
+        };
 
-    #"org/gnome/shell/extensions/rounded-window-corners-reborn/global-rounded-corner-settings" = {
-    #  padding = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkDictionaryEntry [
-    #    [ "left" (lib.hm.gvariant.mkUint32 2) ]
-    #    [ "right" (lib.hm.gvariant.mkUint32 2) ]
-    #    [ "top" (lib.hm.gvariant.mkUint32 2) ]
-    #    [ "bottom" (lib.hm.gvariant.mkUint32 2) ]
-    #  ]);
-    #  keepRoundedCorners = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkDictionaryEntry [
-    #    [ "maximized" true ]
-    #    [ "fullscreen" true ]
-    #  ]);
-    #  borderRadius = lib.hm.gvariant.mkUint32 7;
-    #  smoothing = 0.0;
-    #  enabled = true;
-    #};
+        # 2. Keep Corners: A Variant containing a Dictionary of Booleans
+        keepRoundedCorners = lib.hm.gvariant.mkVariant {
+          maximized = true;
+          fullscreen = true;
+        };
+
+        # 3. Border Radius: A Variant containing a Uint32
+        borderRadius = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkUint32 7);
+
+        # 4. Smoothing: A Variant containing a Double
+        smoothing = lib.hm.gvariant.mkVariant 0.0;
+
+        # 5. Border Color: A Variant containing a Tuple of Doubles
+        borderColor = lib.hm.gvariant.mkVariant (lib.hm.gvariant.mkTuple [ 0.5 0.5 0.5 1.0 ]);
+
+        # 6. Enabled: A Variant containing a Boolean
+        enabled = lib.hm.gvariant.mkVariant true;
+      };
+    };
   };
 }
