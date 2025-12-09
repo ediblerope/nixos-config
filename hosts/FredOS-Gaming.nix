@@ -7,11 +7,16 @@
       adwaita-icon-theme # Helps with missing cursors/icons in some Wine games
     ];
 
-    # 1. Enable the Gamescope Module
+    # Enable the Gamescope Module
     programs.gamescope = {
       enable = true;
       capSysNice = true; # Fixes "No CAP_SYS_NICE" warning implies better performance
       # args = [ "--rt" ]; # Optional: Force realtime priority
+    };
+    # Enables Vulkan and OpenGL drivers
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
     };
 
     programs.steam = {
