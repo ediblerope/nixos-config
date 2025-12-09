@@ -8,13 +8,13 @@
       };
     }; # <--- SEMICOLON (Required)
     
-    environment.systemPackages = with pkgs; [
-      lutris
-      adwaita-icon-theme
-      nix-index
-      libdecor
-      pkgs.lib32.libdecor
-    ]; # <--- SEMICOLON (Required)
+    environment.systemPackages = [ # NO 'with pkgs;'
+      pkgs.lutris
+      pkgs.adwaita-icon-theme
+      pkgs.nix-index
+      pkgs.libdecor
+      pkgs.lib32.libdecor # This will now work correctly!
+    ]; # <--- SEMICOLON (Required)
 
     hardware.graphics = {
       enable = true;
