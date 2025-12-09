@@ -1,11 +1,12 @@
 { config, pkgs, lib, ... }:
 {
-  config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
+  { config, pkgs, lib, ... }:
+
+# The module is returning the result of lib.mkIf, which is a config attribute set.
+(lib.mkIf (config.networking.hostName == "FredOS-Gaming") { 
 
     nixpkgs.config.packageOverrides = pkgs: {
       pkgs = pkgs // {
-        # This is where you pull in 32-bit packages
-        # We access the i686-linux architecture set:
         lib32 = pkgs.pkgsi686Linux.pkgs;
       };
     };
@@ -15,10 +16,16 @@
       adwaita-icon-theme
       nix-index
       libdecor
-      pkgs.lib32.libdecor # CORRECTED LINE
+      pkgs.lib32.libdecor # The fixed lib32 reference
     ];
+    
+    # ... all other configuration attributes ...
 
-    # Enables Vulkan and OpenGL drivers
+    # The end of the attributes set:
+    # (The outer parentheses close the `lib.mkIf` expression)
+  })
+
+  # Enables Vulkan and OpenGL drivers
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
