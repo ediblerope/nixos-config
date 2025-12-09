@@ -10,7 +10,7 @@
     # Enable the Gamescope Module
     programs.gamescope = {
       enable = true;
-      capSysNice = true; # Fixes "No CAP_SYS_NICE" warning implies better performance
+      capSysNice = false;
       # args = [ "--rt" ]; # Optional: Force realtime priority
     };
     # Enables Vulkan and OpenGL drivers
