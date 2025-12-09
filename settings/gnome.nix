@@ -21,9 +21,14 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		libdecor
 		xorg.libxcb
 		xwayland
+		gtk3
+		cairo
 	];
 	
 	# Ensure XWayland has proper decoration support
 	programs.xwayland.enable = true;
+	
+	# Make sure GTK is properly configured
+	programs.dconf.enable = true;
 };
 }
