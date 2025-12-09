@@ -1,20 +1,15 @@
 { config, pkgs, lib, ... }:
-
 (lib.mkIf (config.networking.hostName == "FredOS-Gaming") { 
     
-    nixpkgs.config.packageOverrides = pkgs: {
-      pkgs = pkgs // {
-        lib32 = pkgs.pkgsi686Linux.pkgs;
-      };
-    };
+    # Remove this entire packageOverrides section - it's not working
     
     environment.systemPackages = [
       pkgs.lutris
       pkgs.adwaita-icon-theme
       pkgs.nix-index
       pkgs.libdecor
-      pkgs.lib32.libdecor 
-    ]; # <--- Semicolon required here
+      pkgs.pkgsi686Linux.libdecor  # This is the correct way
+    ];
     
     hardware.graphics = {
       enable = true;
