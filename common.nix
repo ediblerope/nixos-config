@@ -44,7 +44,6 @@ environment.shellAliases = {
 # Add packages
 environment.systemPackages = with pkgs; [
 	git
-	libdecor
 ];
 
 
