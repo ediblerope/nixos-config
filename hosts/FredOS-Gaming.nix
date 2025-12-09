@@ -30,6 +30,11 @@
       };
     };
 
+  	# Set libdecor plugin directory
+  	environment.sessionVariables = {
+  		LIBDECOR_PLUGIN_DIR = "${pkgs.libdecor}/lib/libdecor/plugins-1";
+  	};
+
     system.autoUpgrade = {
       enable = true;
       dates = "daily";
