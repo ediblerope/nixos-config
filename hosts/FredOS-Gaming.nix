@@ -5,6 +5,7 @@
     environment.systemPackages = with pkgs; [
       lutris
       adwaita-icon-theme # Helps with missing cursors/icons in some Wine games
+      nix-index
     ];
 
     # Enables Vulkan and OpenGL drivers
