@@ -4,7 +4,7 @@
     
     environment.systemPackages = with pkgs; [
       lutris
-      dwaita-icon-theme # Helps with missing cursors/icons in some Wine games
+      adwaita-icon-theme # Helps with missing cursors/icons in some Wine games
     ];
 
     # 1. Enable the Gamescope Module
