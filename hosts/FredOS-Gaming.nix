@@ -21,6 +21,7 @@
       dates = "daily";
       persistent = true;
       allowReboot = false;
+      channel = "https://nixos.org/channels/nixos-unstable";
       flags = [
         "--upgrade"
         "--option" "tarball-ttl" "0"
