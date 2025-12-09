@@ -1,6 +1,5 @@
 # gnome.nix
 { config, pkgs, lib, ... }:
-
 {
 config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.networking.hostName == "FredOS-Macbook") {
 	# Enable Gnome
@@ -17,6 +16,14 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		gnomeExtensions.appindicator
 		gnomeExtensions.hot-edge
 		gnomeExtensions.rounded-window-corners-reborn
+		
+		# Wine/Wayland decoration support
+		libdecor
+		xorg.libxcb
+		xwayland
 	];
+	
+	# Ensure XWayland has proper decoration support
+	programs.xwayland.enable = true;
 };
 }
