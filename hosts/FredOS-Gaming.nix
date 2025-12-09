@@ -8,6 +8,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     #Package name
     lutris
     gamescope
+    libdecor
   ];
   
   programs.steam = {
