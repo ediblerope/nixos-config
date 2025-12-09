@@ -6,15 +6,15 @@
       pkgs = pkgs // {
         lib32 = pkgs.pkgsi686Linux.pkgs;
       };
-    }; # <--- SEMICOLON (Required)
+    }; # <--- REMOVE THE SEMICOLON HERE
     
-    environment.systemPackages = [ # NO 'with pkgs;'
-      pkgs.lutris
-      pkgs.adwaita-icon-theme
-      pkgs.nix-index
-      pkgs.libdecor
-      pkgs.lib32.libdecor # This will now work correctly!
-    ]; # <--- SEMICOLON (Required)
+    environment.systemPackages = [
+      pkgs.lutris; # Add semicolons to the array elements for robustness
+      pkgs.adwaita-icon-theme;
+      pkgs.nix-index;
+      pkgs.libdecor;
+      pkgs.lib32.libdecor;
+    ]; # <--- SEMICOLON (Required for environment.systemPackages)
 
     hardware.graphics = {
       enable = true;
