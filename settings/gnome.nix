@@ -3,13 +3,11 @@
 {
 config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.networking.hostName == "FredOS-Macbook") {
 	# Enable Gnome
-	# Enable the X11 windowing system.
 	services.xserver.enable = true;
 	services.displayManager.gdm.enable = true;
 	services.desktopManager.gnome.enable = true;
 	
-	# Add extensions
-	# Add packages
+	# Add extensions and packages
 	environment.systemPackages = with pkgs; [
 		gnomeExtensions.blur-my-shell
 		gnomeExtensions.just-perfection
@@ -17,7 +15,6 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		gnomeExtensions.hot-edge
 		gnomeExtensions.rounded-window-corners-reborn
 		
-		# Wine/Wayland decoration support
 		libdecor
 		xorg.libxcb
 		xwayland
@@ -25,10 +22,12 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		cairo
 	];
 	
-	# Ensure XWayland has proper decoration support
-	programs.xwayland.enable = true;
+	# Set libdecor plugin directory
+	environment.sessionVariables = {
+		LIBDECOR_PLUGIN_DIR = "${pkgs.libdecor}/lib/libdecor/plugins-1";
+	};
 	
-	# Make sure GTK is properly configured
+	programs.xwayland.enable = true;
 	programs.dconf.enable = true;
 };
 }
