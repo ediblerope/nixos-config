@@ -33,6 +33,7 @@
   	# Set libdecor plugin directory
   	environment.sessionVariables = {
   		LIBDECOR_PLUGIN_DIR = "${pkgs.libdecor}/lib/libdecor/plugins-1";
+      GTK_PATH = "${pkgs.gtk3}/lib/gtk-3.0:${pkgs.gtk4}/lib/gtk-4.0";
   	};
 
     system.autoUpgrade = {
