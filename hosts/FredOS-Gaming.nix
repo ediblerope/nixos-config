@@ -7,6 +7,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
   environment.systemPackages = with pkgs; [
     #Package name
     lutris
+    devilspie2
   ];
   
   programs.steam = {
