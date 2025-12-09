@@ -83,10 +83,10 @@
     in {
       global-rounded-corner-settings = [
         (mkEntry "padding" (mkDict {
-          left = mkUint32 2;
-          right = mkUint32 2;
-          top = mkUint32 2;
-          bottom = mkUint32 2;
+          left = mkUint32 4;
+          right = mkUint32 4;
+          top = mkUint32 4;
+          bottom = mkUint32 4;
         }))
 
         (mkEntry "keepRoundedCorners" (mkDict {
