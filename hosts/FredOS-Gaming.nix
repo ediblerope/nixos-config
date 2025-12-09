@@ -1,11 +1,21 @@
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
+
+    nixpkgs.config.packageOverrides = pkgs: {
+      pkgs = pkgs // {
+        # This is where you pull in 32-bit packages
+        # We access the i686-linux architecture set:
+        lib32 = pkgs.pkgsi686Linux.pkgs;
+      };
+    };
     
     environment.systemPackages = with pkgs; [
       lutris
       adwaita-icon-theme # Helps with missing cursors/icons in some Wine games
       nix-index
+      libdecor
+      lib32.libdecor
     ];
 
     # Enables Vulkan and OpenGL drivers
@@ -13,6 +23,8 @@
       enable = true;
       enable32Bit = true;
     };
+
+  
 
     programs.steam = {
       enable = true;
