@@ -6,7 +6,6 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 	services.xserver.enable = true;
 	services.displayManager.gdm.enable = true;
 	services.desktopManager.gnome.enable = true;
-	gtk.enable = true;
 	
 	# Add extensions and packages
 	environment.systemPackages = with pkgs; [
@@ -22,6 +21,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		gtk3
 		cairo
 		adwaita-icon-theme
+		gnome-themes-extra  # This includes Adwaita cursor theme
 	];
 	
 	# Set libdecor plugin directory and cursor theme
