@@ -20,11 +20,14 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		xwayland
 		gtk3
 		cairo
+		adwaita-icon-theme
 	];
 	
-	# Set libdecor plugin directory
+	# Set libdecor plugin directory and cursor theme
 	environment.sessionVariables = {
 		LIBDECOR_PLUGIN_DIR = "${pkgs.libdecor}/lib/libdecor/plugins-1";
+		XCURSOR_THEME = "Adwaita";
+		XCURSOR_SIZE = "24";
 	};
 	
 	programs.xwayland.enable = true;
