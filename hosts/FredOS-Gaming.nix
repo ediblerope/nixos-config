@@ -4,6 +4,7 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
       lutris
+      kdePackages.breeze  # Add breeze to system packages too
     ];
     
     programs.steam = {
@@ -14,6 +15,12 @@
           kdePackages.breeze
         ];
       };
+    };
+    
+    # Set cursor theme for Steam
+    environment.sessionVariables = {
+      XCURSOR_THEME = "breeze_cursors";
+      XCURSOR_SIZE = "24";
     };
     
     system.autoUpgrade = {
