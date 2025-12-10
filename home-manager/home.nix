@@ -24,6 +24,8 @@
       gtk-theme = "Adwaita-dark";
       enable-hot-corners = false;
       accent-color = "purple";
+      cursor-theme = "Adwaita";
+      cursor-size = 24;
     };
     
     # Wallpaper settings
