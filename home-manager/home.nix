@@ -64,6 +64,11 @@
       accel-profile = "flat";
     };
     
+    # Just Perfection extension
+    "org/gnome/shell/extensions/just-perfection" = {
+      window-demands-attention-focus = true;
+    };
+    
     # Rounded Window Corners extension
     "org/gnome/shell/extensions/rounded-window-corners-reborn" = let
       # Helpers to keep the config clean
@@ -88,18 +93,13 @@
           top = mkUint32 4;
           bottom = mkUint32 4;
         }))
-
         (mkEntry "keepRoundedCorners" (mkDict {
           maximized = true;
           fullscreen = true;
         }))
-
         (mkEntry "borderRadius" (mkVariant (mkUint32 7)))
-
         (mkEntry "smoothing" (mkVariant 0.0))
-
         (mkEntry "borderColor" (mkVariant (mkTuple [ 0.5 0.5 0.5 1.0 ])))
-
         (mkEntry "enabled" (mkVariant true))
       ];
     };
