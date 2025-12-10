@@ -4,7 +4,7 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
       lutris
-      kdePackages.breeze  # Add breeze to system packages too
+      adwaita-icon-theme
     ];
     
     programs.steam = {
@@ -12,14 +12,14 @@
       remotePlay.openFirewall = true;
       package = pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
-          kdePackages.breeze
+          adwaita-icon-theme
         ];
       };
     };
     
-    # Set cursor theme for Steam
+    # Set cursor theme for Steam and games
     environment.sessionVariables = {
-      XCURSOR_THEME = "breeze_cursors";
+      XCURSOR_THEME = "Adwaita";
       XCURSOR_SIZE = "24";
     };
     
