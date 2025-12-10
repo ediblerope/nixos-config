@@ -22,7 +22,11 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 	environment.sessionVariables = {
 	  XCURSOR_THEME = "Adwaita";
 	  XCURSOR_SIZE = "24";
-	  XCURSOR_PATH = "${pkgs.adwaita-icon-theme}/share/icons";
+	  XCURSOR_PATH = lib.mkForce [
+		"${pkgs.adwaita-icon-theme}/share/icons"
+		"$HOME/.icons"
+		"$HOME/.local/share/icons"
+	  ];
 	};
 	
 	programs.xwayland.enable = true;
