@@ -20,8 +20,9 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 	
 	# Set cursor theme
 	environment.sessionVariables = {
-		XCURSOR_THEME = "Adwaita";
-		XCURSOR_SIZE = "24";
+	  XCURSOR_THEME = "Adwaita";
+	  XCURSOR_SIZE = "24";
+	  XCURSOR_PATH = "${pkgs.adwaita-icon-theme}/share/icons";
 	};
 	
 	programs.xwayland.enable = true;
