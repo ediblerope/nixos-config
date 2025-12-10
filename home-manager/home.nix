@@ -24,7 +24,7 @@
       gtk-theme = "Adwaita-dark";
       enable-hot-corners = false;
       accent-color = "purple";
-      cursor-theme = "Adwaita";
+      cursor-theme = "default";
       cursor-size = 24;
     };
     
