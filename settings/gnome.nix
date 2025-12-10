@@ -14,19 +14,12 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 		gnomeExtensions.appindicator
 		gnomeExtensions.hot-edge
 		gnomeExtensions.rounded-window-corners-reborn
-		
-		libdecor
-		xorg.libxcb
-		xwayland
-		gtk3
-		cairo
 		adwaita-icon-theme
 		gnome-themes-extra  # This includes Adwaita cursor theme
 	];
 	
-	# Set libdecor plugin directory and cursor theme
+	# Set cursor theme
 	environment.sessionVariables = {
-		LIBDECOR_PLUGIN_DIR = "${pkgs.libdecor}/lib/libdecor/plugins-1";
 		XCURSOR_THEME = "Adwaita";
 		XCURSOR_SIZE = "24";
 	};
