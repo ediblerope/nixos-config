@@ -4,7 +4,6 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
       lutris
-      adwaita-icon-theme
     ];
     
     programs.steam = {
@@ -15,12 +14,6 @@
           adwaita-icon-theme
         ];
       };
-    };
-    
-    # Set cursor theme for Steam and games
-    environment.sessionVariables = {
-      XCURSOR_THEME = "Adwaita";
-      XCURSOR_SIZE = "24";
     };
     
     system.autoUpgrade = {
