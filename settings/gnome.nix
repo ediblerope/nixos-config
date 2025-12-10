@@ -6,6 +6,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.netwo
 	services.xserver.enable = true;
 	services.displayManager.gdm.enable = true;
 	services.desktopManager.gnome.enable = true;
+	gtk.enable = true
 	
 	# Add extensions and packages
 	environment.systemPackages = with pkgs; [
