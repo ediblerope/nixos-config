@@ -4,12 +4,12 @@
   # Define the state version for Home Manager
   home.stateVersion = "25.11";
   
-  # --- Packages for the user ---
+  # Packages for user
   home.packages = with pkgs; [
     #
   ];
   
-  # --- Download wallpaper from your GitHub repo ---
+  # Download wallpaper from GitHub repo
   home.file.".local/share/backgrounds/wallpaper.png".source = 
     "${builtins.fetchGit {
       url = "https://github.com/ediblerope/nixos-config";
