@@ -35,6 +35,14 @@
       picture-options = "zoom";
     };
     
+    # Keyboard input sources
+    "org/gnome/desktop/input-sources" = {
+      sources = [
+        (lib.hm.gvariant.mkTuple [ "xkb" "gb" ])
+        (lib.hm.gvariant.mkTuple [ "xkb" "no" ])
+      ];
+    };
+    
     # Window manager keybindings
     "org/gnome/desktop/wm/keybindings" = {
       close = ["<Super>q"];
