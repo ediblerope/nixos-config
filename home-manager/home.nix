@@ -16,7 +16,7 @@
       ref = "main";
     }}/walls/wallpaper.png";
   
-  # --- GNOME/dconf Settings via Home Manager ---
+  # GNOME dconf
   dconf.settings = {
     # Interface / theme
     "org/gnome/desktop/interface" = {
