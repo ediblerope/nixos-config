@@ -23,6 +23,7 @@ services.flatpak.enable = true;
 
 # Enable network-manager
 networking.networkmanager.enable = true;
+systemd.services.NetworkManager-wait-online.enable = false;
 
 # Shell aliases
 environment.shellAliases = {
