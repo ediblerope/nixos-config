@@ -4,6 +4,7 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
       lutris
+      heroic
     ];
     
     programs.steam = {
