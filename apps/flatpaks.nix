@@ -16,6 +16,7 @@ in
     # This matches the options provided by the nix-flatpak module
     packages = [
       "io.github.zen_browser.zen"
+      "dev.vencord.Vesktop"
     ];
     overrides = {
       "io.github.zen_browser.zen" = {
