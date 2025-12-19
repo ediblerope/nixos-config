@@ -1,3 +1,4 @@
+# flatpaks.nix
 { config, pkgs, ... }:
 {
   imports = [
