@@ -10,7 +10,7 @@
         # The driver version for Broadcom STA is currently "6.30.223.271"
         "broadcom-sta-6.30.223.271-${config.boot.kernelPackages.kernel.version}"
       ];
-    };
+    }
 
     # 2. This part only applies if the hostname matches
     (lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
