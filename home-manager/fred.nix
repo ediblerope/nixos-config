@@ -1,4 +1,4 @@
-# settings/home.nix
+# settings/fred.nix
 { config, pkgs, lib, ... }:  # Add lib here!
 {
   # Define the state version for Home Manager
