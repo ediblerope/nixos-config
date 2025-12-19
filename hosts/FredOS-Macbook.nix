@@ -1,42 +1,36 @@
-# hosts/FredOS-Macbook.nix
 { config, pkgs, lib, ... }:
+
 {
-  nixpkgs.config.permittedInsecurePackages = [
-    (pkgs.lib.getName config.boot.kernelPackages.broadcom_sta)
-  ];
+  # Use mkMerge to allow the insecure package rule to sit alongside the mkIf block
+  config = lib.mkMerge [
+    # 1. This part always applies if this file is imported
+    {
+      nixpkgs.config.permittedInsecurePackages = [
+        (pkgs.lib.getName config.boot.kernelPackages.broadcom_sta)
+      ];
+    }
 
-  config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
-    environment.systemPackages = with pkgs; [
-      # Package names here
-      
-    ];
+    # 2. This part only applies if the hostname matches
+    (lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
+      environment.systemPackages = with pkgs; [
+        tlp
+      ];
 
-    # Enable tlp service
-    services.tlp.enable = true;
-    services.power-profiles-daemon.enable = false;
-    
-    # Bootloader
-    boot = {
-      loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
+      services.tlp.enable = true;
+      services.power-profiles-daemon.enable = false;
+
+      boot = {
+        loader = {
+          systemd-boot.enable = true;
+          efi.canTouchEfiVariables = true;
+        };
+        
+        extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+        
+        blacklistedKernelModules = [ "b43" "bcma" "ssb" ];
       };
       
-      # Enable Broadcom WL for Macbook
-      extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
-      
-      blacklistedKernelModules = [
-        "b43"
-        "bcma"
-        "ssb"
-      ];
-    };
-    
-    hardware.enableRedistributableFirmware = true;
-    
-    # Put nixpkgs config INSIDE the mkIf
-    #nixpkgs.config.permittedInsecurePackages = [
-      #pkgs.lib.getName config.boot.kernelPackages.broadcom_sta
-    #];
-  };
+      hardware.enableRedistributableFirmware = true;
+    })
+  ];
 }
