@@ -35,6 +35,14 @@ environment.shellAliases = {
       sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
       sudo nix-channel --update
     fi
+    
+    # Add nix-flatpak channel if not present
+    if ! sudo nix-channel --list | grep -q "nix-flatpak"; then
+      echo "Adding nix-flatpak channel..."
+      sudo nix-channel --add https://github.com/gmodena/nix-flatpak/archive/main.tar.gz nix-flatpak
+    fi
+    
+    sudo nix-channel --update
     sudo nixos-rebuild switch --upgrade --option tarball-ttl 0
   '';
   clean = "sudo nix-collect-garbage -d";
