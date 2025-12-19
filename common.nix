@@ -9,6 +9,7 @@ imports = [
 	./settings/audio.nix
 	./settings/users.nix
 	./apps/fastfetch.nix
+	./apps/flatpaks.nix
     # Add all your hosts here
   ];
 
