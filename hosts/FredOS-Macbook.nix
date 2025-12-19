@@ -28,7 +28,7 @@
     
     # Put nixpkgs config INSIDE the mkIf
     nixpkgs.config.permittedInsecurePackages = [
-      "broadcom-sta-6.30.223.271-59-6.18"
+      "broadcom-sta-6.30.223.271-59-6.18.1"
     ];
   };
 }
