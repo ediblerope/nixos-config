@@ -1,6 +1,10 @@
 # hosts/FredOS-Macbook.nix
 { config, pkgs, lib, ... }:
 {
+  nixpkgs.config.permittedInsecurePackages = [
+    (pkgs.lib.getName config.boot.kernelPackages.broadcom_sta)
+  ];
+
   config = lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
     environment.systemPackages = with pkgs; [
       # Package names here
@@ -31,8 +35,8 @@
     hardware.enableRedistributableFirmware = true;
     
     # Put nixpkgs config INSIDE the mkIf
-    nixpkgs.config.permittedInsecurePackages = [
-      pkgs.lib.getName config.boot.kernelPackages.broadcom_sta
-    ];
+    #nixpkgs.config.permittedInsecurePackages = [
+      #pkgs.lib.getName config.boot.kernelPackages.broadcom_sta
+    #];
   };
 }
