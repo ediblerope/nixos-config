@@ -16,7 +16,7 @@
   # Download your custom image from GitHub
   environment.etc."fastfetch/logo.png".source = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/ediblerope/nixos-config/main/walls/owventures.png";
-    sha256 = "0000000000000000000000000000000000000000000000000000";
+    sha256 = "sha256-s01G+6StUw0YDlo/9UbAcPN65EUrBlc75qCE5niVAVM=";
   };
 
   # Create the fastfetch config file with custom image
