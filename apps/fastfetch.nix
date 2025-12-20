@@ -4,7 +4,6 @@
   # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
-    ghostty
   ];
 
   # Install Nerd Fonts for icon support
