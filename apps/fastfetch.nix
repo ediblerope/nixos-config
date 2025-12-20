@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  # Install fastfetch and nerd fonts
+  # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
+    ghostty
   ];
 
   # Install Nerd Fonts for icon support
@@ -25,9 +26,9 @@
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
       "logo": {
         "source": "/etc/fastfetch/logo.png",
-        "type": "auto",
-        "width": 25,
-        "height": 12,
+        "type": "kitty-direct",
+        "width": 35,
+        "height": 18,
         "padding": {
           "top": 1,
           "left": 2,
