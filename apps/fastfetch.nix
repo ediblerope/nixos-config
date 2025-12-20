@@ -13,26 +13,25 @@
     nerd-fonts.meslo-lg
   ];
 
-  # Create a wrapper script that chooses a random logo
-  environment.etc."fastfetch/random-logo.sh" = {
-    text = ''
-      #!/bin/sh
-      logos=("RavynOS" "PuffOS" "PearOS" "locos" "GNOME" "eweOS" "DarkOS" "BredOS" "AmogOS")
-      random_logo=''${logos[$RANDOM % ''${#logos[@]}]}
-      ${pkgs.fastfetch}/bin/fastfetch --config /etc/fastfetch/config.jsonc --logo $random_logo
-    '';
-    mode = "0755";
+  # Download your custom image from GitHub
+  environment.etc."fastfetch/logo.png".source = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/ediblerope/nixos-config/main/walls/owventures.png";
+    sha256 = "0000000000000000000000000000000000000000000000000000";
   };
 
-  # Create the fastfetch config file with unicode icons
+  # Create the fastfetch config file with custom image
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
       "logo": {
-        "source": "DarkOS",
+        "source": "/etc/fastfetch/logo.png",
+        "type": "kitty-direct",
+        "width": 30,
+        "height": 15,
         "padding": {
           "top": 1,
-          "left": 2
+          "left": 2,
+          "right": 4
         }
       },
       "display": {
