@@ -41,26 +41,38 @@
   '';
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
-    # Stylish prompt with icons
+    # Powerline-style prompt with background colors
     # Color definitions
     RESET="\[\033[0m\]"
-    CYAN="\[\033[0;36m\]"
-    BLUE="\[\033[0;34m\]"
-    PURPLE="\[\033[0;35m\]"
-    GREEN="\[\033[0;32m\]"
-    YELLOW="\[\033[0;33m\]"
-    BCYAN="\[\033[1;36m\]"
-    BBLUE="\[\033[1;34m\]"
-    BPURPLE="\[\033[1;35m\]"
-    BGREEN="\[\033[1;32m\]"
+    
+    # Powerline separator
+    SEP=""
+    
+    # Background colors with foreground text
+    BG_BLUE="\[\033[48;5;33m\]"      # Blue background
+    BG_PURPLE="\[\033[48;5;98m\]"    # Purple background
+    BG_GREEN="\[\033[48;5;35m\]"     # Green background
+    
+    # Foreground colors for separators
+    FG_BLUE="\[\033[38;5;33m\]"
+    FG_PURPLE="\[\033[38;5;98m\]"
+    FG_GREEN="\[\033[38;5;35m\]"
+    
+    # White text
+    WHITE="\[\033[97m\]"
     
     # Function to get git branch
     parse_git_branch() {
-      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+      local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
+      if [ -n "$branch" ]; then
+        echo -e "''${BG_PURPLE}''${FG_GREEN}''${SEP}''${BG_PURPLE}''${WHITE}  $branch ''${RESET}''${FG_PURPLE}''${SEP}"
+      else
+        echo -e "''${RESET}''${FG_GREEN}''${SEP}"
+      fi
     }
     
-    # Clean prompt with colored chevrons
-    PS1="''${BCYAN}''${BPURPLE}''${RESET} ''${BGREEN}\w''${RESET}''${YELLOW}\$(parse_git_branch)''${RESET} ''${BPURPLE}❯''${RESET} "
+    # Powerline prompt
+    PS1="''${BG_GREEN}''${WHITE} \w ''${RESET}\$(parse_git_branch)''${RESET} "
   '';
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
