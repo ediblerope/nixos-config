@@ -29,12 +29,8 @@
       },
       "modules": [
         {
-          "type": "title",
-          "format": "{user-name-colored}@{host-name-colored}"
-        },
-        {
-          "type": "kernel",
-          "format": " {2}"
+          "type": "custom",
+          "format": "{user-name}@{host-name}  {kernel}"
         },
         {
           "type": "colors",
