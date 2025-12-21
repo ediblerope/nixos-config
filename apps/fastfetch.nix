@@ -59,7 +59,15 @@
       output+="''${FG_ORANGE}\u''${RESET} "
       
       # Path segments
-      local path="''${PWD/#$HOME/~}"
+      local path="''${PWD/#$HOME/\~}"
+      
+      # If we're in home directory, just show ~
+      if [ "$path" = "~" ]; then
+        output+="''${FG_GREEN}~''${RESET}"
+        echo -n "$output"
+        return
+      fi
+      
       local IFS='/'
       local parts=($path)
       local colors=("''${FG_GREEN}" "''${FG_CYAN}" "''${FG_BLUE}")
