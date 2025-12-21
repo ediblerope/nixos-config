@@ -1,18 +1,15 @@
 { config, pkgs, ... }:
-
 {
-  # Install fastfetch
+  # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
-
   # Install Nerd Fonts for icon support
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-
   # Create the fastfetch config file with custom image
   environment.etc."fastfetch/config.jsonc".text = ''
     {
@@ -32,74 +29,16 @@
       },
       "modules": [
         {
-          "type": "title",
-          "format": "{host-name-colored}"
-        },
-        {
-          "type": "separator",
-          "string": "─────────────────────────────────"
-        },
-        {
-          "type": "os",
-          "keyColor": "blue"
-        },
-        {
-          "type": "host",
-          "keyColor": "blue"
-        },
-        {
-          "type": "kernel",
-          "keyColor": "blue"
-        },
-        {
-          "type": "uptime",
-          "keyColor": "blue"
-        },
-        {
-          "type": "de",
-          "keyColor": "blue"
-        },
-        {
-          "type": "wm",
-          "keyColor": "blue"
-        },
-        {
-          "type": "wmtheme",
-          "keyColor": "blue"
-        },
-        {
-          "type": "icons",
-          "keyColor": "blue"
-        },
-        {
-          "type": "cpu",
-          "keyColor": "green"
-        },
-        {
-          "type": "gpu",
-          "keyColor": "green"
-        },
-        {
-          "type": "memory",
-          "keyColor": "yellow"
-        },
-        {
-          "type": "disk",
-          "keyColor": "yellow"
-        },
-        {
-          "type": "separator",
-          "string": "─────────────────────────────────"
+          "type": "custom",
+          "format": "{#blue}{user-name}{#reset}{#cyan}@{#reset}{#blue}{host-name}{#reset} {#green}{kernel}{#reset}"
         },
         {
           "type": "colors",
-          "paddingLeft": 2,
           "symbol": "circle"
         }
       ]
     }
   '';
-
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
     # Stylish prompt with icons
@@ -123,7 +62,6 @@
     # Set the prompt
     PS1="''${RESET}''${BCYAN}╭─''${RESET} ''${BPURPLE}\u''${RESET}''${CYAN}@''${RESET}''${BBLUE}\h''${RESET} ''${BGREEN} \w''${RESET}''${YELLOW}\$(parse_git_branch)''${RESET}\n''${BCYAN}╰─''${BPURPLE}❯''${RESET} "
   '';
-
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
     if [[ $- == *i* ]]; then
