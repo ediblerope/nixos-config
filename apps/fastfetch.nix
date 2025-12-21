@@ -26,7 +26,7 @@
   environment.etc."fastfetch/custom-info.sh" = {
     text = ''
       #!/bin/sh
-      echo "$(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')"
+      echo "$(hostname)@NixOS_Unstable - 🐧 $(uname) $(uname -r) - 🖥️ $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')"
     '';
     mode = "0755";
   };
