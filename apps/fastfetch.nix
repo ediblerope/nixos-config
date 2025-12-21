@@ -30,7 +30,7 @@
       "modules": [
         {
           "type": "command",
-          "text": "echo $(whoami)@$(hostname) - $(uname) $(uname -r) - $(gnome-shell --version | awk '{print $1, $3}')"
+          "text": "$(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version | awk '{print $1, $3}')"
         },
         {
           "type": "colors",
