@@ -30,7 +30,7 @@
       "modules": [
         {
           "type": "custom",
-          "format": "{#blue}{user-name}{#reset}{#cyan}@{#reset}{#blue}{host-name}{#reset} {#green}{kernel}{#reset}"
+          "format": "{#34}{user-name}{#0}@{#36}{host-name}{#0} {#32}{kernel}{#0}"
         },
         {
           "type": "colors",
