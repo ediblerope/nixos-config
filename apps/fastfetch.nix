@@ -42,37 +42,63 @@
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
     # Powerline-style prompt with background colors
-    # Color definitions
-    RESET="\[\033[0m\]"
-    
     # Powerline separator
     SEP=""
     
-    # Background colors with foreground text
-    BG_BLUE="\[\033[48;5;33m\]"      # Blue background
-    BG_PURPLE="\[\033[48;5;98m\]"    # Purple background
-    BG_GREEN="\[\033[48;5;35m\]"     # Green background
+    # Background colors
+    BG_BLUE="$(echo -e '\033[48;5;33m')"
+    BG_PURPLE="$(echo -e '\033[48;5;98m')"
+    BG_GREEN="$(echo -e '\033[48;5;35m')"
+    BG_CYAN="$(echo -e '\033[48;5;37m')"
     
     # Foreground colors for separators
-    FG_BLUE="\[\033[38;5;33m\]"
-    FG_PURPLE="\[\033[38;5;98m\]"
-    FG_GREEN="\[\033[38;5;35m\]"
+    FG_BLUE="$(echo -e '\033[38;5;33m')"
+    FG_PURPLE="$(echo -e '\033[38;5;98m')"
+    FG_GREEN="$(echo -e '\033[38;5;35m')"
+    FG_CYAN="$(echo -e '\033[38;5;37m')"
     
-    # White text
-    WHITE="\[\033[97m\]"
+    # White text and reset
+    WHITE="$(echo -e '\033[97m')"
+    RESET="$(echo -e '\033[0m')"
+    
+    # Function to build path with colored segments
+    build_path_prompt() {
+      local path="''${PWD/#$HOME/~}"
+      local IFS='/'
+      local parts=($path)
+      local output=""
+      local colors=("''${BG_GREEN}" "''${BG_CYAN}" "''${BG_BLUE}")
+      local fg_colors=("''${FG_GREEN}" "''${FG_CYAN}" "''${FG_BLUE}")
+      local i=0
+      
+      for part in "''${parts[@]}"; do
+        local color_idx=$((i % 3))
+        local next_color_idx=$(((i + 1) % 3))
+        
+        if [ -n "$part" ]; then
+          output+="''${colors[$color_idx]}''${WHITE} $part "
+          if [ $i -lt $((''${#parts[@]} - 1)) ]; then
+            output+="''${colors[$next_color_idx]}''${fg_colors[$color_idx]}''${SEP}"
+          fi
+          ((i++))
+        fi
+      done
+      
+      echo -n "$output"
+    }
     
     # Function to get git branch
     parse_git_branch() {
       local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
       if [ -n "$branch" ]; then
-        echo -e "''${BG_PURPLE}''${FG_GREEN}''${SEP}''${BG_PURPLE}''${WHITE}  $branch ''${RESET}''${FG_PURPLE}''${SEP}"
+        echo -n "''${BG_PURPLE}''${FG_CYAN}''${SEP}''${BG_PURPLE}''${WHITE}  $branch ''${RESET}''${FG_PURPLE}''${SEP}"
       else
-        echo -e "''${RESET}''${FG_GREEN}''${SEP}"
+        echo -n "''${RESET}''${FG_BLUE}''${SEP}"
       fi
     }
     
-    # Powerline prompt
-    PS1="''${BG_GREEN}''${WHITE} \w ''${RESET}\$(parse_git_branch)''${RESET} "
+    # Set prompt command to rebuild on each prompt
+    PROMPT_COMMAND='PS1="$(build_path_prompt)$(parse_git_branch)''${RESET} "'
   '';
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
