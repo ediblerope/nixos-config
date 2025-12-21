@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  # Install fastfetch
+  # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
@@ -10,7 +10,7 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-  # Create the fastfetch config file
+  # Create the fastfetch config file with custom image
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
