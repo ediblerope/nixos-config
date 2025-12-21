@@ -28,8 +28,8 @@
       "logo": {
         "source": "/etc/fastfetch/logo.png",
         "type": "kitty-direct",
-        "width": 35,
-        "height": 18,
+        "width": 25,
+        "height": 33,
         "padding": {
           "top": 1,
           "left": 2,
