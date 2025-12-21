@@ -42,8 +42,8 @@
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
     # Powerline-style prompt with background colors
-    # Powerline separator
-    SEP=""
+    # Powerline separator - using a simpler character that renders better
+    SEP="❯"
     
     # Background colors
     BG_BLUE="\001$(echo -e '\033[48;5;33m')\002"
