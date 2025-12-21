@@ -4,7 +4,6 @@
   # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
-    ghostty
   ];
 
   # Install Nerd Fonts for icon support
@@ -14,27 +13,10 @@
     nerd-fonts.meslo-lg
   ];
 
-  # Download your custom image from GitHub
-  environment.etc."fastfetch/logo.png".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/ediblerope/nixos-config/main/walls/owventures-2.png";
-    sha256 = "sha256-kLAEahmpqZklN9FAMMI/ojPWB/rC2yb2Ip8gk6RIStk=";
-  };
-
   # Create the fastfetch config file with custom image
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-      "logo": {
-        "source": "/etc/fastfetch/logo.png",
-        "type": "kitty-direct",
-        "width": 20,
-        "height": 13,
-        "padding": {
-          "top": 1,
-          "left": 2,
-          "right": 4
-        }
-      },
       "display": {
         "separator": " ",
         "color": {
@@ -48,7 +30,7 @@
       "modules": [
         {
           "type": "title",
-          "format": "{user-name-colored}@{host-name-colored}"
+          "format": "@{host-name-colored}"
         },
         {
           "type": "separator",
@@ -68,18 +50,6 @@
         },
         {
           "type": "uptime",
-          "keyColor": "blue"
-        },
-        {
-          "type": "packages",
-          "keyColor": "blue"
-        },
-        {
-          "type": "shell",
-          "keyColor": "blue"
-        },
-        {
-          "type": "terminal",
           "keyColor": "blue"
         },
         {
