@@ -41,56 +41,37 @@
   '';
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
-    # Powerline-style prompt with background colors
-    # Powerline separator - using a simpler character that renders better
-    SEP="❯"
-    
-    # Background colors
-    BG_BLUE="\001$(echo -e '\033[48;5;33m')\002"
-    BG_PURPLE="\001$(echo -e '\033[48;5;98m')\002"
-    BG_GREEN="\001$(echo -e '\033[48;5;35m')\002"
-    BG_CYAN="\001$(echo -e '\033[48;5;37m')\002"
-    BG_ORANGE="\001$(echo -e '\033[48;5;208m')\002"
-    
-    # Foreground colors for separators
-    FG_BLUE="\001$(echo -e '\033[38;5;33m')\002"
-    FG_PURPLE="\001$(echo -e '\033[38;5;98m')\002"
+    # Simple colored prompt without backgrounds
+    # Foreground colors
+    FG_ORANGE="\001$(echo -e '\033[38;5;208m')\002"
     FG_GREEN="\001$(echo -e '\033[38;5;35m')\002"
     FG_CYAN="\001$(echo -e '\033[38;5;37m')\002"
-    FG_ORANGE="\001$(echo -e '\033[38;5;208m')\002"
-    
-    # White text and reset
-    WHITE="\001$(echo -e '\033[97m')\002"
+    FG_BLUE="\001$(echo -e '\033[38;5;33m')\002"
+    FG_PURPLE="\001$(echo -e '\033[38;5;98m')\002"
+    FG_GRAY="\001$(echo -e '\033[38;5;245m')\002"
     RESET="\001$(echo -e '\033[0m')\002"
     
     # Function to build path with colored segments
     build_path_prompt() {
       local output=""
       
-      # Username segment
-      output+="''${BG_ORANGE}''${WHITE} \u ''${RESET}"
+      # Username in orange
+      output+="''${FG_ORANGE}\u''${RESET} "
       
       # Path segments
       local path="''${PWD/#$HOME/~}"
       local IFS='/'
       local parts=($path)
-      local colors=("''${BG_GREEN}" "''${BG_CYAN}" "''${BG_BLUE}")
-      local fg_colors=("''${FG_GREEN}" "''${FG_CYAN}" "''${FG_BLUE}")
+      local colors=("''${FG_GREEN}" "''${FG_CYAN}" "''${FG_BLUE}")
       local i=0
-      local last_color_idx=0
       
       for part in "''${parts[@]}"; do
-        local color_idx=$((i % 3))
-        local next_color_idx=$(((i + 1) % 3))
-        last_color_idx=$color_idx
-        
         if [ -n "$part" ]; then
-          if [ $i -eq 0 ]; then
-            output+="''${colors[$color_idx]}''${FG_ORANGE}''${SEP}"
-          else
-            output+="''${colors[$color_idx]}''${fg_colors[$(((i - 1) % 3))]}''${SEP}"
+          local color_idx=$((i % 3))
+          if [ $i -gt 0 ]; then
+            output+="''${FG_GRAY}/''${RESET}"
           fi
-          output+="''${colors[$color_idx]}''${WHITE} $part "
+          output+="''${colors[$color_idx]}$part''${RESET}"
           ((i++))
         fi
       done
@@ -101,29 +82,13 @@
     # Function to get git branch
     parse_git_branch() {
       local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
-      
-      # Calculate last path color
-      local path="''${PWD/#$HOME/~}"
-      local IFS='/'
-      local parts=($path)
-      local count=0
-      for part in "''${parts[@]}"; do
-        if [ -n "$part" ]; then
-          ((count++))
-        fi
-      done
-      local last_color_idx=$(( (count - 1) % 3 ))
-      local fg_colors=("''${FG_GREEN}" "''${FG_CYAN}" "''${FG_BLUE}")
-      
       if [ -n "$branch" ]; then
-        echo -n "''${BG_PURPLE}''${fg_colors[$last_color_idx]}''${SEP}''${BG_PURPLE}''${WHITE}  $branch ''${RESET}''${FG_PURPLE}''${SEP}''${RESET} "
-      else
-        echo -n "''${RESET}''${fg_colors[$last_color_idx]}''${SEP}''${RESET} "
+        echo -n " ''${FG_PURPLE} $branch''${RESET}"
       fi
     }
     
     # Set prompt command to rebuild on each prompt
-    PROMPT_COMMAND='PS1="$(build_path_prompt)$(parse_git_branch)"'
+    PROMPT_COMMAND='PS1="$(build_path_prompt)$(parse_git_branch) ''${FG_PURPLE}❯''${RESET} "'
   '';
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
