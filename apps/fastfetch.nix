@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  # Install fastfetch
+  # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
@@ -30,7 +30,7 @@
       "modules": [
         {
           "type": "command",
-          "text": "$(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version | awk '{print $1, $3}')"
+          "text": "echo $(whoami)@$(hostname)  $(uname -r)"
         },
         {
           "type": "colors",
