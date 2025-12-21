@@ -29,8 +29,8 @@
       },
       "modules": [
         {
-          "type": "custom",
-          "format": "{user-name}@{host-name}  {kernel}"
+          "type": "command",
+          "text": "echo $(whoami)@$(hostname)  $(uname -r)"
         },
         {
           "type": "colors",
