@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  # Install fastfetch, ghostty, and nerd fonts
+  # Install fastfetch
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
@@ -30,7 +30,7 @@
       "modules": [
         {
           "type": "command",
-          "text": "echo $(whoami)@$(hostname)  $(uname -r)"
+          "text": "echo $(whoami)@$(hostname) - $(uname) $(uname -r) - $(gnome-shell --version | awk '{print $1, $3}')"
         },
         {
           "type": "colors",
