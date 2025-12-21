@@ -10,7 +10,7 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-  # Create the fastfetch config file with custom image
+  # Create the fastfetch config file
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
