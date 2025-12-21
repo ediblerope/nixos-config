@@ -55,7 +55,6 @@ environment.shellAliases = {
 environment.systemPackages = with pkgs; [
 	git
 	adwaita-icon-theme
-	ghostty
 ];
 
 
