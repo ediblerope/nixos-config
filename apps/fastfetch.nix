@@ -1,25 +1,37 @@
 { config, pkgs, ... }:
 {
-  # Install fastfetch, ghostty, and nerd fonts
+  # Install fastfetch
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
+
   # Install Nerd Fonts for icon support
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-# Create a script for the fastfetch command
+
+  # Configure GNOME Console to use Nerd Font
+  programs.dconf.profiles.user.databases = [{
+    settings = {
+      "org/gnome/Console" = {
+        use-system-font = false;
+        custom-font = "FiraCode Nerd Font 11";
+      };
+    };
+  }];
+
+  # Create a script for the fastfetch command
   environment.etc."fastfetch/custom-info.sh" = {
     text = ''
       #!/bin/sh
-      echo $(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')
+      echo "$(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')"
     '';
     mode = "0755";
   };
 
-  # Create the fastfetch config file with custom image
+  # Create the fastfetch config file
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
@@ -48,6 +60,7 @@
       ]
     }
   '';
+
   # Set up bash with fastfetch and a nice prompt
   programs.bash.promptInit = ''
     # Simple colored prompt without backgrounds
@@ -107,6 +120,7 @@
     # Set prompt command to rebuild on each prompt
     PROMPT_COMMAND='PS1="$(build_path_prompt)$(parse_git_branch) ''${FG_PURPLE}❯''${RESET} "'
   '';
+
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
     if [[ $- == *i* ]]; then
