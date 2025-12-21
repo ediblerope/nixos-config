@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  # Install fastfetch, ghostty, and nerd fonts
+  # Install fastfetch
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
