@@ -26,7 +26,15 @@
   environment.etc."fastfetch/custom-info.sh" = {
     text = ''
       #!/bin/sh
-      echo "$(hostname)@NixOS_Unstable - 🐧 $(uname) $(uname -r) - 🖥️ $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')"
+      # Color codes
+      CYAN="\033[0;36m"
+      BLUE="\033[0;34m"
+      GREEN="\033[0;32m"
+      PURPLE="\033[0;35m"
+      GRAY="\033[0;90m"
+      RESET="\033[0m"
+      
+      echo -e "''${CYAN}$(hostname)''${RESET}''${BLUE}@NixOS_Unstable''${RESET} ''${GRAY}-''${RESET} ''${GREEN}$(uname) $(uname -r)''${RESET} ''${GRAY}-''${RESET} ''${PURPLE}$(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')''${RESET}"
     '';
     mode = "0755";
   };
