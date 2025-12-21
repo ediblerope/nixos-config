@@ -10,6 +10,15 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
+# Create a script for the fastfetch command
+  environment.etc."fastfetch/custom-info.sh" = {
+    text = ''
+      #!/bin/sh
+      echo $(hostname)@NixOS_Unstable -  $(uname) $(uname -r) -  $(gnome-shell --version 2>/dev/null | awk '{print $1, $3}')
+    '';
+    mode = "0755";
+  };
+
   # Create the fastfetch config file with custom image
   environment.etc."fastfetch/config.jsonc".text = ''
     {
@@ -30,7 +39,7 @@
       "modules": [
         {
           "type": "command",
-          "text": "echo $(whoami)@$(hostname)  $(uname -r)"
+          "text": "/etc/fastfetch/custom-info.sh"
         },
         {
           "type": "colors",
