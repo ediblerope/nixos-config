@@ -29,8 +29,8 @@
       },
       "modules": [
         {
-          "type": "custom",
-          "format": "{#34}{user-name}{#0}@{#36}{host-name}{#0} {#32}{kernel}{#0}"
+          "type": "title",
+          "format": "{user-name-colored}@{host-name-colored} {#32} {kernel}{#0}"
         },
         {
           "type": "colors",
@@ -59,8 +59,8 @@
       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
     }
     
-    # Set the prompt
-    PS1="''${RESET}''${BCYAN}╭─''${RESET} ''${BPURPLE}\u''${RESET}''${CYAN}@''${RESET}''${BBLUE}\h''${RESET} ''${BGREEN} \w''${RESET}''${YELLOW}\$(parse_git_branch)''${RESET}\n''${BCYAN}╰─''${BPURPLE}❯''${RESET} "
+    # Clean prompt with colored chevrons
+    PS1="''${BCYAN}''${BPURPLE}''${RESET} ''${BGREEN}\w''${RESET}''${YELLOW}\$(parse_git_branch)''${RESET} ''${BPURPLE}❯''${RESET} "
   '';
   programs.bash.interactiveShellInit = ''
     # Run fastfetch on terminal start
