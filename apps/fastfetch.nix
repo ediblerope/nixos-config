@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # Install fastfetch, ghostty, and nerd fonts
+  # Install fastfetch
   environment.systemPackages = with pkgs; [
     fastfetch
   ];
@@ -17,6 +17,9 @@
   environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+      "logo": {
+        "source": "none"
+      },
       "display": {
         "separator": " ",
         "color": {
@@ -30,7 +33,7 @@
       "modules": [
         {
           "type": "title",
-          "format": "@{host-name-colored}"
+          "format": "{host-name-colored}"
         },
         {
           "type": "separator",
