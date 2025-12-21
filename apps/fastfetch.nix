@@ -4,6 +4,7 @@
   # Install fastfetch, ghostty, and nerd fonts
   environment.systemPackages = with pkgs; [
     fastfetch
+    ghostty
   ];
 
   # Install Nerd Fonts for icon support
@@ -15,8 +16,6 @@
 
   # Download your custom image from GitHub
   environment.etc."fastfetch/logo.png".source = pkgs.fetchurl {
-    #url = "https://raw.githubusercontent.com/ediblerope/nixos-config/main/walls/owventures.png";
-    #sha256 = "sha256-s01G+6StUw0YDlo/9UbAcPN65EUrBlc75qCE5niVAVM=";
     url = "https://raw.githubusercontent.com/ediblerope/nixos-config/main/walls/owventures-2.png";
     sha256 = "sha256-kLAEahmpqZklN9FAMMI/ojPWB/rC2yb2Ip8gk6RIStk=";
   };
@@ -28,8 +27,8 @@
       "logo": {
         "source": "/etc/fastfetch/logo.png",
         "type": "kitty-direct",
-        "width": 25,
-        "height": 33,
+        "width": 15,
+        "height": 20,
         "padding": {
           "top": 1,
           "left": 2,
