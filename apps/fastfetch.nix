@@ -78,12 +78,18 @@
     FG_CYAN="\001$(echo -e '\033[38;5;37m')\002"
     FG_BLUE="\001$(echo -e '\033[38;5;33m')\002"
     FG_PURPLE="\001$(echo -e '\033[38;5;98m')\002"
+    FG_YELLOW="\001$(echo -e '\033[38;5;220m')\002"
     FG_GRAY="\001$(echo -e '\033[38;5;245m')\002"
     RESET="\001$(echo -e '\033[0m')\002"
     
     # Function to build path with colored segments
     build_path_prompt() {
       local output=""
+      
+      # Check if in nix-shell and show indicator
+      if [ -n "''${IN_NIX_SHELL}" ]; then
+        output+="''${FG_YELLOW}[nix-shell]''${RESET} "
+      fi
       
       # Username in orange
       output+="''${FG_ORANGE}\u''${RESET} "
