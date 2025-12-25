@@ -19,9 +19,6 @@ boot.kernelPackages = pkgs.linuxPackages_latest;
 # Allow unfree packages
 nixpkgs.config.allowUnfree = true;
 
-# Services
-services.flatpak.enable = true;
-
 # Enable network-manager
 networking.networkmanager.enable = true;
 systemd.services.NetworkManager-wait-online.enable = false;
