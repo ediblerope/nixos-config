@@ -23,6 +23,9 @@
       "app.zen_browser.zen" = {
         Context.filesystems = [ "home:rw" ];
       };
+      "dev.vencord.Vesktop" = {
+        Context.filesystems = [ "home:rw" ];
+      };
     };
   };
 }
