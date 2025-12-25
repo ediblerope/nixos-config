@@ -20,7 +20,7 @@
     ];
     
     overrides = {
-      "io.github.zen_browser.zen" = {
+      "app.zen_browser.zen" = {
         Context.filesystems = [ "home:rw" ];
       };
     };
