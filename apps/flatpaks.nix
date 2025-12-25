@@ -16,7 +16,7 @@
     
     packages = [
       "app.zen_browser.zen"
-      "ddev.vencord.Vesktop
+      "dev.vencord.Vesktop"
     ];
     
     overrides = {
