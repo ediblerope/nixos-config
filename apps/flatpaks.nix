@@ -15,7 +15,7 @@
     ];
     
     packages = [
-      "io.github.zen_browser.zen"
+      "app.zen_browser.zen"
       "dev.vencord.Vesktop"
     ];
     
