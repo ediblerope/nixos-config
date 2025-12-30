@@ -55,5 +55,6 @@
   environment.systemPackages = with pkgs; [
       git
       adwaita-icon-theme
+      mission-center
   ];
 }
