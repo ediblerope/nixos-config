@@ -13,9 +13,6 @@
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
 
-      # Disable WiFi power management
-      networking.networkmanager.wifi.powersave = false;
-
       hardware.facetimehd.enable = true;
       
       boot = {
@@ -27,6 +24,39 @@
         blacklistedKernelModules = [ "b43" "bcma" "ssb" ];
       };
       hardware.enableRedistributableFirmware = true;
+
+      {
+  # Enable Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+    };
+  };
+
+  # PipeWire with Bluetooth support
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    
+    # Add Bluetooth codec config
+    wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+        bluez_monitor.properties = {
+          ["bluez5.enable-sbc-xq"] = true,
+          ["bluez5.enable-msbc"] = true,
+          ["bluez5.enable-hw-volume"] = true,
+          ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+        }
+      '')
+    ];
+  };
+
     })
   ];
 }
