@@ -25,8 +25,7 @@
       };
       hardware.enableRedistributableFirmware = true;
 
-      {
-  # Enable Bluetooth
+# Enable Bluetooth
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
