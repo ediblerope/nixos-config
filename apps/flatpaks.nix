@@ -23,7 +23,7 @@
       "app.zen_browser.zen" = {
         Context.filesystems = [ "home:rw" ];
       };
-      "dev.vencord.Vesktop" = {
+      "org.equicord.equibop" = {
         Context.filesystems = [ "home:rw" ];
       };
     };
