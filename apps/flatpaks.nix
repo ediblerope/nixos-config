@@ -17,6 +17,7 @@
     packages = [
       "app.zen_browser.zen"
       "org.equicord.equibop"
+      "io.missioncenter.MissionCenter"
     ];
     
     overrides = {
