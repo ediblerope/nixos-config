@@ -11,7 +11,7 @@
       # ... all your other settings (tlp, boot, firmware) ...
       environment.systemPackages = with pkgs; [ tlp ];
       services.tlp.enable = false;
-      services.power-profiles-daemon.enable = enable;
+      services.power-profiles-daemon.enable = true;
 
       # Disable WiFi power management
       networking.networkmanager.wifi.powersave = false;
