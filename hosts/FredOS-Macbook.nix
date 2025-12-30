@@ -12,6 +12,7 @@
       environment.systemPackages = with pkgs; [ tlp ];
       services.tlp.enable = true;
       services.power-profiles-daemon.enable = false;
+      hardware.facetimehd.enable = true;
       
       boot = {
         loader = {
