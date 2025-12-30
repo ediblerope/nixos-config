@@ -16,7 +16,7 @@
     
     packages = [
       "app.zen_browser.zen"
-      "dev.vencord.Vesktop"
+      "org.equicord.equibop"
     ];
     
     overrides = {
