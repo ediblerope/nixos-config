@@ -33,27 +33,15 @@
         DESKTOP_DIR="$HOME/.local/share/applications"
         ICON_DIR="$HOME/.local/share/icons/hicolor"
         
-        # Wait a bit for Steam to create desktop files
-        sleep 5
-        
-        # Create icon theme directories
-        for size in 32x32 48x48 64x64 128x128 256x256; do
-            mkdir -p "$ICON_DIR/$size/apps"
-        done
-        
-        # Create index.theme if it doesn't exist
+        # Create icon theme index if it doesn't exist
         if [ ! -f "$ICON_DIR/index.theme" ]; then
+            mkdir -p "$ICON_DIR"
             cat > "$ICON_DIR/index.theme" << 'EOF'
         [Icon Theme]
         Name=Hicolor
         Comment=Fallback icon theme
         Hidden=true
-        Directories=32x32/apps,48x48/apps,64x64/apps,128x128/apps,256x256/apps
-        
-        [32x32/apps]
-        Size=32
-        Context=Applications
-        Type=Threshold
+        Directories=48x48/apps,64x64/apps,128x128/apps,256x256/apps
         
         [48x48/apps]
         Size=48
@@ -77,6 +65,9 @@
         EOF
         fi
         
+        # Wait a bit for Steam to create desktop files
+        sleep 5
+        
         # Search all desktop files for steam_icon references
         ${pkgs.gnugrep}/bin/grep -l "Icon=steam_icon_" "$DESKTOP_DIR"/*.desktop 2>/dev/null | while read desktop_file; do
             # Extract the app_id from the Icon line
@@ -86,18 +77,13 @@
             icon_file=$(find "$STEAM_DIR/appcache/librarycache/$app_id" -name "*.jpg" 2>/dev/null | head -n 1)
             
             if [ -f "$icon_file" ]; then
-                # Copy icon to all sizes for better quality
-                for size in 32x32 48x48 64x64 128x128 256x256; do
+                # Copy icon to multiple sizes for GNOME
+                for size in 48x48 64x64 128x128 256x256; do
+                    mkdir -p "$ICON_DIR/$size/apps/"
                     cp "$icon_file" "$ICON_DIR/$size/apps/steam_icon_$app_id.png"
                 done
                 
-                echo "Copied icons for App ID $app_id"
-                
-                # Add StartupWMClass if not present
-                if ! ${pkgs.gnugrep}/bin/grep -q "StartupWMClass" "$desktop_file"; then
-                    echo "StartupWMClass=steam_app_$app_id" >> "$desktop_file"
-                    echo "Added StartupWMClass for $(basename "$desktop_file")"
-                fi
+                echo "Fixed icon for $(basename "$desktop_file"): App ID $app_id"
             fi
         done
         
