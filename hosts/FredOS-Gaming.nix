@@ -26,12 +26,16 @@
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = false;
+        Nice = 19; # Run at low priority
       };
       
       script = ''
         STEAM_DIR="$HOME/.local/share/Steam"
         DESKTOP_DIR="$HOME/.local/share/applications"
         ICON_DIR="$HOME/.local/share/icons/hicolor"
+        
+        # Wait for system to settle
+        sleep 10
         
         # Create icon theme index if it doesn't exist
         if [ ! -f "$ICON_DIR/index.theme" ]; then
@@ -65,13 +69,18 @@
         EOF
         fi
         
-        # Wait a bit for Steam to create desktop files
-        sleep 5
+        # Track if we made any changes
+        changes_made=false
         
         # Search all desktop files for steam_icon references
         ${pkgs.gnugrep}/bin/grep -l "Icon=steam_icon_" "$DESKTOP_DIR"/*.desktop 2>/dev/null | while read desktop_file; do
             # Extract the app_id from the Icon line
             app_id=$(${pkgs.gnugrep}/bin/grep "Icon=steam_icon_" "$desktop_file" | ${pkgs.gnused}/bin/sed 's/Icon=steam_icon_//')
+            
+            # Check if icon already exists
+            if [ -f "$ICON_DIR/256x256/apps/steam_icon_$app_id.png" ]; then
+                continue
+            fi
             
             # Find the actual icon file
             icon_file=$(find "$STEAM_DIR/appcache/librarycache/$app_id" -name "*.jpg" 2>/dev/null | head -n 1)
@@ -83,12 +92,15 @@
                     cp "$icon_file" "$ICON_DIR/$size/apps/steam_icon_$app_id.png"
                 done
                 
+                changes_made=true
                 echo "Fixed icon for $(basename "$desktop_file"): App ID $app_id"
             fi
         done
         
-        # Update icon cache
-        ${pkgs.gtk3}/bin/gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
+        # Only update cache if we made changes
+        if [ "$changes_made" = true ]; then
+            ${pkgs.gtk3}/bin/gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
+        fi
       '';
     };
     
