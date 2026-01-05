@@ -35,15 +35,17 @@
         # Wait a bit for Steam to create desktop files
         sleep 5
         
-        for desktop_file in "$DESKTOP_DIR"/steam_app_*.desktop; do
-            [ -f "$desktop_file" ] || continue
+        # Search all desktop files for steam_icon references
+        ${pkgs.gnugrep}/bin/grep -l "Icon=steam_icon_" "$DESKTOP_DIR"/*.desktop 2>/dev/null | while read desktop_file; do
+            # Extract the app_id from the Icon line
+            app_id=$(${pkgs.gnugrep}/bin/grep "Icon=steam_icon_" "$desktop_file" | ${pkgs.gnused}/bin/sed 's/Icon=steam_icon_//')
             
-            app_id=$(basename "$desktop_file" | sed 's/steam_app_\(.*\)\.desktop/\1/')
+            # Find the actual icon file
             icon_file=$(find "$STEAM_DIR/appcache/librarycache/$app_id" -name "*.jpg" 2>/dev/null | head -n 1)
             
             if [ -f "$icon_file" ]; then
                 ${pkgs.gnused}/bin/sed -i "s|Icon=steam_icon_$app_id|Icon=$icon_file|" "$desktop_file"
-                echo "Fixed icon for App ID: $app_id"
+                echo "Fixed icon for $(basename "$desktop_file"): App ID $app_id"
             fi
         done
       '';
