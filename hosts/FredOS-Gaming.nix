@@ -20,57 +20,16 @@
     # Steam icon fix script
     systemd.user.services.steam-icon-fix = {
       description = "Fix Steam Proton game icons";
-      wantedBy = [ "default.target" ];
-      after = [ "graphical-session.target" ];
       
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = false;
-        Nice = 19; # Run at low priority
       };
       
       script = ''
         STEAM_DIR="$HOME/.local/share/Steam"
         DESKTOP_DIR="$HOME/.local/share/applications"
-        ICON_DIR="$HOME/.local/share/icons/hicolor"
-        
-        # Wait for system to settle
-        sleep 10
-        
-        # Create icon theme index if it doesn't exist
-        if [ ! -f "$ICON_DIR/index.theme" ]; then
-            mkdir -p "$ICON_DIR"
-            cat > "$ICON_DIR/index.theme" << 'EOF'
-        [Icon Theme]
-        Name=Hicolor
-        Comment=Fallback icon theme
-        Hidden=true
-        Directories=48x48/apps,64x64/apps,128x128/apps,256x256/apps
-        
-        [48x48/apps]
-        Size=48
-        Context=Applications
-        Type=Threshold
-        
-        [64x64/apps]
-        Size=64
-        Context=Applications
-        Type=Threshold
-        
-        [128x128/apps]
-        Size=128
-        Context=Applications
-        Type=Threshold
-        
-        [256x256/apps]
-        Size=256
-        Context=Applications
-        Type=Threshold
-        EOF
-        fi
-        
-        # Track if we made any changes
-        changes_made=false
+        ICON_DIR="$HOME/.local/share/icons"
         
         # Search all desktop files for steam_icon references
         ${pkgs.gnugrep}/bin/grep -l "Icon=steam_icon_" "$DESKTOP_DIR"/*.desktop 2>/dev/null | while read desktop_file; do
@@ -78,7 +37,7 @@
             app_id=$(${pkgs.gnugrep}/bin/grep "Icon=steam_icon_" "$desktop_file" | ${pkgs.gnused}/bin/sed 's/Icon=steam_icon_//')
             
             # Check if icon already exists
-            if [ -f "$ICON_DIR/256x256/apps/steam_icon_$app_id.png" ]; then
+            if [ -f "$ICON_DIR/hicolor/256x256/apps/steam_icon_$app_id.png" ]; then
                 continue
             fi
             
@@ -86,31 +45,16 @@
             icon_file=$(find "$STEAM_DIR/appcache/librarycache/$app_id" -name "*.jpg" 2>/dev/null | head -n 1)
             
             if [ -f "$icon_file" ]; then
-                # Copy icon to multiple sizes for GNOME
+                # Copy icon to multiple sizes
                 for size in 48x48 64x64 128x128 256x256; do
-                    mkdir -p "$ICON_DIR/$size/apps/"
-                    cp "$icon_file" "$ICON_DIR/$size/apps/steam_icon_$app_id.png"
+                    mkdir -p "$ICON_DIR/hicolor/$size/apps/"
+                    cp "$icon_file" "$ICON_DIR/hicolor/$size/apps/steam_icon_$app_id.png"
                 done
                 
-                changes_made=true
                 echo "Fixed icon for $(basename "$desktop_file"): App ID $app_id"
             fi
         done
-        
-        # Only update cache if we made changes
-        if [ "$changes_made" = true ]; then
-            ${pkgs.gtk3}/bin/gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
-        fi
       '';
-    };
-    
-    # Path watcher to trigger the fix when desktop files change
-    systemd.user.paths.steam-icon-fix-watcher = {
-      wantedBy = [ "default.target" ];
-      pathConfig = {
-        PathChanged = "%h/.local/share/applications";
-        Unit = "steam-icon-fix.service";
-      };
     };
     
     # Bootloader
