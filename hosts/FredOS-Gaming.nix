@@ -5,7 +5,6 @@
     environment.systemPackages = with pkgs; [
       lutris
       heroic
-      steamtinkerlaunch
     ];
     
     programs.steam = {
