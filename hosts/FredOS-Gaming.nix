@@ -6,8 +6,9 @@
       lutris
       heroic
       mangohud
-      lact
     ];
+
+    services.lact.enable = true;
 
     hardware.graphics = {
       enable = true;
