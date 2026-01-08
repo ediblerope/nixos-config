@@ -6,6 +6,7 @@
       lutris
       heroic
       mangohud
+      lsfg-vk
     ];
     services.lact.enable = true;
     hardware.graphics = {
