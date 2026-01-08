@@ -6,6 +6,7 @@
       lutris
       heroic
       mangohud
+      vesktop
       lsfg-vk
       lsfg-vk-ui
     ];
