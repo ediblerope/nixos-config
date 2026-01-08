@@ -7,15 +7,15 @@
       heroic
       mangohud
     ];
-
     services.lact.enable = true;
-
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
     };
-
     services.xserver.videoDrivers = ["amdgpu"];
+    
+    # Enable AMD GPU overdrive for overclocking/undervolting
+    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
     
     programs.steam = {
       enable = true;
