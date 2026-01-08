@@ -6,6 +6,11 @@
       lutris
       heroic
     ];
+
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
     
     programs.steam = {
       enable = true;
