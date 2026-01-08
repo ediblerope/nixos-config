@@ -7,6 +7,7 @@
       heroic
       mangohud
       lsfg-vk
+      lsfg-vk-ui
     ];
     services.lact.enable = true;
     hardware.graphics = {
