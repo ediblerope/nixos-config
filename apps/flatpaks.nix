@@ -16,14 +16,14 @@
     
     packages = [
       "app.zen_browser.zen"
-      "org.equicord.equibop"
+      "dev.vencord.Vesktop"
     ];
     
     overrides = {
       "app.zen_browser.zen" = {
         Context.filesystems = [ "home:rw" ];
       };
-      "org.equicord.equibop" = {
+      "dev.vencord.Vesktop" = {
         Context.filesystems = [ "home:rw" ];
       };
     };
