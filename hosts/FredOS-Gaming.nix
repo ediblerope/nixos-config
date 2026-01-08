@@ -5,6 +5,8 @@
     environment.systemPackages = with pkgs; [
       lutris
       heroic
+      mangohud
+      lact
     ];
 
     hardware.graphics = {
