@@ -19,6 +19,11 @@
     
     # Enable AMD GPU overdrive for overclocking/undervolting
     boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+
+    # Set VK player path
+    environment.sessionVariables = {
+      VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
+    };
     
     programs.steam = {
       enable = true;
