@@ -1,7 +1,7 @@
 # gnome.nix
 { config, pkgs, lib, ... }:
 {
-  config = lib.mkIf (config.networking.hostName == "FredOS-Gaming" || config.networking.hostName == "FredOS-Macbook") {
+  config = lib.mkIf (lib.elem config.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
     # Enable Gnome
     services.xserver.enable = true;
     services.displayManager.gdm.enable = true;
