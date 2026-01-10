@@ -9,7 +9,11 @@
 
     (lib.mkIf (config.networking.hostName == "FredOS-Macbook") {
       # ... all your other settings (tlp, boot, firmware) ...
-      environment.systemPackages = with pkgs; [ tlp ];
+
+      environment.systemPackages = with pkgs; [
+        tlp
+        vesktop
+      ];
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
 
