@@ -25,16 +25,6 @@
       VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
     };
     
-    # XDG Desktop Portal for Vesktop screensharing
-    xdg.portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-gnome
-      ];
-      config.common.default = "*";
-    };
-    
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;
