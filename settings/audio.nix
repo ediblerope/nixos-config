@@ -20,24 +20,25 @@
         default.clock.max-quantum = 2048;
       };
     };
-  };
-  
-  # Allow capturing audio from all applications
-  environment.etc."pipewire/pipewire.conf.d/99-steam-monitor.conf".text = ''
-    context.modules = [
-      { name = libpipewire-module-loopback
-        args = {
-          node.description = "Steam Audio Monitor"
-          capture.props = {
-            media.class = "Audio/Sink"
-            audio.position = [ FL FR ]
-          }
-          playback.props = {
-            media.class = "Audio/Source"
-            audio.position = [ FL FR ]
-          }
+    
+    # Allow capturing audio from all applications including Steam games
+    extraConfig.pipewire."99-steam-monitor" = {
+      context.modules = [
+        {
+          name = "libpipewire-module-loopback";
+          args = {
+            node.description = "Steam Audio Monitor";
+            capture.props = {
+              media.class = "Audio/Sink";
+              audio.position = [ "FL" "FR" ];
+            };
+            playback.props = {
+              media.class = "Audio/Source";
+              audio.position = [ "FL" "FR" ];
+            };
+          };
         }
-      }
-    ]
-  '';
+      ];
+    };
+  };
 }
