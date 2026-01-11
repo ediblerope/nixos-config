@@ -10,11 +10,21 @@
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
   ];
-
+#############################################################################
   # Make boot time quicker
   boot.loader.timeout = 1;
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.systemd-udev-settle.enable = false;
+  systemd.services.firewall = {
+    wantedBy = lib.mkForce [ ];
+    after = [ "multi-user.target" ];
+  };
+  systemd.services.home-manager-fred = {
+    wantedBy = lib.mkForce [ ];
+    after = [ "multi-user.target" ];
+  };
+  boot.initrd.systemd.enable = true; # if not already enabled
+#############################################################################
 
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
