@@ -39,7 +39,6 @@
   # Shell aliases
   environment.shellAliases = {
     update = ''
-      #dconf reset -f /org/gnome/desktop/background/
       CHANNEL=$(sudo nix-channel --list | grep "^nixos " | awk '{print $2}')
       if [[ "$CHANNEL" != *"nixos-unstable"* ]]; then
         echo "Switching to nixos-unstable channel..."
