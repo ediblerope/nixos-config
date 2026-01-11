@@ -7,6 +7,7 @@
     ./settings/locale.nix
     ./settings/audio.nix
     ./settings/users.nix
+    ./settings/gdm-monitor.nix
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
   ];
