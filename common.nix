@@ -24,7 +24,7 @@
     after = [ "multi-user.target" ];
   };
   boot.initrd.systemd.enable = true;
-  boot.blacklistedKernelModules = [ "serial8250" ];
+  boot.initrd.verbose = false;
 #############################################################################
 
   # Use latest kernel
