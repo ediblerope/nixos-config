@@ -4,7 +4,7 @@
 {
   # Copy monitors.xml to GDM's config directory to prevent display mode changes during login
   # This eliminates the black screen/signal loss when transitioning from GDM to user session
-  
+config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {  
   environment.etc."gdm-monitors.xml" = {
     source = pkgs.writeText "monitors.xml" ''
       <monitors version="2">
@@ -40,4 +40,5 @@
     "d /var/lib/gdm/.config 0711 gdm gdm"
     "L+ /var/lib/gdm/.config/monitors.xml - - - - /etc/gdm-monitors.xml"
   ];
+};
 }
