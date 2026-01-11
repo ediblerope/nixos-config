@@ -16,6 +16,7 @@
       enable32Bit = true;
     };
     services.xserver.videoDrivers = ["amdgpu"];
+    boot.initrd.kernelModules = [ "amdgpu" ];
     
     # Enable AMD GPU overdrive for overclocking/undervolting
     boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
