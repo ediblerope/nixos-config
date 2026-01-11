@@ -23,6 +23,7 @@
     # Set VK player path
     environment.sessionVariables = {
       VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
+      ENABLE_VKBASALT = "1";
     };
     
     programs.steam = {
