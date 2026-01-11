@@ -6,6 +6,9 @@
     services.xserver.enable = true;
     services.displayManager.gdm.enable = true;
     services.desktopManager.gnome.enable = true;
+    services.xserver.displayManager.gdm.wayland = true;
+    boot.plymouth.enable = false;
+    boot.initrd.kernelModules = [ "amdgpu" ];
     
     # Add extensions and packages
     environment.systemPackages = with pkgs; [
@@ -18,6 +21,8 @@
       gnome-themes-extra  # This includes Adwaita cursor theme
       papirus-icon-theme  # Add Papirus icon theme
     ];
+
+    
     
     # Set cursor theme
     environment.sessionVariables = {
