@@ -8,7 +8,6 @@
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.wayland = true;
     boot.plymouth.enable = false;
-    boot.initrd.kernelModules = [ "amdgpu" ];
     
     # Add extensions and packages
     environment.systemPackages = with pkgs; [
