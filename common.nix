@@ -11,6 +11,11 @@
     ./apps/flatpaks.nix
   ];
 
+  # Make boot time quicker
+  boot.loader.timeout = 1;
+  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.systemd-udev-settle.enable = false;
+
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
