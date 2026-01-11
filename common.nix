@@ -59,8 +59,8 @@
       sudo nixos-rebuild switch --upgrade --option tarball-ttl 0
       
       # Manually reapply wallpaper settings
-      dconf write /org/gnome/desktop/background/picture-uri "'file://$HOME/.local/share/backgrounds/wallpaper.png'"
-      dconf write /org/gnome/desktop/background/picture-uri-dark "'file://$HOME/.local/share/backgrounds/wallpaper.png'"
+      dconf write /org/gnome/desktop/background/picture-uri "'file://''${HOME}/.local/share/backgrounds/wallpaper.png'"
+      dconf write /org/gnome/desktop/background/picture-uri-dark "'file://''${HOME}/.local/share/backgrounds/wallpaper.png'"
       dconf write /org/gnome/desktop/background/picture-options "'zoom'"
     '';
     clean = "sudo nix-collect-garbage -d";
