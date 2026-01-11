@@ -20,7 +20,7 @@
     # Enable AMD GPU overdrive for overclocking/undervolting
     boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
     
-    # Set VK player path
+    # Session variables to make LSFG-VK work properly.
     environment.sessionVariables = {
       VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
       ENABLE_VKBASALT = "1";
