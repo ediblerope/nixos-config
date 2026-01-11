@@ -23,7 +23,8 @@
     wantedBy = lib.mkForce [ ];
     after = [ "multi-user.target" ];
   };
-  boot.initrd.systemd.enable = true; # if not already enabled
+  boot.initrd.systemd.enable = true;
+  boot.blacklistedKernelModules = [ "serial8250" ];
 #############################################################################
 
   # Use latest kernel
