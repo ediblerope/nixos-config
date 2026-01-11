@@ -54,12 +54,14 @@
       fi
       
       sudo nix-channel --update
-
-      # Wipe the flatpak state cache to ensure a fresh sync
       echo "Cleaning Flatpak state cache..."
       sudo rm -f /nix/var/nix/gcroots/flatpak-state.json
-
       sudo nixos-rebuild switch --upgrade --option tarball-ttl 0
+      
+      # Manually reapply wallpaper settings
+      dconf write /org/gnome/desktop/background/picture-uri "'file://$HOME/.local/share/backgrounds/wallpaper.png'"
+      dconf write /org/gnome/desktop/background/picture-uri-dark "'file://$HOME/.local/share/backgrounds/wallpaper.png'"
+      dconf write /org/gnome/desktop/background/picture-options "'zoom'"
     '';
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
