@@ -1,10 +1,7 @@
-# settings/gdm-monitor-sync.nix
+# Update settings/gdm-monitor-sync.nix
 { config, pkgs, lib, ... }:
 {
-  # Copy monitors.xml to GDM's config directory to prevent display mode changes during login
-  # This eliminates the black screen/signal loss when transitioning from GDM to user session
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {  
-    # Copy monitors.xml to GDM's config directory
     environment.etc."gdm-monitors.xml" = {
       source = pkgs.writeText "monitors.xml" ''
         <monitors version="2">
@@ -40,20 +37,22 @@
       "L+ /var/lib/gdm/.config/monitors.xml - - - - /etc/gdm-monitors.xml"
     ];
     
-    # Log what GDM is actually using
+    # Log what GDM is actually using - trigger on display-manager instead
     systemd.services.gdm-display-check = {
       description = "Log GDM display settings";
-      wantedBy = [ "gdm.service" ];
-      after = [ "gdm.service" ];
+      wantedBy = [ "display-manager.service" ];
+      after = [ "display-manager.service" ];
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${pkgs.writeShellScript "check-gdm-display" ''
-          sleep 5
-          DISPLAY=:1024 ${pkgs.xorg.xrandr}/bin/xrandr > /tmp/gdm-display-info.txt 2>&1 || true
+          sleep 8
+          for display in :0 :1 :1024; do
+            DISPLAY=$display ${pkgs.xorg.xrandr}/bin/xrandr >> /tmp/gdm-display-info.txt 2>&1 && break
+          done
           echo "=== GDM monitors.xml ===" >> /tmp/gdm-display-info.txt
           cat /var/lib/gdm/.config/monitors.xml >> /tmp/gdm-display-info.txt 2>&1 || true
         ''}";
       };
     };
-  }; # <-- This was missing
+  };
 }
