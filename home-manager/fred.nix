@@ -9,12 +9,14 @@
     #
   ];
   
-  # Download wallpaper from GitHub repo
+  # Download wallpaper from GitHub repo and symlink it
   home.file.".local/share/backgrounds/wallpaper.png".source = 
-    "${builtins.fetchGit {
-      url = "https://github.com/ediblerope/nixos-config";
-      ref = "main";
-    }}/walls/wallpaper.png";
+    let
+      wallpaperRepo = builtins.fetchGit {
+        url = "https://github.com/ediblerope/nixos-config";
+        ref = "main";
+      };
+    in "${wallpaperRepo}/walls/wallpaper.png";
   
   # GNOME dconf
   dconf.settings = {
