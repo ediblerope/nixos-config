@@ -26,6 +26,11 @@
       VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
       ENABLE_VKBASALT = "1";
     };
+
+    # Create symlink for lsfg-vk layer
+    systemd.user.tmpfiles.rules = [
+      "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    ];
     
     programs.steam = {
       enable = true;
