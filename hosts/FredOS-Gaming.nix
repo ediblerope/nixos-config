@@ -41,6 +41,12 @@
         ];
       };
     };
+
+    systemd.user.tmpfiles.rules = [
+      "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+      "d %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d 0755 - - -"
+      "L+ %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    ];
     
     # Bootloader
     boot.loader.systemd-boot.enable = true;
