@@ -9,6 +9,7 @@
       vesktop
       lsfg-vk
       lsfg-vk-ui
+      jan
     ];
     services.lact.enable = true;
     hardware.graphics = {
