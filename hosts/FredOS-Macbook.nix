@@ -26,8 +26,13 @@
         };
         extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
         blacklistedKernelModules = [ "b43" "bcma" "ssb" ];
+        kernelParams = [ "acpi_osi=" ];
       };
       hardware.enableRedistributableFirmware = true;
+
+services.xserver.deviceSection = lib.mkDefault ''
+    Option "TearFree" "true"
+  '';
 
 # Enable Bluetooth
   hardware.bluetooth = {
