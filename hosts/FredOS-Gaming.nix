@@ -10,6 +10,7 @@
       lsfg-vk
       lsfg-vk-ui
       jan
+      faugus-launcher
     ];
     services.lact.enable = true;
     hardware.graphics = {
