@@ -20,7 +20,7 @@
     boot.initrd.kernelModules = [ "amdgpu" ];
     
     # Enable AMD GPU overdrive for overclocking/undervolting
-    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" ];
     
     # Session variables to make LSFG-VK work properly.
     environment.sessionVariables = {
