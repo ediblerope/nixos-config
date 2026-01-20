@@ -13,6 +13,7 @@ in
     # hosts #
     ./hosts/FredOS-Gaming.nix
     ./hosts/FredOS-Macbook.nix
+    ./hosts/FredOS-Mediaserver.nix
     # #
     ./settings/gnome.nix
     ./settings/locale.nix
