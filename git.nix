@@ -8,8 +8,6 @@ in
 {
   imports = [
     (import "${home-manager}/nixos")
-    ./hosts/FredOS-Gaming.nix
-    ./hosts/FredOS-Macbook.nix
     ./common.nix
   ];
   
