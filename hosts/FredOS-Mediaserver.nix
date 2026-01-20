@@ -91,7 +91,7 @@
         SERVER_NAME = "Nordhammer.it Hytale Server";
         MAX_PLAYERS = "50";
         MEMORY = "4G";
-        ENABLE_BACKUP = true;
+        ENABLE_BACKUP = "true";
         BACKUP_FREQUENCY = "30";
         PASSWORD = "DukeSmells";
       };
