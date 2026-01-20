@@ -22,6 +22,8 @@ in
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
     ./services/game-servers.nix
+    ./services/arr-stack.nix
+    ./services/webservices.nix
   ];
 
   # Home Manager #
