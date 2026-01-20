@@ -3,6 +3,8 @@
   imports = [
     <nix-flatpak/modules/nixos.nix>
   ];
+
+config = lib.mkIf (lib.elem config.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
   
   services.flatpak = {
     enable = true;
@@ -28,4 +30,5 @@
       #};
     };
   };
+};
 }
