@@ -81,19 +81,6 @@
       };
     };
 
-  virtualisation.oci-containers.containers."hytale-server" = {
-    image = "ghcr.io/terkea/hytale-server:latest";
-    ports = [ "5520:5520/udp" ];
-    environment = {
-      SERVER_NAME = "My Hytale Server";
-      MAX_PLAYERS = "50";
-      MEMORY = "4G";
-    };
-    volumes = [
-      "/home/fred/docker/hytale-server/hytale-data:/data"
-    ];
-    # We remove extraOptions to avoid the TTY/Input device errors
-  };
 
     # Open firewall for web traffic
     networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];
