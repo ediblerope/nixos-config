@@ -13,6 +13,8 @@
       environment.systemPackages = with pkgs; [
         tlp
         vesktop
+        adwaita-icon-theme
+        mission-center
       ];
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
