@@ -89,7 +89,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
   # Boot loader
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = [ "/dev/sda" "/dev/sdb" "/dev/sdc" "/dev/sde" ];
+  boot.loader.grub.device = [ "/dev/sda" "/dev/sdc" "/dev/sde" ];
   boot.loader.grub.useOSProber = true;
 };
 }
