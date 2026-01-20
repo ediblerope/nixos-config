@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 {
-#config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
+config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 #  fileSystems."/mnt/disk1" = {
 #    device = "/dev/disk/by-uuid/90ae3493-38c1-4473-b409-e9d99c3b315e";
 #    fsType = "ext4";
