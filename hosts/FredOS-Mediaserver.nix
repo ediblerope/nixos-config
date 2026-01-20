@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
-    
     # Individual Data Disks
     fileSystems."/mnt/disk1" = {
       device = "/dev/disk/by-uuid/90ae3493-38c1-4473-b409-e9d99c3b315e";
@@ -80,6 +79,32 @@
         ExecStop = "${pkgs.docker}/bin/docker stop nginx-proxy-manager";
       };
     };
+
+
+  virtualisation.oci-containers = {
+    backend = "docker";  # Explicitly set the backend
+    
+    containers."hytale-server" = {
+      image = "ghcr.io/terkea/hytale-server:latest";
+      ports = [ "5520:5520/udp" ];
+      environment = {
+        SERVER_NAME = "My Hytale Server";
+        MAX_PLAYERS = "50";
+        MEMORY = "4G";
+      };
+      volumes = [
+        "/home/fred/docker/hytale-server/hytale-data:/data"
+      ];
+      # Explicitly disable interactive and TTY
+      extraOptions = [
+        "--interactive=false"
+        "--tty=false"
+      ];
+    };
+  };
+
+# Also make sure to open the firewall port
+networking.firewall.allowedUDPPorts = [ 5520 ];
 
 
     # Open firewall for web traffic
