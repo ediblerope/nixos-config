@@ -10,8 +10,4 @@ in
     (import "${home-manager}/nixos")
     ./common.nix
   ];
-  
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.fred = import ./home-manager/fred.nix;
 }
