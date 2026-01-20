@@ -21,6 +21,7 @@ in
     ./settings/users.nix
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
+    ./services/game-servers.nix
   ];
 
   # Home Manager #
