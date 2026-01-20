@@ -25,7 +25,7 @@ in
   # Home Manager #
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.fred = import ./home-manager/gnome-hm.nix;
+  home-manager.users.fred = import ./home-manager/fred.nix;
 
 #############################################################################
   # Make boot time quicker
