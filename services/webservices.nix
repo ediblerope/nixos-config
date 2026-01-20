@@ -17,18 +17,16 @@
 	          "/var/lib/nginx-proxy-manager/data:/data"
 	          "/var/lib/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
 	        ];
-	        extraOptions = [
-	          "--restart=unless-stopped"
-	        ];
+	        # Remove the extraOptions with --restart, it conflicts with --rm
 	      };
 	    };
-    
+	    
 	    # Create directories
 	    systemd.tmpfiles.rules = [
 	      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
 	      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
 	    ];
-    
+	    
 	    # Open firewall
 	    networking.firewall.allowedTCPPorts = [ 80 81 443 ];
 
