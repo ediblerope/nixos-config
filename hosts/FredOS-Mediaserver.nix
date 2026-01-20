@@ -82,6 +82,10 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
   # Basic networking
   networking.useDHCP = lib.mkDefault true;
 
+  # Boot loader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # System state version
   system.stateVersion = "25.11";
 };
