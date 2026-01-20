@@ -82,7 +82,7 @@
 
 
   virtualisation.oci-containers = {
-    backend = "docker";  # Explicitly set the backend
+    backend = "docker";
     
     containers."hytale-server" = {
       image = "ghcr.io/terkea/hytale-server:latest";
@@ -98,7 +98,6 @@
       volumes = [
         "/home/fred/docker/hytale-server/hytale-data:/data"
       ];
-      # Explicitly disable interactive and TTY
       extraOptions = [
         "--interactive=false"
         "--tty=false"
