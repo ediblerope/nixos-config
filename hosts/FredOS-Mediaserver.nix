@@ -92,8 +92,7 @@
     volumes = [
       "/home/fred/docker/hytale-server/hytale-data:/data"
     ];
-    # Remove --interactive, keep only --tty
-    extraOptions = [ "--tty" ]; 
+    # We remove extraOptions to avoid the TTY/Input device errors
   };
 
     # Open firewall for web traffic
