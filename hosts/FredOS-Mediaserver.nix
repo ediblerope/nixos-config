@@ -91,8 +91,5 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sdc";
   boot.loader.grub.useOSProbler = true;
-
-  # System state version
-  system.stateVersion = "25.11";
 };
 }
