@@ -2,33 +2,44 @@
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
     
-    # --- File Systems (Uncomment and add UUIDs as needed) ---
-    # fileSystems."/mnt/disk1" = {
-    #   device = "/dev/disk/by-uuid/90ae3493-38c1-4473-b409-e9d99c3b315e";
-    #   fsType = "ext4";
-    #   options = [ "defaults" ];
-    # };
+    # Individual Data Disks
+    fileSystems."/mnt/disk1" = {
+      device = "/dev/disk/by-uuid/90ae3493-38c1-4473-b409-e9d99c3b315e";
+      fsType = "ext4";
+    };
 
-    # fileSystems."/mnt/disk4" = {
-    #   device = "/dev/disk/by-uuid/PASTE_NEW_SSD_UUID_HERE";
-    #   fsType = "ext4";
-    #   options = [ "defaults" ];
-    # };
+    fileSystems."/mnt/disk2" = {
+      device = "/dev/disk/by-uuid/7145223e-f285-424a-a114-cb0b1b64e068";
+      fsType = "ext4";
+    };
 
-    # fileSystems."/mnt/storage" = {
-    #   device = "/mnt/disk1:/mnt/disk2:/mnt/disk3:/mnt/disk4";
-    #   fsType = "fuse.mergerfs";
-    #   options = [
-    #     "defaults"
-    #     "allow_other"
-    #     "use_ino"
-    #     "cache.files=partial"
-    #     "dropcacheonclose=true"
-    #     "category.create=mfs"
-    #   ];
-    # };
+    fileSystems."/mnt/disk3" = {
+      device = "/dev/disk/by-uuid/58cecfd5-2fd7-4c4b-b3a1-0bf5e9d0beab";
+      fsType = "ext4";
+    };
 
-    # --- System Packages ---
+    # The Combined MergerFS Pool
+    fileSystems."/mnt/storage" = {
+      device = "/mnt/disk1:/mnt/disk2:/mnt/disk3";
+      fsType = "fuse.mergerfs";
+      options = [
+        "defaults"
+        "allow_other"
+        "use_ino"
+        "cache.files=partial"
+        "dropcacheonclose=true"
+        "category.create=mfs"
+      ];
+    };
+
+    # Create symlink from home to storage
+    systemd.tmpfiles.rules = [
+      "L+ /home/fred/storage - - - - /mnt/storage"
+      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
+      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
+    ];
+
+    # Basic system packages
     environment.systemPackages = with pkgs; [
       mergerfs
       wget
@@ -36,33 +47,24 @@
       util-linux
     ];
 
-    # --- Services ---
+    # Jellyfin
     services.jellyfin = {
       enable = true;
       openFirewall = true;
     };
 
-    services.openssh = {
-      enable = true;
-      settings.PermitRootLogin = "no";
-    };
-
-    # --- Networking ---
-    networking.useDHCP = lib.mkDefault true;
-    networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];
-
-    # --- Docker & Nginx Proxy Manager ---
+    # Nginx Proxy Manager
     virtualisation.docker.enable = true;
-
+    
     systemd.services.nginx-proxy-manager = {
       description = "Nginx Proxy Manager";
       after = [ "docker.service" ];
       requires = [ "docker.service" ];
       wantedBy = [ "multi-user.target" ];
+      
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        # The '-' tells systemd to ignore errors if the container doesn't exist yet
         ExecStartPre = "-${pkgs.docker}/bin/docker rm -f nginx-proxy-manager";
         ExecStart = ''
           ${pkgs.docker}/bin/docker run -d \
@@ -79,13 +81,23 @@
       };
     };
 
-    # --- Bootloader ---
+    # Open firewall for web traffic
+    networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];
+
+    # Basic networking
+    networking.useDHCP = lib.mkDefault true;
+
+    services.openssh = {
+      enable = true;
+      settings.PermitRootLogin = "no";
+    };
+
+    # Boot loader
     boot.loader.grub = {
       enable = true;
-      # We recommend using /dev/disk/by-id/ names here eventually!
+      # Includes all 4 physical disks for redundancy
       devices = [ "/dev/sda" "/dev/sdb" "/dev/sdc" "/dev/sdd" ];
       useOSProber = true;
     };
-
   };
 }
