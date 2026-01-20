@@ -41,6 +41,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
     mergerfs
     wget
     btop
+    util-linux
   ];
 
   # Jellyfin
