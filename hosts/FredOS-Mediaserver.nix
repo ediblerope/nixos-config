@@ -83,8 +83,9 @@
   networking.useDHCP = lib.mkDefault true;
 
   # Boot loader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sdc";
+  boot.loader.grub.useOSProbler = true;
 
   # System state version
   system.stateVersion = "25.11";
