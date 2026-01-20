@@ -11,6 +11,8 @@
       lsfg-vk-ui
       jan
       faugus-launcher
+      adwaita-icon-theme
+      mission-center
     ];
     services.lact.enable = true;
     hardware.graphics = {
