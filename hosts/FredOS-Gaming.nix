@@ -13,6 +13,7 @@
       faugus-launcher
       adwaita-icon-theme
       mission-center
+      popsicle
     ];
     services.lact.enable = true;
     hardware.graphics = {
