@@ -88,9 +88,12 @@
       image = "ghcr.io/terkea/hytale-server:latest";
       ports = [ "5520:5520/udp" ];
       environment = {
-        SERVER_NAME = "My Hytale Server";
+        SERVER_NAME = "Nordhammer.it Hytale Server";
         MAX_PLAYERS = "50";
         MEMORY = "4G";
+        ENABLE_BACKUP = true;
+        BACKUP_FREQUENCY = 30;
+        PASSWORD = "DukeSmells"
       };
       volumes = [
         "/home/fred/docker/hytale-server/hytale-data:/data"
