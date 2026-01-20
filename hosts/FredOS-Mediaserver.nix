@@ -34,8 +34,6 @@
     # Create symlink from home to storage
     systemd.tmpfiles.rules = [
       "L+ /home/fred/storage - - - - /mnt/storage"
-      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
-      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
     ];
 
     # Basic system packages
@@ -46,45 +44,14 @@
       util-linux
     ];
 
-    # Nginx Proxy Manager
+    # Enable Docker
     virtualisation.docker.enable = true;
     
-    systemd.services.nginx-proxy-manager = {
-      description = "Nginx Proxy Manager";
-      after = [ "docker.service" ];
-      requires = [ "docker.service" ];
-      wantedBy = [ "multi-user.target" ];
-      
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStartPre = "-${pkgs.docker}/bin/docker rm -f nginx-proxy-manager";
-        ExecStart = ''
-          ${pkgs.docker}/bin/docker run -d \
-            --name=nginx-proxy-manager \
-            --restart=unless-stopped \
-            -p 80:80 \
-            -p 81:81 \
-            -p 443:443 \
-            -v /var/lib/nginx-proxy-manager/data:/data \
-            -v /var/lib/nginx-proxy-manager/letsencrypt:/etc/letsencrypt \
-            jc21/nginx-proxy-manager:latest
-        '';
-        ExecStop = "${pkgs.docker}/bin/docker stop nginx-proxy-manager";
-      };
-    };
-
-
-# Also make sure to open the firewall port
-networking.firewall.allowedUDPPorts = [ 5520 ];
-
-
-    # Open firewall for web traffic
-    networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];
-
     # Basic networking
     networking.useDHCP = lib.mkDefault true;
 
+    # Open firewall for SSH
+    networking.firewall.allowedTCPPorts = [ 22 ];
     services.openssh = {
       enable = true;
       settings.PermitRootLogin = "no";
