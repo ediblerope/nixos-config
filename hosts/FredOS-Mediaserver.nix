@@ -93,7 +93,7 @@
         MEMORY = "4G";
         ENABLE_BACKUP = true;
         BACKUP_FREQUENCY = 30;
-        PASSWORD = "DukeSmells"
+        PASSWORD = "DukeSmells";
       };
       volumes = [
         "/home/fred/docker/hytale-server/hytale-data:/data"
