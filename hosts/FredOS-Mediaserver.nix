@@ -59,7 +59,13 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
     requires = [ "docker.service" ];
     wantedBy = [ "multi-user.target" ];
     
-  serviceConfig = {
+systemd.services.nginx-proxy-manager = {
+    description = "Nginx Proxy Manager";
+    after = [ "docker.service" ];
+    requires = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
+    
+    serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStartPre = "-${pkgs.docker}/bin/docker rm -f nginx-proxy-manager";
@@ -76,6 +82,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop nginx-proxy-manager";
     };
+  };
 
   # Open firewall for web traffic
   networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];  # 81 is NPM admin interface
