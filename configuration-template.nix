@@ -16,7 +16,7 @@ in
 {
 imports = [
   ./hardware-configuration.nix
-  "${gitConfig}/git.nix"
+  "${gitConfig}/common.nix"
 ];
 networking.hostName = "HOSTNAME-HERE";  # Change this!
   
