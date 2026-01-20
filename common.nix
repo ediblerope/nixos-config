@@ -3,6 +3,10 @@
 
 {
   imports = [
+    # hosts #
+    ./hosts/FredOS-Gaming.nix
+    ./hosts/FredOS-Macbook.nix
+    # #
     ./settings/gnome.nix
     ./settings/locale.nix
     ./settings/audio.nix
