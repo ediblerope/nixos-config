@@ -62,6 +62,7 @@ config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = ''
+        ${pkgs.docker}/bin/docker run --rm --name=nginx-proxy-manager \
         ${pkgs.docker}/bin/docker run -d \
           --name=nginx-proxy-manager \
           --restart=unless-stopped \
