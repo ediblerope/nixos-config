@@ -1,8 +1,15 @@
 # Common.nix
 { config, pkgs, lib, ... }:
 
+let
+  home-manager = builtins.fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  };
+in
+
 {
   imports = [
+    (import "${home-manager}/nixos")
     # hosts #
     ./hosts/FredOS-Gaming.nix
     ./hosts/FredOS-Macbook.nix
@@ -81,7 +88,7 @@
   # Add packages
   environment.systemPackages = with pkgs; [
       git
-      adwaita-icon-theme
-      mission-center
+      #adwaita-icon-theme
+      #mission-center
   ];
 }
