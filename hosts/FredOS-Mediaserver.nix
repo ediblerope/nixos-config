@@ -46,12 +46,6 @@
       util-linux
     ];
 
-    # Jellyfin
-    services.jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
-
     # Nginx Proxy Manager
     virtualisation.docker.enable = true;
     
