@@ -77,10 +77,15 @@
   };
 
   # Open firewall for web traffic
-  networking.firewall.allowedTCPPorts = [ 80 443 81 ];  # 81 is NPM admin interface
+  networking.firewall.allowedTCPPorts = [ 80 443 81 22 ];  # 81 is NPM admin interface
 
   # Basic networking
   networking.useDHCP = lib.mkDefault true;
+
+  services.openssh = {
+    enable = true;
+    settings.PermitRootLogin = "no";
+  };
 
   # Boot loader
   boot.loader.grub.enable = true;
