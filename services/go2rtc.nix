@@ -19,7 +19,7 @@
 
       # --- Go2RTC ---
       containers."go2rtc" = {
-        image = "blakeblackshear/go2rtc:latest";
+        image = "alexxit/go2rtc:latest";
         volumes = [
           "/home/fred/docker/go2rtc/config.yml:/config/config.yml:ro"
         ];
