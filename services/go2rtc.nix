@@ -15,7 +15,6 @@
           "/home/fred/docker/authelia/secrets:/secrets"
         ];
         ports = [ "9091:9091" ];
-        extraOptions = [ "--restart" "unless-stopped" ];
       };
 
       # --- Go2RTC ---
@@ -25,7 +24,6 @@
           "/home/fred/docker/go2rtc/config.yml:/config/config.yml:ro"
         ];
         ports = [ "1984:1984" ];
-        extraOptions = [ "--restart" "unless-stopped" ];
       };
     };
 
