@@ -10,9 +10,9 @@
       containers."authelia" = {
         image = "authelia/authelia:latest";
         volumes = [
-          "/home/fred/docker/authelia/config.yml:/config/configuration.yml:ro"
-          "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml:ro"
-          "/home/fred/docker/authelia/secrets:/secrets:ro"
+          "/home/fred/docker/authelia:/config"
+          "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml"
+          "/home/fred/docker/authelia/secrets:/secrets"
         ];
         ports = [ "9091:9091" ];
         extraOptions = [ "--restart" "unless-stopped" ];
