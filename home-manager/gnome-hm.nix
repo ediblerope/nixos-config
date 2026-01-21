@@ -42,6 +42,9 @@
         close = ["<Super>q"];
         toggle-fullscreen = ["<Super>f"];
       };
+      "org/gnome/desktop/wm/preferences" = {
+        resize-with-right-button = true:
+      };
       
       # Shell keybindings
       "org/gnome/shell/keybindings" = {
