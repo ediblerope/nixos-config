@@ -43,7 +43,7 @@
         toggle-fullscreen = ["<Super>f"];
       };
       "org/gnome/desktop/wm/preferences" = {
-        resize-with-right-button = true;
+        resize-with-right-button = lib.hm.gvariant.mkBoolean true;
       };
       
       # Shell keybindings
