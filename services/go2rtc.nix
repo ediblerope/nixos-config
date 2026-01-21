@@ -9,7 +9,6 @@ in
 {
 	imports = [
 		"${sops-nix}/modules/sops"
-		# your other imports
 	];
 
 	config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
