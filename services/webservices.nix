@@ -14,8 +14,8 @@
 	          "443:443"
 	        ];
 	        volumes = [
-	          "~/docker/nginx-proxy-manager/data:/data"
-	          "~/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
+	          "/home/fred/docker/nginx-proxy-manager/data:/data"
+	          "/home/fred/docker/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
 	        ];
 	        # Remove the extraOptions with --restart, it conflicts with --rm
 	      };
