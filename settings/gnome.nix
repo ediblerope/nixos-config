@@ -15,6 +15,7 @@
       gnomeExtensions.appindicator
       gnomeExtensions.hot-edge
       gnomeExtensions.rounded-window-corners-reborn
+      gnomeExtensions.hide-top-bar
       adwaita-icon-theme
       gnome-themes-extra
       papirus-icon-theme
