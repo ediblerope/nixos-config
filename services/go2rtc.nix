@@ -6,16 +6,6 @@
     virtualisation.oci-containers = {
       backend = "docker";
 
-      # --- Nginx Proxy Manager (existing setup) ---
-      containers."nginx-proxy-manager" = {
-        image = "jc21/nginx-proxy-manager:latest";
-        ports = [ "80:80" "81:81" "443:443" ];
-        volumes = [
-          "/var/lib/nginx-proxy-manager/data:/data"
-          "/var/lib/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
-        ];
-      };
-
       # --- Authelia ---
       containers."authelia" = {
         image = "authelia/authelia:latest";
@@ -40,10 +30,6 @@
 
     # --- Create directories ---
     systemd.tmpfiles.rules = [
-      # Nginx Proxy Manager
-      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
-      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
-
       # Local secrets & configs
       "d /home/fred/docker/authelia/secrets 0700 fred users -"
       "d /home/fred/docker/go2rtc 0755 fred users -"
