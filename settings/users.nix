@@ -7,7 +7,7 @@
 		users.users.fred = {
 			isNormalUser = true;
 			description = "fred";
-			extraGroups = [ "networkmanager" "wheel" "docker" ];
+			extraGroups = [ "networkmanager" "wheel" "docker" "qbittorrent" ];
 			packages = with pkgs; [
 				bazaar
 				fastfetch
