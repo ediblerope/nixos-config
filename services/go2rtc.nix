@@ -38,7 +38,7 @@ in
         "/var/lib/go2rtc:/config"
       ];
       extraOptions = [
-        "--network=nginx-proxy-manager_default"
+        #"--network=nginx-proxy-manager_default"
       ];
     };
     
@@ -52,7 +52,7 @@ in
         "/var/lib/authelia:/config"
       ];
       extraOptions = [
-        "--network=nginx-proxy-manager_default"
+        #"--network=nginx-proxy-manager_default"
       ];
     };
   };
