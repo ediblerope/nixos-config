@@ -1,18 +1,19 @@
 { config, pkgs, lib, ... }:
+
+let
+  sops-nix = builtins.fetchTarball {
+    url = "https://github.com/Mic92/sops-nix/archive/master.tar.gz";
+  };
+in
+
 {
 	config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
-		inputs = {
-		    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-		    sops-nix.url = "github:Mic92/sops-nix";
-		  };
+		imports = [
+		    "${sops-nix}/modules/sops"
+		    # your other imports
+		];
 		
-		  outputs = { self, nixpkgs, sops-nix }: {
-		    nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
-		      modules = [
-		        sops-nix.nixosModules.sops
-		        ./configuration.nix
-		      ];
-		    };
-		};
+		
+		
 	};
 }
