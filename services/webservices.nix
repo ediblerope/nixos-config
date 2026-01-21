@@ -23,8 +23,8 @@
 	    
 	    # Create directories
 	    systemd.tmpfiles.rules = [
-	      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
-	      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
+	      "d /home/fred/docker/nginx-proxy-manager/data 0755 root root -"
+	      "d /home/fred/docker/nginx-proxy-manager/letsencrypt 0755 root root -"
 	    ];
 	    
 	    # Open firewall
