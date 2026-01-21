@@ -10,20 +10,24 @@ in
 {
   imports = [
     (import "${home-manager}/nixos")
-    # hosts #
+    # Hosts #
     ./hosts/FredOS-Gaming.nix
     ./hosts/FredOS-Macbook.nix
     ./hosts/FredOS-Mediaserver.nix
-    # #
+    
+    # Generic settings #
     ./settings/gnome.nix
     ./settings/locale.nix
     ./settings/audio.nix
     ./settings/users.nix
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
+
+    # Services #
     ./services/game-servers.nix
     ./services/arr-stack.nix
     ./services/webservices.nix
+    ./services/go2rtc.nix
   ];
 
   # Home Manager #
