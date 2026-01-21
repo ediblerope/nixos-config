@@ -1,35 +1,52 @@
 { config, pkgs, lib, ... }:
 
 {
-	config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
+  config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
-		virtualisation.oci-containers = {
-			backend = "docker";
+    virtualisation.oci-containers = {
+      backend = "docker";
 
-			# Authelia
-			containers."authelia" = {
-			  image = "authelia/authelia:latest";
-			  volumes = [
-				"/home/fred/docker/authelia/config.yml:/config/config.yml:ro"
-				"/home/fred/docker/authelia/secrets:/secrets:ro"
-			  ];
-			  ports = [ "9091:9091" ];
-			  extraOptions = [ "--restart" "unless-stopped" ];
-			};
-			
-			containers."go2rtc" = {
-			  image = "blakeblackshear/go2rtc:latest";
-			  volumes = [
-				"/home/fred/docker/go2rtc/config.yml:/config/config.yml:ro"
-			  ];
-			  ports = [ "1984:1984" ];
-			  extraOptions = [ "--restart" "unless-stopped" ];
-			};
-		};
-		# Create directories for local secrets
-		systemd.tmpfiles.rules = [
-		  "d /home/fred/docker/authelia/secrets 0700 fred users -"
-		  "d /home/fred/docker/go2rtc 0755 fred users -"
-		];
-	};
+      # --- Nginx Proxy Manager (existing setup) ---
+      containers."nginx-proxy-manager" = {
+        image = "jc21/nginx-proxy-manager:latest";
+        ports = [ "80:80" "81:81" "443:443" ];
+        volumes = [
+          "/var/lib/nginx-proxy-manager/data:/data"
+          "/var/lib/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
+        ];
+      };
+
+      # --- Authelia ---
+      containers."authelia" = {
+        image = "authelia/authelia:latest";
+        volumes = [
+          "/home/fred/docker/authelia/config.yml:/config/config.yml:ro"
+          "/home/fred/docker/authelia/secrets:/secrets:ro"
+        ];
+        ports = [ "9091:9091" ];
+        extraOptions = [ "--restart" "unless-stopped" ];
+      };
+
+      # --- Go2RTC ---
+      containers."go2rtc" = {
+        image = "blakeblackshear/go2rtc:latest";
+        volumes = [
+          "/home/fred/docker/go2rtc/config.yml:/config/config.yml:ro"
+        ];
+        ports = [ "1984:1984" ];
+        extraOptions = [ "--restart" "unless-stopped" ];
+      };
+    };
+
+    # --- Create directories ---
+    systemd.tmpfiles.rules = [
+      # Nginx Proxy Manager
+      "d /var/lib/nginx-proxy-manager/data 0755 root root -"
+      "d /var/lib/nginx-proxy-manager/letsencrypt 0755 root root -"
+
+      # Local secrets & configs
+      "d /home/fred/docker/authelia/secrets 0700 fred users -"
+      "d /home/fred/docker/go2rtc 0755 fred users -"
+    ];
+  };
 }
