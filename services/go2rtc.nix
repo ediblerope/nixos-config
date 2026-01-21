@@ -7,16 +7,16 @@
       backend = "docker";
 
       # --- Authelia ---
-      containers."authelia" = {
-        image = "authelia/authelia:latest";
-        volumes = [
-          "/home/fred/docker/authelia/config.yml:/config/configuration.yml:ro"
-          "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml:ro"
-          "/home/fred/docker/authelia/secrets:/secrets:ro"
-        ];
-        ports = [ "9091:9091" ];
-        extraOptions = [ "--restart" "unless-stopped" ];
-      };
+      #containers."authelia" = {
+      #  image = "authelia/authelia:latest";
+      #  volumes = [
+      #    "/home/fred/docker/authelia/config.yml:/config/configuration.yml:ro"
+      #    "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml:ro"
+      #    "/home/fred/docker/authelia/secrets:/secrets:ro"
+      #  ];
+      #  ports = [ "9091:9091" ];
+      #  extraOptions = [ "--restart" "unless-stopped" ];
+      #};
 
       # --- Go2RTC ---
       containers."go2rtc" = {
