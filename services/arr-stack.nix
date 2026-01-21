@@ -17,14 +17,14 @@
 				ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
 				Restart = "on-failure";
 				
-				# Security hardening (optional but recommended)
+				# Security hardening
 				NoNewPrivileges = true;
 				PrivateTmp = true;
 				ProtectSystem = "strict";
-				ProtectHome = "read-only";
+				ProtectHome = true;
 				ReadWritePaths = [ 
 					"/var/lib/qbittorrent"
-					"/home/fred/storage/torrents"
+					"/mnt/storage/torrents"
 				];
 			};
 
@@ -32,13 +32,12 @@
 				mkdir -p /var/lib/qbittorrent/.config/qBittorrent
 				cat > /var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf << EOF
 				[Preferences]
-				Downloads\SavePath=/home/fred/storage/torrents/downloads
+				Downloads\SavePath=/mnt/storage/torrents/downloads
 				EOF
 				chown -R qbittorrent:qbittorrent /var/lib/qbittorrent/.config
 			'';
 		};
 
-		# Create the user and group
 		users.users.qbittorrent = {
 			isSystemUser = true;
 			group = "qbittorrent";
@@ -50,7 +49,9 @@
 
 		# Ensure the download directory exists with proper permissions
 		systemd.tmpfiles.rules = [
-			"d /home/fred/storage/torrents/downloads 0775 qbittorrent qbittorrent -"
+			"d /mnt/storage/torrents/downloads 0775 qbittorrent qbittorrent -"
 		];
+		
+		users.users.fred.extraGroups = [ "qbittorrent" ];
 	};
 }
