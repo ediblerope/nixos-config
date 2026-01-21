@@ -21,7 +21,7 @@
       containers."go2rtc" = {
         image = "alexxit/go2rtc:latest";
         volumes = [
-          "/home/fred/docker/go2rtc/config.yml:/config/go2rtc.yaml:"
+          "/home/fred/docker/go2rtc/config.yml:/config/go2rtc.yaml"
         ];
         ports = [ "1984:1984" ];
       };
