@@ -10,7 +10,8 @@
       containers."authelia" = {
         image = "authelia/authelia:latest";
         volumes = [
-          "/home/fred/docker/authelia/config.yml:/config/config.yml:ro"
+          "/home/fred/docker/authelia/config.yml:/config/configuration.yml:ro"
+          "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml:ro"
           "/home/fred/docker/authelia/secrets:/secrets:ro"
         ];
         ports = [ "9091:9091" ];
