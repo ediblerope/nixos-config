@@ -35,5 +35,7 @@
       		enable = true;
 			openFirewall = true;
     	};
+		# Also add jellyfin to media group for reading
+    	users.users.jellyfin.extraGroups = [ "media" ];
 	};
 }
