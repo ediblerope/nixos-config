@@ -30,6 +30,7 @@ in
     ./services/webservices.nix
     ./services/go2rtc.nix
     ./services/sonarr.nix
+    ./services/prowlarr.nix
   ];
 
   # Home Manager #
