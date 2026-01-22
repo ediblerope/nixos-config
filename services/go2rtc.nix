@@ -1,3 +1,4 @@
+#/services/go2rtc.nix
 { config, pkgs, lib, ... }:
 
 {
