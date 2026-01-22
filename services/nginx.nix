@@ -1,3 +1,4 @@
+#nginx.nix
 { config, pkgs, lib, ... }:
 {
 	config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
@@ -29,13 +30,5 @@
 	    
 	    # Open firewall
 	    networking.firewall.allowedTCPPorts = [ 80 81 443 ];
-
-		# Jellyfin
-    	services.jellyfin = {
-      		enable = true;
-			openFirewall = true;
-    	};
-		# Also add jellyfin to media group for reading
-    	users.users.jellyfin.extraGroups = [ "media" ];
 	};
 }
