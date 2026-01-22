@@ -27,10 +27,11 @@ in
     ./services/game-servers.nix
     ./services/qbittorrent-nox.nix
     #./services/arr-stack.nix
-    ./services/webservices.nix
+    ./services/nginx.nix
     ./services/go2rtc.nix
     ./services/sonarr.nix
     ./services/prowlarr.nix
+    ./services/jellyfin.nix
   ];
 
   # Home Manager #
