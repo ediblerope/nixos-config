@@ -33,8 +33,5 @@
       "d /mnt/storage/torrents/audiobooks 0775 sonarr media -"
       "Z /mnt/storage/torrents/audiobooks 0775 sonarr media -"
     ];
-
-    # Also add jellyfin to media group for reading
-    users.users.jellyfin.extraGroups = [ "media" ];
   };
 }
