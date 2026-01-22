@@ -8,7 +8,6 @@
       enable = true;
       openFirewall = true;
       dataDir = "/var/lib/prowlarr";
-      user = "prowlarr";
     };
   };
 }
