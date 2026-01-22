@@ -38,8 +38,10 @@ notifier:
   filesystem:
     filename: /config/notification.txt
 fred ~/docker/authelia ❯ 
-###########################################
+
+
 cat users_database.yml 
+---
 users:
   username:
     password: "secret"
@@ -53,6 +55,7 @@ users:
 ##########################################
 
 cat config.yml 
+---
 streams:
   kids_bedroom:
     - rtsp://username:password@IP-address:554/stream1
