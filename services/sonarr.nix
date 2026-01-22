@@ -12,30 +12,18 @@
       group = "media";
     };
 
-    # Create a shared media group
-    users.groups.media = {
-      gid = 3000;  # Fixed GID for consistency
-    };
-    
-    # Add users to media group
+    # Media group is already created in qbittorrent-nox.nix
+    # Just make sure sonarr is in it
     users.users.sonarr = {
       isSystemUser = true;
       group = "media";
       extraGroups = [ "media" ];
     };
-    
-    # Assuming qbittorrent-nox user exists, add to media group
-    users.users.qbittorrent-nox = {
-      extraGroups = [ "media" ];
-    };
 
     # Set up directory structure with proper permissions
-    # The key is that both sonarr and qbittorrent write to the same filesystem
-    # and both are in the media group with write permissions
     systemd.tmpfiles.rules = [
-      # Downloads folder - qbittorrent writes here
-      "d /mnt/storage/torrents/downloads 0775 qbittorrent-nox media -"
-      "Z /mnt/storage/torrents/downloads 0775 qbittorrent-nox media -"  # Recursively fix existing
+      # Downloads folder - qbittorrent writes here (already in qbittorrent-nox.nix)
+      "Z /mnt/storage/torrents/downloads 0775 qbittorrent media -"
       
       # Media folders - sonarr writes here
       "d /mnt/storage/torrents/shows 0775 sonarr media -"
