@@ -29,6 +29,7 @@ in
     #./services/arr-stack.nix
     ./services/webservices.nix
     ./services/go2rtc.nix
+    ./services/sonarr.nix
   ];
 
   # Home Manager #
