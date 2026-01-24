@@ -81,8 +81,3 @@
     };
   };
 }
-```
-
-**Steam Launch Options:**
-```
-mangohud %command%
