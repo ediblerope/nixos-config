@@ -33,7 +33,11 @@
       VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
     };
     
-    # Create symlink for lsfg-vk layer
+    # Create symlink for lsfg-vk layer - ADD SYSTEM-WIDE LOCATION
+    systemd.tmpfiles.rules = [
+      "L+ /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    ];
+    
     systemd.user.tmpfiles.rules = [
       "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
       "d %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d 0755 - - -"
@@ -48,6 +52,7 @@
           adwaita-icon-theme
           lsfg-vk
         ];
+        extraLibraries = pkgs: [ pkgs.lsfg-vk ];  # ADD THIS
       };
     };
     
