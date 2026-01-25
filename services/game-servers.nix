@@ -6,7 +6,7 @@
 		virtualisation.oci-containers = {
 			backend = "docker";
 			containers."hytale-server" = {
-				image = "ghcr.io/indifferentbroccoli/hytale-server:latest";
+				image = "ghcr.io/indifferentbroccoli/hytale-server-docker:latest";
 				ports = [ "5520:5520/udp" ];
 				environment = {
 					SERVER_NAME = "Nordhammer.it Hytale Server";
