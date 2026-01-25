@@ -1,4 +1,3 @@
-#/services/game-servers.nix
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
@@ -7,7 +6,6 @@
       backend = "docker";
       containers."hytale" = {
         image = "indifferentbroccoli/hytale-server-docker:latest";
-        autoStart = true;
         ports = [ "5520:5520/udp" ];
         environment = {
           SERVER_NAME = "Nordhammer.it Hytale Server";
@@ -22,8 +20,6 @@
         ];
         extraOptions = [
           "--stop-timeout=30"
-          "--interactive"
-          "--tty"
         ];
       };
     };
