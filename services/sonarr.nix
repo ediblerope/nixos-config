@@ -1,4 +1,4 @@
-#sonarr.nix
+# sonarr.nix
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
@@ -11,7 +11,7 @@
       user = "sonarr";
       group = "media";
     };
-
+    
     # Media group is already created in qbittorrent-nox.nix
     # Just make sure sonarr is in it
     users.users.sonarr = {
@@ -19,7 +19,7 @@
       group = "media";
       extraGroups = [ "media" ];
     };
-
+    
     # Set up directory structure with proper permissions
     systemd.tmpfiles.rules = [
       # Downloads folder - qbittorrent writes here (already in qbittorrent-nox.nix)
@@ -28,8 +28,6 @@
       # Media folders - sonarr writes here
       "d /mnt/storage/torrents/shows 0775 sonarr media -"
       "Z /mnt/storage/torrents/shows 0775 sonarr media -"
-      "d /mnt/storage/torrents/movies 0775 sonarr media -"
-      "Z /mnt/storage/torrents/movies 0775 sonarr media -"
       "d /mnt/storage/torrents/audiobooks 0775 sonarr media -"
       "Z /mnt/storage/torrents/audiobooks 0775 sonarr media -"
     ];
