@@ -43,6 +43,7 @@
       btop
       util-linux
       javaPackages.compiler.temurin-bin.jre-25
+      unzip
     ];
 
     # Enable Docker
