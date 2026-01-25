@@ -26,10 +26,10 @@ in
     # Services #
     ./services/game-servers.nix
     ./services/qbittorrent-nox.nix
-    #./services/arr-stack.nix
     ./services/nginx.nix
     ./services/go2rtc.nix
     ./services/sonarr.nix
+    ./services/radarr.nix
     ./services/prowlarr.nix
     ./services/jellyfin.nix
   ];
