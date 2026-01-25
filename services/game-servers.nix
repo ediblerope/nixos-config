@@ -7,6 +7,8 @@
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       
+      path = with pkgs; [ bash jdk unzip gawk gnugrep coreutils ];  # Add required tools
+      
       environment = {
         HYTALE_MEMORY = "8G";  # Adjust memory allocation here
       };
