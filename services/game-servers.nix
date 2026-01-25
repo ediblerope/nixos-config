@@ -6,7 +6,7 @@
 		virtualisation.oci-containers = {
 			backend = "docker";
 			containers."hytale-server" = {
-				image = "ghcr.io/terkea/hytale-server:latest";
+				image = "ghcr.io/indifferentbroccoli/hytale-server:latest";
 				ports = [ "5520:5520/udp" ];
 				environment = {
 					SERVER_NAME = "Nordhammer.it Hytale Server";
@@ -17,7 +17,7 @@
 					PASSWORD = "DukeSmells";
 				};
 				volumes = [
-					"/home/fred/docker/hytale-server/hytale-data:/data"
+					"/home/fred/docker/hytale-server/hytale-data:/home/hytale/server-files"
 				];
 				extraOptions = [
 					"--interactive=false"
