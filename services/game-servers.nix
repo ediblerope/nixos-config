@@ -5,7 +5,7 @@
 	## <----- HYTALE ----> ##
 		virtualisation.oci-containers = {
 			backend = "docker";
-			containers."hytale-server" = {
+			containers."hytale" = {
 				image = "ghcr.io/indifferentbroccoli/hytale-server-docker:latest";
 				ports = [ "5520:5520/udp" ];
 				environment = {
