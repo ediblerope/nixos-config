@@ -10,6 +10,7 @@
         environment = {
           SERVER_NAME = "Nordhammer.it Hytale Server";
           MAX_PLAYERS = "50";
+          MEMORY = "8G";  # Increased from 4G to 8G
           ENABLE_BACKUP = "true";
           BACKUP_FREQUENCY = "30";
           PASSWORD = "DukeSmells";
