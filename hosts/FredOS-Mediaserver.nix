@@ -45,6 +45,7 @@
       javaPackages.compiler.temurin-bin.jre-25
       unzip
       screen
+      yt-dlp
     ];
 
     # Enable Docker
