@@ -1,4 +1,3 @@
-#qbittorrent-nox.nix
 { config, pkgs, lib, ... }:
 {
 	config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
@@ -9,13 +8,13 @@
 		# Create qbittorrent user with media group
 		users.users.qbittorrent = {
 			isSystemUser = true;
-			group = "media";  # Changed to media group for sharing
+			group = "media";
 			extraGroups = [ "media" ];
 			home = "/var/lib/qbittorrent";
 			createHome = true;
 		};
 		
-		# Create media group (shared with sonarr)
+		# Create media group (shared with sonarr/radarr)
 		users.groups.media = {
 			gid = 3000;
 		};
@@ -27,35 +26,35 @@
 			serviceConfig = {
 				Type = "simple";
 				User = "qbittorrent";
-				Group = "media";  # Changed to media
-				ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+				Group = "media";
+				ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --confirm-legal-notice";
 				Restart = "on-failure";
 				
-				# Security hardening
+				# Security hardening - FIXED
 				NoNewPrivileges = true;
 				PrivateTmp = true;
 				ProtectSystem = "strict";
-				ProtectHome = true;
+				ProtectHome = false;  # Changed to false so it can write to /var/lib/qbittorrent
 				ReadWritePaths = [ 
 					"/var/lib/qbittorrent"
 					"/mnt/storage/torrents"
 				];
+				# Set proper working directory
+				WorkingDirectory = "/var/lib/qbittorrent";
 			};
-			preStart = ''
-				mkdir -p /var/lib/qbittorrent/.config/qBittorrent
-				cat > /var/lib/qbittorrent/.config/qBittorrent/qBittorrent.conf << EOF
-				[Preferences]
-				Downloads\SavePath=/mnt/storage/torrents/downloads
-				EOF
-				chown -R qbittorrent:media /var/lib/qbittorrent/.config
-			'';
 		};
 		
-		# Ensure the download directory exists with proper permissions
+		# Ensure directories exist with proper permissions
 		systemd.tmpfiles.rules = [
+			"d /var/lib/qbittorrent 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.config 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.config/qBittorrent 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local/share 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local/share/qBittorrent 0755 qbittorrent media -"
 			"d /mnt/storage/torrents/downloads 0775 qbittorrent media -"
 		];
 		
-		users.users.fred.extraGroups = [ "media" ];  # Changed to media group
+		users.users.fred.extraGroups = [ "media" ];
 	};
 }
