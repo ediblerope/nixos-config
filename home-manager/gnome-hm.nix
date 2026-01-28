@@ -77,32 +77,32 @@
       };
       
       # Rounded Window Corners extension
-      "org/gnome/shell/extensions/rounded-window-corners-reborn" = let
-        mkUint32 = lib.hm.gvariant.mkUint32;
-        mkVariant = lib.hm.gvariant.mkVariant;
-        mkTuple = lib.hm.gvariant.mkTuple;
-        mkEntry = name: value: lib.hm.gvariant.mkDictionaryEntry [name value];
-        mkDict = attrs: mkVariant (
-          lib.mapAttrsToList (name: value: mkEntry name value) attrs
-        );
-      in {
-        global-rounded-corner-settings = [
-          (mkEntry "padding" (mkDict {
-            left = mkUint32 4;
-            right = mkUint32 4;
-            top = mkUint32 4;
-            bottom = mkUint32 4;
-          }))
-          (mkEntry "keepRoundedCorners" (mkDict {
-            maximized = true;
-            fullscreen = true;
-          }))
-          (mkEntry "borderRadius" (mkVariant (mkUint32 7)))
-          (mkEntry "smoothing" (mkVariant 0.0))
-          (mkEntry "borderColor" (mkVariant (mkTuple [ 0.5 0.5 0.5 1.0 ])))
-          (mkEntry "enabled" (mkVariant true))
-        ];
-      };
+      #"org/gnome/shell/extensions/rounded-window-corners-reborn" = let
+      #  mkUint32 = lib.hm.gvariant.mkUint32;
+      #  mkVariant = lib.hm.gvariant.mkVariant;
+      #  mkTuple = lib.hm.gvariant.mkTuple;
+      #  mkEntry = name: value: lib.hm.gvariant.mkDictionaryEntry [name value];
+      #  mkDict = attrs: mkVariant (
+      #    lib.mapAttrsToList (name: value: mkEntry name value) attrs
+      #  );
+      #in {
+      #  global-rounded-corner-settings = [
+      #    (mkEntry "padding" (mkDict {
+      #      left = mkUint32 4;
+      #      right = mkUint32 4;
+      #      top = mkUint32 4;
+      #      bottom = mkUint32 4;
+      #    }))
+      #    (mkEntry "keepRoundedCorners" (mkDict {
+      #      maximized = true;
+      #      fullscreen = true;
+      #    }))
+      #    (mkEntry "borderRadius" (mkVariant (mkUint32 7)))
+      #    (mkEntry "smoothing" (mkVariant 0.0))
+      #    (mkEntry "borderColor" (mkVariant (mkTuple [ 0.5 0.5 0.5 1.0 ])))
+      #    (mkEntry "enabled" (mkVariant true))
+      #  ];
+      #};
     };
   };
 }
