@@ -60,9 +60,9 @@
         extraProfile = ''
           export VK_ADD_LAYER_PATH=${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d:$VK_ADD_LAYER_PATH
           export LD_LIBRARY_PATH=${pkgs.lsfg-vk}/lib:$LD_LIBRARY_PATH
-        '';
-        extraCompatPackages = [ pkgs.lsfg-vk ];
+        '';  
       };
+      extraCompatPackages = [ pkgs.lsfg-vk ];
     };
     
     # Bootloader
