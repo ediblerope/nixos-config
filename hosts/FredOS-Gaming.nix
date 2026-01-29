@@ -44,6 +44,8 @@
     
     systemd.user.tmpfiles.rules = [
       "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+      "d %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d 0755 - - -"
+      "L+ %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
     ];
     
     programs.steam = {
@@ -52,7 +54,13 @@
       package = pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
           adwaita-icon-theme
+          lsfg-vk
         ];
+        extraLibraries = pkgs: [ pkgs.lsfg-vk ];
+        extraProfile = ''
+          export VK_ADD_LAYER_PATH=${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d:$VK_ADD_LAYER_PATH
+          export LD_LIBRARY_PATH=${pkgs.lsfg-vk}/lib:$LD_LIBRARY_PATH
+        '';
       };
     };
     
