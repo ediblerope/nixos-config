@@ -4,7 +4,11 @@
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
       lutris
-      heroic
+      (heroic.override {
+        extraPkgs = pkgs: with pkgs; [
+          adwaita-icon-theme
+        ];
+      })
       mangohud
       vesktop
       lsfg-vk
