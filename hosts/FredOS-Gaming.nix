@@ -19,8 +19,8 @@
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = [ pkgs.lsfg-vk ];
-      extraPackages32 = [ pkgs.lsfg-vk ];
+      #extraPackages = [ pkgs.lsfg-vk ];
+      #extraPackages32 = [ pkgs.lsfg-vk ];
     };
     services.xserver.videoDrivers = ["amdgpu"];
     boot.initrd.kernelModules = [ "amdgpu" ];
