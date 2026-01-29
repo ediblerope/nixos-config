@@ -54,7 +54,7 @@
       package = pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
           adwaita-icon-theme
-          lsfg-vk
+          #lsfg-vk
         ];
         #extraLibraries = pkgs: [ pkgs.lsfg-vk ];
         #extraProfile = ''
