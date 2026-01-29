@@ -29,11 +29,11 @@
     boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" ];
     
     # Session variables
-    environment.sessionVariables = {
-      VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
+    #environment.sessionVariables = {
+      #VK_ADD_LAYER_PATH = "${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d";
       # Force the layer to be visible everywhere
-      VK_INSTANCE_LAYERS = "VK_LAYER_LS_frame_generation";
-    };
+      #VK_INSTANCE_LAYERS = "VK_LAYER_LS_frame_generation";
+    #};
     
     # Create symlinks in EVERY possible location
     #systemd.tmpfiles.rules = [
