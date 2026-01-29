@@ -36,15 +36,15 @@
     };
     
     # Create symlinks in EVERY possible location
-    #systemd.tmpfiles.rules = [
-    #  "L+ /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
-    #  "d /usr/lib/x86_64-linux-gnu 0755 root root -"
-    #  "L+ /usr/lib/x86_64-linux-gnu/liblsfg-vk.so - - - - ${pkgs.lsfg-vk}/lib/liblsfg-vk.so"
-    #];
-    
-    systemd.user.tmpfiles.rules = [
-      "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    systemd.tmpfiles.rules = [
+      "L+ /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+      "d /usr/lib/x86_64-linux-gnu 0755 root root -"
+      "L+ /usr/lib/x86_64-linux-gnu/liblsfg-vk.so - - - - ${pkgs.lsfg-vk}/lib/liblsfg-vk.so"
     ];
+    
+    #systemd.user.tmpfiles.rules = [
+    #  "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    #];
     
     programs.steam = {
       enable = true;
