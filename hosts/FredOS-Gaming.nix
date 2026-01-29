@@ -36,17 +36,15 @@
     };
     
     # Create symlinks in EVERY possible location
-    systemd.tmpfiles.rules = [
-      "L+ /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
-      "d /usr/lib/x86_64-linux-gnu 0755 root root -"
-      "L+ /usr/lib/x86_64-linux-gnu/liblsfg-vk.so - - - - ${pkgs.lsfg-vk}/lib/liblsfg-vk.so"
-    ];
+    #systemd.tmpfiles.rules = [
+    #  "L+ /usr/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    #  "d /usr/lib/x86_64-linux-gnu 0755 root root -"
+    #  "L+ /usr/lib/x86_64-linux-gnu/liblsfg-vk.so - - - - ${pkgs.lsfg-vk}/lib/liblsfg-vk.so"
+    #];
     
-    systemd.user.tmpfiles.rules = [
-      "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
-      "d %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d 0755 - - -"
-      "L+ %h/.var/app/com.hypixel.HytaleLauncher/data/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
-    ];
+    #systemd.user.tmpfiles.rules = [
+    #  "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    #];
     
     programs.steam = {
       enable = true;
@@ -54,15 +52,8 @@
       package = pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
           adwaita-icon-theme
-          lsfg-vk
         ];
-        extraLibraries = pkgs: [ pkgs.lsfg-vk ];
-        extraProfile = ''
-          export VK_ADD_LAYER_PATH=${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d:$VK_ADD_LAYER_PATH
-          export LD_LIBRARY_PATH=${pkgs.lsfg-vk}/lib:$LD_LIBRARY_PATH
-        '';  
       };
-      extraCompatPackages = [ pkgs.lsfg-vk ];
     };
     
     # Bootloader
