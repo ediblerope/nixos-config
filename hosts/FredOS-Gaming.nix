@@ -42,9 +42,9 @@
     #  "L+ /usr/lib/x86_64-linux-gnu/liblsfg-vk.so - - - - ${pkgs.lsfg-vk}/lib/liblsfg-vk.so"
     #];
     
-    #systemd.user.tmpfiles.rules = [
-    #  "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
-    #];
+    systemd.user.tmpfiles.rules = [
+      "L+ %h/.local/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json - - - - ${pkgs.lsfg-vk}/share/vulkan/implicit_layer.d/VkLayer_LS_frame_generation.json"
+    ];
     
     programs.steam = {
       enable = true;
