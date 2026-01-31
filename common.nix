@@ -34,6 +34,9 @@ in
     ./services/jellyfin.nix
   ];
 
+  ### Make build time quicker
+  documentation.nixos.enable = false;
+
   # Home Manager #
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
