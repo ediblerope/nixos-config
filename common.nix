@@ -32,6 +32,7 @@ in
     ./services/radarr.nix
     ./services/prowlarr.nix
     ./services/jellyfin.nix
+    ./services/bazarr.nix
   ];
 
   ### Make build time quicker
