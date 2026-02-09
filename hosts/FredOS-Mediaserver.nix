@@ -48,6 +48,8 @@
       yt-dlp
     ];
 
+    services.fail2ban.enable = true;
+
     # Enable Docker
     virtualisation.docker.enable = true;
     
