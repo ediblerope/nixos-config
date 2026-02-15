@@ -14,7 +14,7 @@
       gnomeExtensions.just-perfection
       gnomeExtensions.appindicator
       gnomeExtensions.hot-edge
-      gnomeExtensions.rounded-window-corners-reborn
+      #gnomeExtensions.rounded-window-corners-reborn
       adwaita-icon-theme
       gnome-themes-extra
       papirus-icon-theme
