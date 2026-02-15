@@ -33,6 +33,7 @@ in
     ./services/prowlarr.nix
     ./services/jellyfin.nix
     ./services/bazarr.nix
+    ./services/cloudflare-ddns.nix
   ];
 
   ### Make build time quicker
