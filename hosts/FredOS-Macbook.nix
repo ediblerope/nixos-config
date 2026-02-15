@@ -15,6 +15,9 @@
         vesktop
         adwaita-icon-theme
         mission-center
+        vlc
+        geary
+        protonvpn-gui
       ];
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
