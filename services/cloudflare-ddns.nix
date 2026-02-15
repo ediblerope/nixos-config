@@ -5,10 +5,7 @@
       services.cloudflare-dyndns = {
         enable = true;
         apiTokenFile = "/var/secrets/cloudflare-token";
-        domains = [ "nordhammer.it" ]; # or subdomain.yourdomain.com
-        # Optional: specify which network interface to get IP from
-        # ipv4 = true;  # default
-        # ipv6 = false; # default
+        domains = [ "nordhammer.it" ];
       };
 	};
 }
