@@ -44,17 +44,6 @@
 			};
 		};
 		
-		# Ensure directories exist with proper permissions
-		systemd.tmpfiles.rules = [
-			"d /var/lib/qbittorrent 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.config 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.config/qBittorrent 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local/share 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local/share/qBittorrent 0755 qbittorrent media -"
-			"d /mnt/storage/torrents/downloads 0775 qbittorrent media -"
-		];
-		
 		users.users.fred.extraGroups = [ "media" ];
 	};
 }
