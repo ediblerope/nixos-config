@@ -24,6 +24,7 @@ in
     ./apps/flatpaks.nix
 
     # Services #
+    ./services/server-permissions.nix
     ./services/game-servers.nix
     ./services/qbittorrent-nox.nix
     ./services/nginx.nix
