@@ -8,6 +8,9 @@
   home.packages = with pkgs; [
     #
   ];
+
+  # Allow unfree nix-shell maybe
+  nixpkgs.config.allowUnfree = true;
   
   # Import gnome home manager config
   imports = [ ./gnome-hm.nix ];
