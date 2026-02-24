@@ -10,7 +10,9 @@
   ];
 
   # Allow unfree nix-shell maybe
-  nixpkgs.config.allowUnfree = true;
+  home.file.".config/nixpkgs/config.nix".text = ''
+    { allowUnfree = true; }
+  '';
   
   # Import gnome home manager config
   imports = [ ./gnome-hm.nix ];
