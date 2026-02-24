@@ -54,10 +54,7 @@ in
     wantedBy = lib.mkForce [ ];
     after = [ "multi-user.target" ];
   };
-  systemd.services.home-manager-fred = {
-    wantedBy = lib.mkForce [ ];
-    after = [ "multi-user.target" ];
-  };
+
   boot.initrd.systemd.enable = true;
   boot.initrd.verbose = false;
 #############################################################################
