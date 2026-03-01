@@ -17,6 +17,7 @@
       adwaita-icon-theme
       mission-center
       geary
+      wowup-cf
     ];
     services.lact.enable = true;
     hardware.graphics = {
