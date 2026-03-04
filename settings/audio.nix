@@ -9,7 +9,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
 
-    extraConfig.pulse."10-quirk-rules" = {
+    extraConfig."pipewire-pulse"."10-quirk-rules" = {
       "pulse.rules" = [
         {
           matches = [ { "application.name" = "~Chromium.*"; } ];
