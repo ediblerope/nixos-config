@@ -8,14 +8,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-  };
 
-  environment.etc."pipewire/pipewire-pulse.d/10-quirk-rules.conf".text = ''
-    pulse.rules = [
-      {
-        matches = [ { application.name = "~Chromium.*" } ]
-        actions = { quirks = [ block-source-volume ] }
-      }
-    ]
-  '';
+    extraConfig.pulse."10-quirk-rules" = {
+      "pulse.rules" = [
+        {
+          matches = [ { "application.name" = "~Chromium.*"; } ];
+          actions = { quirks = [ "block-source-volume" ]; };
+        }
+      ];
+    };
+  };
 }
