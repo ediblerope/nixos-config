@@ -23,7 +23,6 @@
 
     # Waydroid
     virtualisation.waydroid.enable = true;
-    boot.kernelModules = [ "binder_linux" "ashmem_linux" ];
     
     services.lact.enable = true;
     hardware.graphics = {
