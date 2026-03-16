@@ -18,11 +18,11 @@
       mission-center
       geary
       wowup-cf
-      waydroid
+      #waydroid
     ];
 
     # Waydroid
-    virtualisation.waydroid.enable = true;
+    #virtualisation.waydroid.enable = true;
     
     services.lact.enable = true;
     hardware.graphics = {
