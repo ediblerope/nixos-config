@@ -69,7 +69,7 @@ in
   # Enable network-manager
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
-  networking.nftables.enable = true;
+  #networking.nftables.enable = true;
 
   # Shell aliases
   environment.shellAliases = {
