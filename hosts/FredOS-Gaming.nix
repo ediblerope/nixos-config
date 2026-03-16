@@ -18,6 +18,7 @@
       mission-center
       geary
       wowup-cf
+      waydroid
     ];
     services.lact.enable = true;
     hardware.graphics = {
