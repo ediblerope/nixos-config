@@ -18,7 +18,7 @@
       mission-center
       geary
       wowup-cf
-      #waydroid
+      waydroid
     ];
 
     virtualisation.waydroid.enable = true;
