@@ -107,6 +107,7 @@ in
   environment.systemPackages = with pkgs; [
       git
       localsend
+      onlyoffice-desktopeditors
       #adwaita-icon-theme
       #mission-center
   ];
