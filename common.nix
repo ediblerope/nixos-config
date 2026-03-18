@@ -106,6 +106,7 @@ in
   # Add packages
   environment.systemPackages = with pkgs; [
       git
+      localsend
       #adwaita-icon-theme
       #mission-center
   ];
