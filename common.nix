@@ -25,7 +25,7 @@ in
 
     # Services #
     ./services/server-permissions.nix
-    ./services/game-servers.nix
+    #./services/game-servers.nix
     ./services/qbittorrent-nox.nix
     ./services/nginx.nix
     ./services/go2rtc.nix
