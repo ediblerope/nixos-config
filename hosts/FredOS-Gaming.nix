@@ -18,6 +18,7 @@
       mission-center
       geary
       wowup-cf
+      adwsteamgtk
       #waydroid
     ];
 
