@@ -35,7 +35,7 @@
     boot.initrd.kernelModules = [ "amdgpu" ];
     
     # Enable AMD GPU overdrive for overclocking/undervolting
-    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" ];
+    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" "amdgpu.freesync_video=1"];
 
     programs.steam = {
       enable = true;
