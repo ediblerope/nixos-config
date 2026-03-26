@@ -1,4 +1,3 @@
-#omnisearch.nix
 { config, lib, pkgs, ... }:
 
 let
@@ -9,5 +8,7 @@ in
 {
   imports = [ "${omnisearch}/module.nix" ];
 
-  services.omnisearch.enable = true;
+  config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
+    services.omnisearch.enable = true;
+  };
 }
