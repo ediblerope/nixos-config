@@ -35,6 +35,7 @@ in
     ./services/jellyfin.nix
     ./services/bazarr.nix
     ./services/cloudflare-ddns.nix
+    ./services/omnisearch.nix
   ];
 
   ### Make build time quicker
