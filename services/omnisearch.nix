@@ -2,7 +2,7 @@
 
 let
   omnisearch = builtins.fetchTarball {
-    url = "https://git.bwaaa.monster/omnisearch/archive/master.tar.gz";
+    url = "https://git.bwaaa.monster/omnisearch/archive/omnisearch-master.tar.gz";
   };
 in
 {
