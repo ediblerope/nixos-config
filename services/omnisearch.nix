@@ -8,7 +8,6 @@ let
 
   beakerSrc = builtins.fetchGit {
     url = "https://git.bwaaa.monster/beaker";
-    shallow = true;
   };
 
   beaker = pkgs.stdenv.mkDerivation {
