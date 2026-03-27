@@ -19,7 +19,7 @@
       geary
       wowup-cf
       adwsteamgtk
-      protonvpn-gui
+      proton-vpn
       #waydroid
     ];
 
