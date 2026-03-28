@@ -74,7 +74,7 @@ in
 
   # Shell aliases
   environment.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config --refresh";
+    update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config --refresh --no-write-lock-file";
     #update = ''
     #  CHANNEL=$(sudo nix-channel --list | grep "^nixos " | awk '{print $2}')
     #  if [[ "$CHANNEL" != *"nixos-unstable"* ]]; then
