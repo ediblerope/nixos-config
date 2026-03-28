@@ -31,7 +31,7 @@
       modules = [
         ./hosts/${hostname}.nix
         ./common.nix
-        home-manager.nixosModules.homeManager
+        home-manager.nixosModules.home-manager
         nix-flatpak.nixosModules.nix-flatpak
         omnisearch.nixosModules.default
       ];
