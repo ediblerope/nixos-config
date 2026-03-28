@@ -20,7 +20,7 @@
       wowup-cf
       adwsteamgtk
       proton-vpn
-      #inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      onlyoffice-desktopeditors
     ];
     
     services.lact.enable = true;
@@ -43,23 +43,11 @@
         ];
       };
     };
-    
+  
     # Bootloader
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.systemd-boot.configurationLimit = 5;
     boot.initrd.systemd.enable = true;
-    
-    system.autoUpgrade = {
-      enable = true;
-      dates = "daily";
-      persistent = true;
-      allowReboot = false;
-      channel = "https://nixos.org/channels/nixos-unstable";
-      flags = [
-        "--upgrade"
-        "--option" "tarball-ttl" "0"
-      ];
-    };
   };
 }

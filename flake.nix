@@ -10,17 +10,17 @@
     };
 
     omnisearch = {
-        url = "git+https://git.bwaaa.monster/omnisearch";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "git+https://git.bwaaa.monster/omnisearch";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  zen-browser = {
-    url = "github:0xc000022070/zen-browser-flake";
-    inputs = {
-      nixpkgs.follows = "nixpkgs";
-      home-manager.follows = "home-manager";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
-  };
   
     nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
