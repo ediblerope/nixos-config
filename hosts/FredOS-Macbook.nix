@@ -17,7 +17,7 @@
         mission-center
         vlc
         geary
-        protonvpn-gui
+        proton-vpn
       ];
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
