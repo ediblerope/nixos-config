@@ -10,8 +10,8 @@
     };
 
     omnisearch = {
-      url = "git+https://git.bwaaa.monster/omnisearch";
-      inputs.nixpkgs.follows = "nixpkgs";
+        url = "git+https://git.bwaaa.monster/omnisearch?ref=master";
+        inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
