@@ -1,0 +1,33 @@
+name: Update flake inputs
+ 
+on:
+  schedule:
+    - cron: '0 4 * * *'  # Daily at 4am UTC
+  workflow_dispatch:       # Allow manual trigger from GitHub Actions tab
+ 
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+ 
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+ 
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+ 
+      - name: Update flake inputs
+        run: nix flake update
+ 
+      - name: Commit updated flake.lock
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "flake: update inputs"
+          file_pattern: flake.lock
+ 
