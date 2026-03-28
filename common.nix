@@ -37,6 +37,7 @@
   # Home Manager #
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.extraSpecialArgs = { inherit inputs; };
   home-manager.users.fred = import ./home-manager/fred.nix;
 
 #############################################################################

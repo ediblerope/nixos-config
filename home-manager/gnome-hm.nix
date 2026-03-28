@@ -1,14 +1,9 @@
-{ config, pkgs, lib, osConfig, ... }:
+{ config, pkgs, lib, osConfig, inputs, ... }:
 {
   config = lib.mkIf (lib.elem osConfig.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
-    # Download wallpaper from GitHub repo and symlink it
+
     home.file.".local/share/backgrounds/wallpaper.png".source = 
-      let
-        wallpaperRepo = builtins.fetchGit {
-          url = "https://github.com/ediblerope/nixos-config";
-          ref = "main";
-        };
-      in "${wallpaperRepo}/walls/wallpaper.png";
+      "${inputs.self}/walls/wallpaper.png";
     
     # GNOME dconf settings
     dconf.settings = {
