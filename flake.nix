@@ -30,6 +30,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/${hostname}.nix
+        ./hosts/hardware/${hostname}.nix 
         ./common.nix
         home-manager.nixosModules.home-manager
         nix-flatpak.nixosModules.nix-flatpak
