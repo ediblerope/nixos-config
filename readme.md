@@ -13,21 +13,25 @@ Flake-based NixOS configuration for three machines, built and deployed directly 
 ## Structure
 
 ```
-flake.nix                        # Flake inputs and host definitions
-common.nix                       # Shared config for all hosts
-hosts/
-  FredOS-Gaming.nix              # Gaming-specific config
-  FredOS-Macbook.nix             # Macbook-specific config
-  FredOS-Mediaserver.nix         # Mediaserver-specific config
-  hardware/
-    FredOS-Gaming.nix            # Hardware config + bootloader
-    FredOS-Macbook.nix
-    FredOS-Mediaserver.nix
-apps/                            # Per-app config files
-settings/                        # Shared system settings (GNOME, locale, audio, etc.)
-services/                        # Service definitions
-home-manager/                    # Home Manager config
-walls/                           # Wallpapers
+├── .github
+│   └── workflows
+│       └── update.yml               # Auto-updates flake.lock daily
+├── apps                             # Per-app config files
+├── home-manager                     # Home Manager config
+├── hosts
+│   ├── FredOS-Gaming.nix            # Gaming-specific config
+│   ├── FredOS-Macbook.nix           # Macbook-specific config
+│   ├── FredOS-Mediaserver.nix       # Mediaserver-specific config
+│   └── hardware
+│       ├── FredOS-Gaming.nix        # Hardware config + bootloader + hostname
+│       ├── FredOS-Macbook.nix
+│       └── FredOS-Mediaserver.nix
+├── services                         # Service definitions
+├── settings                         # Shared system settings (GNOME, locale, audio, etc.)
+├── walls                            # Wallpapers
+├── common.nix                       # Shared config for all hosts
+├── flake.lock                       # Auto-generated, updated daily by GitHub Actions
+└── flake.nix                        # Flake inputs and host definitions
 ```
 
 ## Day-to-day usage
