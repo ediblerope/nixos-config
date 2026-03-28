@@ -19,6 +19,9 @@
         geary
         proton-vpn
       ];
+      
+      services.zen-browser.enable = true;
+
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
 

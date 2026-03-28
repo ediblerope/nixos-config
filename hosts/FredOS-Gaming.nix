@@ -20,11 +20,9 @@
       wowup-cf
       adwsteamgtk
       proton-vpn
-      #waydroid
     ];
 
-    # Waydroid
-    #virtualisation.waydroid.enable = true;
+    services.zen-browser.enable = true;
     
     services.lact.enable = true;
     hardware.graphics = {
