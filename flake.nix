@@ -1,4 +1,3 @@
-# flake.nix — place this in the root of your nixos-config repo
 {
   description = "FredOS NixOS configuration";
 
@@ -7,11 +6,11 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";  # shares your nixpkgs, no double download
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     omnisearch = {
-      url = "git+https://git.bwaaa.monster/omnisearch/omnisearch";
+      url = "git+https://git.bwaaa.monster/omnisearch";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,32 +19,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak = {
-      url = "github:gmodena/nix-flatpak";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
   outputs = { self, nixpkgs, home-manager, omnisearch, zen-browser, nix-flatpak, ... } @ inputs:
   let
     system = "x86_64-linux";
-
-    # Helper so each host doesn't have to repeat the boilerplate
     mkHost = hostname: nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit inputs; };  # makes 'inputs' available in all your .nix files
+      specialArgs = { inherit inputs; };
       modules = [
-        ./hosts/${hostname}.nix          # your existing per-host file
-        ./common.nix                     # your existing shared config
+        ./hosts/${hostname}.nix
+        ./common.nix
         home-manager.nixosModules.homeManager
         nix-flatpak.nixosModules.nix-flatpak
+        omnisearch.nixosModules.default
       ];
     };
   in {
     nixosConfigurations = {
-      FredOS-Gaming       = mkHost "FredOS-Gaming";
-      FredOS-Mediaserver  = mkHost "FredOS-Mediaserver";
-      FredOS-Macbook      = mkHost "FredOS-Macbook";
+      FredOS-Gaming      = mkHost "FredOS-Gaming";
+      FredOS-Mediaserver = mkHost "FredOS-Mediaserver";
+      FredOS-Macbook     = mkHost "FredOS-Macbook";
     };
   };
 }
