@@ -20,9 +20,8 @@
       wowup-cf
       adwsteamgtk
       proton-vpn
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
-
-    services.zen-browser.enable = true;
     
     services.lact.enable = true;
     hardware.graphics = {

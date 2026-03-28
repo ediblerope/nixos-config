@@ -18,9 +18,9 @@
         vlc
         geary
         proton-vpn
+        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
-      
-      services.zen-browser.enable = true;
+
 
       services.tlp.enable = false;
       services.power-profiles-daemon.enable = true;
