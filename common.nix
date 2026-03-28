@@ -48,7 +48,7 @@
 
 #############################################################################
   # Make boot time quicker
-  boot.loader.timeout = 5;
+  boot.loader.timeout = lib.mkDefault 5;
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.systemd-udev-settle.enable = false;
   systemd.services.firewall = {
