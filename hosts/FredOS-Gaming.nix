@@ -1,5 +1,5 @@
 # hosts/FredOS-Gaming.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Gaming") {
     environment.systemPackages = with pkgs; [
