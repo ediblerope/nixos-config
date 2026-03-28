@@ -44,7 +44,6 @@
 #############################################################################
   # Make boot time quicker
   boot.loader.timeout = 5;
-  boot.loader.systemd-boot.configurationLimit = 5;
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.services.systemd-udev-settle.enable = false;
   systemd.services.firewall = {
@@ -52,7 +51,6 @@
     after = [ "multi-user.target" ];
   };
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.verbose = false;
 #############################################################################
 

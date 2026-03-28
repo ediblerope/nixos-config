@@ -37,42 +37,43 @@
         kernelParams = [ "acpi_osi=" ];
       };
       hardware.enableRedistributableFirmware = true;
+      boot.loader.systemd-boot.configurationLimit = 5;
+      boot.initrd.systemd.enable = true;
 
-services.xserver.deviceSection = lib.mkDefault ''
-    Option "TearFree" "true"
-  '';
+      services.xserver.deviceSection = lib.mkDefault ''
+          Option "TearFree" "true"
+        '';
 
-# Enable Bluetooth
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        Experimental = true;
+      #Enable Bluetooth
+      hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings = {
+          General = {
+            Enable = "Source,Sink,Media,Socket";
+            Experimental = true;
+          };
+        };
       };
-    };
-  };
 
-  # PipeWire with Bluetooth support
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    
-    # Add Bluetooth codec config
-    wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-        bluez_monitor.properties = {
-          ["bluez5.enable-sbc-xq"] = true,
-          ["bluez5.enable-msbc"] = true,
-          ["bluez5.enable-hw-volume"] = true,
-          ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-        }
-      '')
-    ];
-  };
-
+      # PipeWire with Bluetooth support
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        pulse.enable = true;
+        
+        # Add Bluetooth codec config
+        wireplumber.configPackages = [
+          (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
+            bluez_monitor.properties = {
+              ["bluez5.enable-sbc-xq"] = true,
+              ["bluez5.enable-msbc"] = true,
+              ["bluez5.enable-hw-volume"] = true,
+              ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+            }
+          '')
+        ];
+      };
     })
   ];
 }
