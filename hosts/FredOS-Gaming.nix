@@ -21,7 +21,6 @@
       adwsteamgtk
       proton-vpn
       onlyoffice-desktopeditors
-      spotify
     ];
     
     services.lact.enable = true;

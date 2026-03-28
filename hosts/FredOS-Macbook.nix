@@ -19,7 +19,6 @@
         geary
         proton-vpn
         onlyoffice-desktopeditors
-        spotify
       ];
 
 
