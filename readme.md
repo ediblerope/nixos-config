@@ -1,54 +1,56 @@
 # FredOS NixOS Configuration
 
-Multi-host NixOS configuration managed via flakes, built and deployed directly from GitHub. No local config management required — all changes are made via the GitHub web editor.
+Flake-based NixOS configuration for three machines, built and deployed directly from GitHub. No local config management required after initial setup.
 
-## How it works
+## Machines
 
-All machines pull their configuration directly from this repo at build time:
+| Hostname | Description |
+|---|---|
+| FredOS-Gaming | AMD desktop, UEFI/systemd-boot |
+| FredOS-Macbook | Intel laptop, UEFI/systemd-boot |
+| FredOS-Mediaserver | Intel server, BIOS/GRUB |
+
+## Structure
+
+```
+flake.nix                        # Flake inputs and host definitions
+common.nix                       # Shared config for all hosts
+hosts/
+  FredOS-Gaming.nix              # Gaming-specific config
+  FredOS-Macbook.nix             # Macbook-specific config
+  FredOS-Mediaserver.nix         # Mediaserver-specific config
+  hardware/
+    FredOS-Gaming.nix            # Hardware config + bootloader
+    FredOS-Macbook.nix
+    FredOS-Mediaserver.nix
+apps/                            # Per-app config files
+settings/                        # Shared system settings (GNOME, locale, audio, etc.)
+services/                        # Service definitions
+home-manager/                    # Home Manager config
+walls/                           # Wallpapers
+```
+
+## Day-to-day usage
+
+Edit files directly on GitHub, then on the machine run:
+
+```bash
+update
+```
+
+That's it. The alias is defined in `common.nix` and expands to:
 
 ```bash
 sudo nixos-rebuild switch --flake github:ediblerope/nixos-config --refresh --no-write-lock-file
 ```
 
-This is aliased to `update` on all machines.
+Nix automatically matches the running machine's hostname to the correct `nixosConfigurations` entry.
 
-## Repo structure
+Other useful aliases:
 
+```bash
+clean    # sudo nix-collect-garbage -d
 ```
-flake.nix                        # Flake inputs and host definitions
-common.nix                       # Shared config imported by all hosts
-hosts/
-  FredOS-Gaming.nix              # Gaming PC specific config
-  FredOS-Macbook.nix             # Macbook specific config
-  FredOS-Mediaserver.nix         # Mediaserver specific config
-  hardware/
-    FredOS-Gaming.nix            # Hardware config + bootloader + hostname
-    FredOS-Macbook.nix
-    FredOS-Mediaserver.nix
-apps/                            # Per-app config files
-settings/                        # System settings (GNOME, locale, audio, etc.)
-services/                        # System services (Jellyfin, Sonarr, nginx, etc.)
-home-manager/                    # Home Manager config
-walls/                           # Wallpapers
-```
-
-## Flake inputs
-
-| Input | Source |
-|---|---|
-| nixpkgs | github:NixOS/nixpkgs/nixos-unstable |
-| home-manager | github:nix-community/home-manager |
-| omnisearch | git+https://git.bwaaa.monster/omnisearch |
-| zen-browser | github:0xc000022070/zen-browser-flake |
-| nix-flatpak | github:gmodena/nix-flatpak |
-
-## Day-to-day usage
-
-| Task | Command |
-|---|---|
-| Update system | `update` |
-| Garbage collect | `clean` |
-| First-run on new machine | See below |
 
 ---
 
@@ -56,56 +58,58 @@ walls/                           # Wallpapers
 
 ### 1. Fresh NixOS install
 
-Boot the NixOS installer and complete the standard installation. Note the `system.stateVersion` the installer sets — you'll need it later.
+Boot the NixOS installer and complete the standard installation. Note the `system.stateVersion` it generates — you'll need it later.
 
-### 2. Enable flakes
+### 2. Enable flakes temporarily
 
-After the base install, add this to `/etc/nixos/configuration.nix` and run `sudo nixos-rebuild switch`:
+Add this to `/etc/nixos/configuration.nix` and rebuild:
 
 ```nix
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
+```
+
+```bash
+sudo nixos-rebuild switch
 ```
 
 ### 3. Create the hardware config on GitHub
 
-Copy the contents of `/etc/nixos/hardware-configuration.nix` and create `hosts/hardware/FredOS-NEWHOST.nix` in this repo via the GitHub web editor. Append the following to it:
+Copy the contents of `/etc/nixos/hardware-configuration.nix` and create `hosts/hardware/FredOS-NEWHOST.nix` on GitHub. Append the following to it:
 
 ```nix
 networking.hostName = "FredOS-NEWHOST";
 
-# Match whatever bootloader the installer set up:
-boot.loader.systemd-boot.enable = true;       # UEFI systems
-boot.loader.efi.canTouchEfiVariables = true;  # UEFI systems
-# boot.loader.grub.enable = true;             # BIOS systems
-# boot.loader.grub.devices = [ "/dev/sda" ];  # BIOS systems — verify with: sudo grub-probe --target=disk /
+# Match what the installer configured — systemd-boot for UEFI:
+boot.loader.systemd-boot.enable = true;
+boot.loader.efi.canTouchEfiVariables = true;
+boot.loader.systemd-boot.configurationLimit = 5;
+boot.initrd.systemd.enable = true;
 
-boot.loader.systemd-boot.configurationLimit = 5;  # UEFI only
-boot.initrd.systemd.enable = true;                # UEFI only
+# For BIOS/GRUB machines instead:
+# boot.loader.grub.enable = true;
+# boot.loader.grub.devices = [ "/dev/sda" ]; # verify with: sudo grub-probe --target=disk /
 
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-system.stateVersion = "25.11";  # Use the version the installer generated
+system.stateVersion = "25.11"; # use the version the installer generated
 ```
 
-### 4. Add the host to flake.nix
+### 4. Register the host in flake.nix
 
-In `flake.nix`, add the new host to `nixosConfigurations`:
+In `flake.nix` on GitHub, add to `nixosConfigurations`:
 
 ```nix
 FredOS-NEWHOST = mkHost "FredOS-NEWHOST";
 ```
 
-### 5. Create a host-specific config file
+### 5. Add host-specific config
 
-Create `hosts/FredOS-NEWHOST.nix` for any machine-specific packages or services. Wrap everything in a hostname guard:
+Create `hosts/FredOS-NEWHOST.nix` on GitHub for any machine-specific packages or services:
 
 ```nix
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-NEWHOST") {
-    environment.systemPackages = with pkgs; [
-      # host-specific packages
-    ];
+    # host-specific config here
   };
 }
 ```
@@ -118,18 +122,28 @@ Then add it to the imports list in `common.nix`:
 
 ### 6. Switch to the flake
 
-Run this on the new machine (first time only — requires explicit hostname):
+Run this once on the new machine with the explicit hostname:
 
 ```bash
 sudo nixos-rebuild switch --flake github:ediblerope/nixos-config#FredOS-NEWHOST --refresh --no-write-lock-file
 ```
 
-After this succeeds, the `update` alias works normally from that point on.
+After this succeeds, the plain `update` alias works from then on.
 
 ---
 
+## Flake inputs
+
+| Input | Source |
+|---|---|
+| nixpkgs | `github:NixOS/nixpkgs/nixos-unstable` |
+| home-manager | `github:nix-community/home-manager` |
+| omnisearch | `git+https://git.bwaaa.monster/omnisearch` |
+| zen-browser | `github:0xc000022070/zen-browser-flake` |
+| nix-flatpak | `github:gmodena/nix-flatpak` |
+
 ## Notes
 
-- **GitHub rate limiting** — `--refresh` queries the GitHub API on every run. At 60 unauthenticated requests/hour this is fine for normal use but will hit the limit during rapid iteration. Wait ~15 minutes if you see a 403 rate limit error.
-- **hardware-configuration.nix** — do not run `nixos-generate-config` and expect to copy the output directly. Always append the hostname, bootloader, stateVersion and flake settings as shown above.
-- **system.autoUpgrade** — disabled on all hosts. Updates are done manually via the `update` alias.
+- `hosts/hardware/` files are committed to the repo — they contain UUIDs and disk layout but no sensitive credentials
+- Host-specific behaviour is gated with `lib.mkIf (config.networking.hostName == "...")` or `lib.elem config.networking.hostName [...]`
+- GitHub API rate limit (60 req/hour unauthenticated) can occasionally be hit if running `update` many times in quick succession during active config changes — wait ~15 minutes and retry
