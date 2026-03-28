@@ -64,35 +64,10 @@
   # Enable network-manager
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
-  #networking.nftables.enable = true;
 
   # Shell aliases
   environment.shellAliases = {
     update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config --refresh --no-write-lock-file";
-    #update = ''
-    #  CHANNEL=$(sudo nix-channel --list | grep "^nixos " | awk '{print $2}')
-    #  if [[ "$CHANNEL" != *"nixos-unstable"* ]]; then
-    #    echo "Switching to nixos-unstable channel..."
-    #    sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
-    #    sudo nix-channel --update
-    #  fi
-    #  
-    #  # Add nix-flatpak channel if not present
-    #  if ! sudo nix-channel --list | grep -q "nix-flatpak"; then
-    #    echo "Adding nix-flatpak channel..."
-    #    sudo nix-channel --add https://github.com/gmodena/nix-flatpak/archive/main.tar.gz nix-flatpak
-    #  fi
-    #  
-    #  sudo nix-channel --update
-    #  echo "Cleaning Flatpak state cache..."
-    #  sudo rm -f /nix/var/nix/gcroots/flatpak-state.json
-    #  sudo nixos-rebuild switch --upgrade --option tarball-ttl 0
-    #  
-    #  # Manually reapply wallpaper settings
-    #  dconf write /org/gnome/desktop/background/picture-uri "'file://''${HOME}/.local/share/backgrounds/wallpaper.png'"
-    #  dconf write /org/gnome/desktop/background/picture-uri-dark "'file://''${HOME}/.local/share/backgrounds/wallpaper.png'"
-    #  dconf write /org/gnome/desktop/background/picture-options "'zoom'"
-    #'';
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
     clear = "command clear && fastfetch --config /etc/fastfetch/config.jsonc";
@@ -104,7 +79,5 @@
       git
       localsend
       onlyoffice-desktopeditors
-      #adwaita-icon-theme
-      #mission-center
   ];
 }
