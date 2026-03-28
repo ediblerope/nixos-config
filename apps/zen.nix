@@ -1,4 +1,4 @@
-#apps/zen.nix
+#./apps/zen.nix
 { inputs, pkgs, lib, config,  ... }:
 {
     config = lib.mkIf (lib.elem config.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
