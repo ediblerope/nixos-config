@@ -32,6 +32,11 @@
     ./services/omnisearch.nix
   ];
 
+  #public token to avoid rate limit
+  #nix.extraConfig = ''
+  #  access-tokens = github.com
+  #'';
+
   ### Make build time quicker
   documentation.nixos.enable = false;
 
