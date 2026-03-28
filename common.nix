@@ -66,7 +66,7 @@
 
   # Shell aliases
   environment.shellAliases = {
-    update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config --refresh --no-write-lock-file";
+    update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config";
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
     clear = "command clear && fastfetch --config /etc/fastfetch/config.jsonc";
