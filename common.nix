@@ -3,7 +3,6 @@
 
 {
   imports = [
-    (import "${home-manager}/nixos")
     # Hosts #
     ./hosts/FredOS-Gaming.nix
     ./hosts/FredOS-Macbook.nix
