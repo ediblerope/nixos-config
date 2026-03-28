@@ -15,6 +15,7 @@
     ./settings/users.nix
     ./apps/fastfetch.nix
     ./apps/flatpaks.nix
+    ./apps/zen.nix
 
     # Services #
     ./services/server-permissions.nix
