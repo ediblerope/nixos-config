@@ -70,18 +70,5 @@
       devices = [ "/dev/sda" "/dev/sdb" "/dev/sdc" "/dev/sdd" ];
       useOSProber = true;
     };
-
-    # Auto-update + upgrade
-    system.autoUpgrade = {
-      enable = true;
-      dates = "daily";
-      persistent = true;
-      allowReboot = false;
-      channel = "https://nixos.org/channels/nixos-unstable";
-      flags = [
-        "--upgrade"
-        "--option" "tarball-ttl" "0"
-      ];
-    };
   };
 }

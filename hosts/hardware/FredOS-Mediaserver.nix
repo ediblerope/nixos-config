@@ -22,10 +22,6 @@
 
   networking.hostName = "FredOS-Mediaserver";
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sdc";
-  boot.loader.grub.forceInstall = false;
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "25.11";
