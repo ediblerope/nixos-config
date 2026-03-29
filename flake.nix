@@ -10,7 +10,7 @@
     };
 
     omnisearch = {
-      url = "git+https://git.bwaaa.monster/omnisearch";
+      url = "https://git.bwaaa.monster/omnisearch/snapshot/omnisearch-master.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
