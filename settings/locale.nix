@@ -8,7 +8,7 @@ services.automatic-timezoned.enable = true;
 services.geoclue2 = {
   enable = true;
   enableDemoAgent = lib.mkForce true;
-  geoProviderUrl = "https://location.services.mozilla.com/v1/geolocate?key=geoclue";
+  geoProviderUrl = "https://api.beacondb.net/v1/geolocate?key=geoclue";
 };
 
 # Select internationalisation properties.
