@@ -17,10 +17,10 @@
       fsType = "ext4";
     };
 
-    #fileSystems."/mnt/disk4" = {
-    #  device = "/dev/disk/by-uuid/317660ef-bd75-4fa4-bd20-f96a3926bf7b";
-    #  fsType = "ext4";
-    #};
+    fileSystems."/mnt/disk4" = {
+      device = "/dev/disk/by-uuid/317660ef-bd75-4fa4-bd20-f96a3926bf7b";
+      fsType = "ext4";
+    };
 
     # The Combined MergerFS Pool
     fileSystems."/mnt/storage" = {
@@ -72,8 +72,7 @@
     boot.loader.grub = {
       enable = true;
       # Includes all 4 physical disks for redundancy
-      devices = [ "/dev/sda" "/dev/sdb" "/dev/sdc" "/dev/sdd" #"/dev/sde"
-      ];
+      devices = [ "/dev/sda" "/dev/sdb" "/dev/sdc" "/dev/sdd" "/dev/sde" ];
       useOSProber = true;
     };
   };
