@@ -21,6 +21,7 @@
       adwsteamgtk
       proton-vpn
       onlyoffice-desktopeditors
+      vscodium
     ];
     
     services.lact.enable = true;
