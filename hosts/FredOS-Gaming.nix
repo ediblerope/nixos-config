@@ -24,6 +24,7 @@
       vscodium
     ];
     
+    programs.nix-ld.enable = true;
     services.lact.enable = true;
     hardware.graphics = {
       enable = true;
