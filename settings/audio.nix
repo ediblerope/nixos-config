@@ -1,21 +1,23 @@
 # audio.nix
 { config, pkgs, lib, ... }:
 {
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+  config = lib.mkIf (lib.elem config.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
 
-    extraConfig."pipewire-pulse"."10-quirk-rules" = {
-      "pulse.rules" = [
-        {
-          matches = [ { "application.name" = "~Chromium.*"; } ];
-          actions = { quirks = [ "block-source-volume" ]; };
-        }
-      ];
+      extraConfig."pipewire-pulse"."10-quirk-rules" = {
+        "pulse.rules" = [
+          {
+            matches = [ { "application.name" = "~Chromium.*"; } ];
+            actions = { quirks = [ "block-source-volume" ]; };
+          }
+        ];
+      };
     };
   };
 }

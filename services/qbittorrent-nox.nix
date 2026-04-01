@@ -19,6 +19,20 @@
 			gid = 3000;
 		};
 		
+		systemd.tmpfiles.rules = [
+			# qbittorrent app data
+			"d /var/lib/qbittorrent 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.config 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.config/qBittorrent 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local/share 0755 qbittorrent media -"
+			"d /var/lib/qbittorrent/.local/share/qBittorrent 0755 qbittorrent media -"
+
+			# Storage - qbittorrent downloads here
+			"d /mnt/storage/torrents/downloads 2775 qbittorrent media -"
+			"Z /mnt/storage/torrents/downloads 2775 qbittorrent media -"
+		];
+
 		systemd.services.qbittorrent-nox = {
 			description = "qBittorrent-nox service";
 			after = [ "network.target" ];

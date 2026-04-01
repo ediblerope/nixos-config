@@ -54,6 +54,8 @@
   boot.initrd.verbose = false;
 #############################################################################
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

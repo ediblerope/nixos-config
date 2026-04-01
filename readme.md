@@ -16,20 +16,41 @@ Flake-based NixOS configuration for three machines, built and deployed directly 
 ├── .github
 │   └── workflows
 │       └── update.yml               # Auto-updates flake.lock daily
-├── apps                             # Per-app config files
-├── home-manager                     # Home Manager config
+├── apps
+│   ├── fastfetch.nix                # Fastfetch config
+│   ├── flatpaks.nix                 # Flatpak apps
+│   └── zen.nix                      # Zen browser config
+├── home-manager
+│   ├── fred.nix                     # User-level Home Manager config
+│   └── gnome-hm.nix                 # GNOME Home Manager settings
 ├── hosts
-│   ├── FredOS-Gaming.nix            # Gaming-specific config
-│   ├── FredOS-Macbook.nix           # Macbook-specific config
-│   ├── FredOS-Mediaserver.nix       # Mediaserver-specific config
+│   ├── FredOS-Gaming.nix            # Gaming: packages, Steam, boot options
+│   ├── FredOS-Macbook.nix           # Macbook: packages, power management, boot options
+│   ├── FredOS-Mediaserver.nix       # Mediaserver: packages, networking, SSH
 │   └── hardware
-│       ├── FredOS-Gaming.nix        # Hardware config + bootloader + hostname
-│       ├── FredOS-Macbook.nix
-│       └── FredOS-Mediaserver.nix
-├── services                         # Service definitions
-├── settings                         # Shared system settings (GNOME, locale, audio, etc.)
+│       ├── FredOS-Gaming.nix        # AMD GPU, kernel modules, filesystems, bootloader, hostname
+│       ├── FredOS-Macbook.nix       # Broadcom WiFi, Intel GPU, Bluetooth, filesystems, bootloader, hostname
+│       └── FredOS-Mediaserver.nix   # Intel CPU, data disks, mergerfs pool, GRUB, hostname
+├── services
+│   ├── bazarr.nix                   # Subtitle management
+│   ├── cloudflare-ddns.nix          # Cloudflare dynamic DNS
+│   ├── game-servers.nix             # Game server definitions
+│   ├── go2rtc.nix                   # Camera/RTSP streaming
+│   ├── jellyfin.nix                 # Media server
+│   ├── nginx.nix                    # Reverse proxy
+│   ├── omnisearch.nix               # OmniSearch service
+│   ├── prowlarr.nix                 # Indexer manager
+│   ├── qbittorrent-nox.nix          # Torrent client
+│   ├── radarr.nix                   # Movie management
+│   ├── server-permissions.nix       # File/dir permission setup
+│   └── sonarr.nix                   # TV management
+├── settings
+│   ├── audio.nix                    # PipeWire / audio config
+│   ├── gnome.nix                    # GNOME desktop settings
+│   ├── locale.nix                   # Locale, timezone, keyboard
+│   └── users.nix                    # User accounts
 ├── walls                            # Wallpapers
-├── common.nix                       # Shared config for all hosts
+├── common.nix                       # Shared config imported by all hosts
 ├── flake.lock                       # Auto-generated, updated daily by GitHub Actions
 └── flake.nix                        # Flake inputs and host definitions
 ```
@@ -62,7 +83,7 @@ clean    # sudo nix-collect-garbage -d
 
 ### 1. Fresh NixOS install
 
-Boot the NixOS installer and complete the standard installation. Note the `system.stateVersion` it generates — you'll need it later.
+Boot the NixOS installer and complete the standard installation.
 
 ### 2. Enable flakes temporarily
 
@@ -78,23 +99,18 @@ sudo nixos-rebuild switch
 
 ### 3. Create the hardware config on GitHub
 
-Copy the contents of `/etc/nixos/hardware-configuration.nix` and create `hosts/hardware/FredOS-NEWHOST.nix` on GitHub. Append the following to it:
+Copy the contents of `/etc/nixos/hardware-configuration.nix` and create `hosts/hardware/FredOS-NEWHOST.nix` on GitHub. Append the hostname and bootloader config to it:
 
 ```nix
 networking.hostName = "FredOS-NEWHOST";
 
-# Match what the installer configured — systemd-boot for UEFI:
+# For UEFI/systemd-boot machines:
 boot.loader.systemd-boot.enable = true;
 boot.loader.efi.canTouchEfiVariables = true;
-boot.loader.systemd-boot.configurationLimit = 5;
-boot.initrd.systemd.enable = true;
 
 # For BIOS/GRUB machines instead:
 # boot.loader.grub.enable = true;
 # boot.loader.grub.devices = [ "/dev/sda" ]; # verify with: sudo grub-probe --target=disk /
-
-nix.settings.experimental-features = [ "nix-command" "flakes" ];
-system.stateVersion = "25.11"; # use the version the installer generated
 ```
 
 ### 4. Register the host in flake.nix
@@ -113,7 +129,7 @@ Create `hosts/FredOS-NEWHOST.nix` on GitHub for any machine-specific packages or
 { config, pkgs, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-NEWHOST") {
-    # host-specific config here
+    # host-specific packages and services here
   };
 }
 ```

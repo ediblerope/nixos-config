@@ -8,7 +8,12 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  boot.blacklistedKernelModules = [ "b43" "bcma" "ssb" ];
+  boot.kernelParams = [ "acpi_osi=" ];
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/e295ac26-bf7e-4b93-bc97-74c3c01de0e3";
@@ -25,13 +30,27 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
   networking.hostName = "FredOS-Macbook";
+  hardware.enableRedistributableFirmware = true;
+  hardware.facetimehd.enable = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  nixpkgs.config.allowInsecurePredicate = pkg:
+    (lib.hasPrefix "broadcom-sta" (lib.getName pkg));
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  services.xserver.deviceSection = lib.mkDefault ''
+      Option "TearFree" "true"
+    '';
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+    };
+  };
 
   system.stateVersion = "25.11";
 }

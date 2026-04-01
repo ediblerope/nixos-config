@@ -23,19 +23,8 @@
       onlyoffice-desktopeditors
       vscodium
     ];
-    
+
     programs.nix-ld.enable = true;
-    services.lact.enable = true;
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-    services.xserver.videoDrivers = ["amdgpu"];
-    boot.initrd.kernelModules = [ "amdgpu" ];
-    boot.kernelModules = [ "ntsync" ];
-    
-    # Enable AMD GPU overdrive for overclocking/undervolting
-    boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" "amdgpu.freesync_video=1"];
 
     programs.steam = {
       enable = true;
@@ -46,10 +35,7 @@
         ];
       };
     };
-  
-    # Bootloader
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+
     boot.loader.systemd-boot.configurationLimit = 5;
     boot.initrd.systemd.enable = true;
   };

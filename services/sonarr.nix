@@ -19,5 +19,11 @@
       group = "media";
       extraGroups = [ "media" ];
     };
+
+    systemd.tmpfiles.rules = [
+      # Shows - sonarr organises, bazarr writes subtitles
+      "d /mnt/storage/torrents/shows 2775 sonarr media -"
+      "Z /mnt/storage/torrents/shows 2775 sonarr media -"
+    ];
   };
 }
