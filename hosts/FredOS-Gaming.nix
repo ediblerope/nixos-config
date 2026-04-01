@@ -30,7 +30,8 @@
       enable32Bit = true;
     };
     services.xserver.videoDrivers = ["amdgpu"];
-    boot.initrd.kernelModules = [ "amdgpu" "ntsync" ];
+    boot.initrd.kernelModules = [ "amdgpu" ];
+    boot.kernelModules = [ "ntsync" ];
     
     # Enable AMD GPU overdrive for overclocking/undervolting
     boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "acpi_osi=\"!Windows 2015\"" "amdgpu.freesync_video=1"];
