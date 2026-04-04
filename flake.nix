@@ -23,9 +23,11 @@
     };
   
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
-  outputs = { self, nixpkgs, home-manager, omnisearch, zen-browser, nix-flatpak, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, omnisearch, zen-browser, nix-flatpak, nix-cachyos-kernel, ... } @ inputs:
   let
     system = "x86_64-linux";
     mkHost = hostname: nixpkgs.lib.nixosSystem {

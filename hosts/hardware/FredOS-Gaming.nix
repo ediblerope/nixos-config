@@ -1,9 +1,17 @@
 #./hosts/hardware/FredOS-Gaming.nix
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, inputs, ... }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
+  boot.kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-bore;
+
+  nix.settings = {
+    substituters = [ "https://attic.xuyh0120.win/lantian" ];
+    trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+  };
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
