@@ -1,19 +1,11 @@
 {
   description = "FredOS NixOS configuration";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    omnisearch = {
-      url = "https://git.bwaaa.monster/omnisearch/snapshot/omnisearch-master.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs = {
@@ -23,11 +15,9 @@
     };
   
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
-
-  outputs = { self, nixpkgs, home-manager, omnisearch, zen-browser, nix-flatpak, nix-cachyos-kernel, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, zen-browser, nix-flatpak, nix-cachyos-kernel, ... } @ inputs:
   let
     system = "x86_64-linux";
     mkHost = hostname: nixpkgs.lib.nixosSystem {
@@ -39,7 +29,6 @@
         ./common.nix
         home-manager.nixosModules.home-manager
         nix-flatpak.nixosModules.nix-flatpak
-        omnisearch.nixosModules.default
       ];
     };
   in {
