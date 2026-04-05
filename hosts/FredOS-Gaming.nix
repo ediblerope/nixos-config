@@ -22,7 +22,6 @@
       proton-vpn
       onlyoffice-desktopeditors
       vscodium
-      easyeffects
     ];
 
     programs.nix-ld.enable = true;
