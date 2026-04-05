@@ -1,23 +1,5 @@
 {
   "nodes": {
-    "beaker-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773884524,
-        "narHash": "sha256-1dnlofWaxI/YRID+WPz2jHZNDyloBubDt/bAQk9ePLU=",
-        "ref": "refs/heads/master",
-        "rev": "abc598baf15d6f8a4de395a27ba34b1e769558e1",
-        "revCount": 21,
-        "shallow": false,
-        "type": "git",
-        "url": "https://git.bwaaa.monster/beaker"
-      },
-      "original": {
-        "shallow": false,
-        "type": "git",
-        "url": "https://git.bwaaa.monster/beaker"
-      }
-    },
     "cachyos-kernel": {
       "flake": false,
       "locked": {
@@ -189,31 +171,12 @@
         "type": "github"
       }
     },
-    "omnisearch": {
-      "inputs": {
-        "beaker-src": "beaker-src",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775330941,
-        "narHash": "sha256-qBmmeLAa3vXZ0FwgGcXpYQhnmcCyLFBjOc8BYjJaTtE=",
-        "type": "tarball",
-        "url": "https://git.bwaaa.monster/omnisearch/snapshot/omnisearch-master.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.bwaaa.monster/omnisearch/snapshot/omnisearch-master.tar.gz"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
-        "omnisearch": "omnisearch",
         "zen-browser": "zen-browser"
       }
     },
