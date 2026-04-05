@@ -31,6 +31,9 @@
       "L+ /etc/crowdsec/config.yaml - - - - ${(pkgs.formats.yaml { }).generate "crowdsec.yaml" config.services.crowdsec.settings.general}"
     ];
 
+    # Ensure /var/lib/crowdsec exists before crowdsec starts (race with tmpfiles-resetup)
+    systemd.services.crowdsec.after = [ "systemd-tmpfiles-resetup.service" ];
+
     # Firewall bouncer — auto-registers to local CrowdSec LAPI
     services.crowdsec-firewall-bouncer = {
       enable = true;
