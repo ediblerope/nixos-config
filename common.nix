@@ -29,6 +29,7 @@
     ./services/jellyfin.nix
     ./services/bazarr.nix
     ./services/cloudflare-ddns.nix
+    ./services/crowdsec.nix
   ];
 
   ### Make build time quicker
