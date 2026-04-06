@@ -29,7 +29,6 @@
     ./services/jellyfin.nix
     ./services/bazarr.nix
     ./services/cloudflare-ddns.nix
-    ./services/crowdsec.nix
     ./services/fail2ban.nix
   ];
 
