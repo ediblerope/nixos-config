@@ -12,7 +12,7 @@
       # Progressively longer bans for repeat offenders, up to 1 week
       bantime-increment = {
         enable = true;
-        multiplier = "1 2 4 8 16 32 64";
+        multipliers = "1 2 4 8 16 32 64";
         maxtime = "168h";
         overalljails = true;
       };
