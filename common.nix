@@ -30,8 +30,6 @@
     ./services/bazarr.nix
     ./services/cloudflare-ddns.nix
     ./services/fail2ban.nix
-    ./services/suricata.nix
-    ./services/elk.nix
   ];
 
   ### Make build time quicker
