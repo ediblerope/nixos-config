@@ -35,6 +35,8 @@ in
           "discovery.type" = "single-node";
           # Security disabled — ES is not exposed externally
           "xpack.security.enabled" = "false";
+          # Disable enrollment flow (ES 8.x auto-enables this when security is on)
+          "xpack.security.enrollment.enabled" = "false";
           # Keep heap at 1g; ES default is 50% of RAM which is excessive here
           "ES_JAVA_OPTS" = "-Xms1g -Xmx1g";
         };
@@ -46,6 +48,8 @@ in
         image = "docker.elastic.co/kibana/kibana:${elasticVersion}";
         environment = {
           "ELASTICSEARCH_HOSTS" = "http://elasticsearch:9200";
+          # Tell Kibana security is off — suppresses the enrollment token screen
+          "xpack.security.enabled" = "false";
           # Cap Node.js heap — default is uncapped
           "NODE_OPTIONS" = "--max-old-space-size=512";
         };
