@@ -5,6 +5,13 @@
     services.suricata = {
       enable = true;
 
+      # Default disabledRules covers DNP3 (2270000-2270004); add Modbus rules
+      # which also fail to parse because those protocols are disabled in the build
+      disabledRules = [
+        "2270000" "2270001" "2270002" "2270003" "2270004"
+        "2250005" "2250006" "2250007" "2250008" "2250009"
+      ];
+
       settings = {
         vars.address-groups = {
           # Your local networks — Suricata won't alert on traffic within these
