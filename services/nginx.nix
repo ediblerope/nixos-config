@@ -64,6 +64,7 @@ in
         domain = "*.nordhammer.it";
         extraDomainNames = [ "nordhammer.it" ];
         dnsProvider = "cloudflare";
+        dnsPropagationCheck = false;
         credentialFiles = {
           "CF_DNS_API_TOKEN_FILE" = "/var/secrets/cloudflare-token";
         };
