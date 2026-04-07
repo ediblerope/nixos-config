@@ -87,7 +87,7 @@ in
 
       # Allow access from anywhere on the LAN
       # Add your domain here too if you expose it via Nginx Proxy Manager
-      allowedHosts = "localhost:8082,127.0.0.1:8082,192.168.4.74:8082";
+      allowedHosts = "localhost:8082,127.0.0.1:8082,homepage.nordhammer.it";
 
       # API keys auto-extracted by homepage-extract-secrets.service
       environmentFiles = [ "/etc/homepage-secrets" ];
@@ -136,12 +136,12 @@ in
           Media = [
             {
               Jellyfin = {
-                href = "http://192.168.4.74:8096";
+                href = "https://jellyfin.nordhammer.it";
                 description = "Media server";
                 icon = "jellyfin.png";
                 widget = {
                   type = "jellyfin";
-                  url = "http://192.168.4.74:8096";
+                  url = "http://127.0.0.1:8096";
                   key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
                   enableBlocks = true;
                   enableNowPlaying = true;
@@ -150,24 +150,24 @@ in
             }
             {
               Bazarr = {
-                href = "http://192.168.4.74:6767";
+                href = "https://bazarr.nordhammer.it";
                 description = "Subtitle management";
                 icon = "bazarr.png";
                 widget = {
                   type = "bazarr";
-                  url = "http://192.168.4.74:6767";
+                  url = "http://127.0.0.1:6767";
                   key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
                 };
               };
             }
             {
               Sonarr = {
-                href = "http://192.168.4.74:8989";
+                href = "https://sonarr.nordhammer.it";
                 description = "TV show management";
                 icon = "sonarr.png";
                 widget = {
                   type = "sonarr";
-                  url = "http://192.168.4.74:8989";
+                  url = "http://127.0.0.1:8989";
                   key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
                   enableQueue = true;
                 };
@@ -175,12 +175,12 @@ in
             }
             {
               Radarr = {
-                href = "http://192.168.4.74:7878";
+                href = "https://radarr.nordhammer.it";
                 description = "Movie management";
                 icon = "radarr.png";
                 widget = {
                   type = "radarr";
-                  url = "http://192.168.4.74:7878";
+                  url = "http://127.0.0.1:7878";
                   key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
                   enableQueue = true;
                 };
@@ -192,7 +192,7 @@ in
           Downloads = [
             {
               qBittorrent = {
-                href = "http://192.168.4.74:8080";
+                href = "https://torrent.nordhammer.it";
                 description = "Torrent client";
                 icon = "qbittorrent.png";
                 widget = {
@@ -203,12 +203,12 @@ in
             }
             {
               Prowlarr = {
-                href = "http://192.168.4.74:9696";
+                href = "https://prowlarr.nordhammer.it";
                 description = "Indexer manager";
                 icon = "prowlarr.png";
                 widget = {
                   type = "prowlarr";
-                  url = "http://192.168.4.74:9696";
+                  url = "http://127.0.0.1:9696";
                   key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
                 };
               };
@@ -218,22 +218,15 @@ in
         {
           Infrastructure = [
             {
-              "Nginx Proxy Manager" = {
-                href = "http://192.168.4.74:81";
-                description = "Reverse proxy";
-                icon = "nginx-proxy-manager.png";
-              };
-            }
-            {
               Authelia = {
-                href = "http://192.168.4.74:9091";
+                href = "https://auth.nordhammer.it";
                 description = "SSO & 2FA";
                 icon = "authelia.png";
               };
             }
             {
               go2rtc = {
-                href = "http://192.168.4.74:1984";
+                href = "https://camera.nordhammer.it";
                 description = "Camera streams";
                 icon = "go2rtc.png";
               };

@@ -37,14 +37,26 @@
           };
         };
 
-        # Nginx Proxy Manager — watches Docker-mounted log files for 401/403s
-        nginx-proxy-manager = {
+        # Nginx — watches access log for HTTP auth failures
+        nginx = {
           settings = {
             enabled = true;
             filter = "nginx-http-auth";
-            logpath = "/home/fred/docker/nginx-proxy-manager/data/logs/*.log";
+            logpath = "/var/log/nginx/access.log";
             maxretry = 10;
             bantime = "1h";
+          };
+        };
+
+        # Authelia — failed login attempts via journald
+        authelia = {
+          settings = {
+            enabled = true;
+            backend = "systemd";
+            journalmatch = "_SYSTEMD_UNIT=authelia-main.service";
+            filter = "authelia";
+            maxretry = 5;
+            bantime = "2h";
           };
         };
 
@@ -137,6 +149,13 @@
     environment.etc."fail2ban/filter.d/qbittorrent.conf".text = ''
       [Definition]
       failregex = .*WebAPI login failure.*remote IP: <HOST>
+      ignoreregex =
+    '';
+
+    # Authelia filter
+    environment.etc."fail2ban/filter.d/authelia.conf".text = ''
+      [Definition]
+      failregex = ^.*Unsuccessful .* authentication attempt by user .* from <HOST>.*$
       ignoreregex =
     '';
 

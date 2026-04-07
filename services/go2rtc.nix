@@ -1,38 +1,18 @@
-#/services/go2rtc.nix
-{ config, pkgs, lib, ... }:
-
+# services/go2rtc.nix — Native go2rtc camera streaming
+{ config, lib, ... }:
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
-    virtualisation.oci-containers = {
-      backend = "docker";
-
-      # --- Authelia ---
-      containers."authelia" = {
-        image = "authelia/authelia:latest";
-        volumes = [
-          "/home/fred/docker/authelia:/config"
-          "/home/fred/docker/authelia/users_database.yml:/config/users_database.yml"
-          "/home/fred/docker/authelia/secrets:/secrets"
-        ];
-        ports = [ "9091:9091" ];
-      };
-
-      # --- Go2RTC ---
-      containers."go2rtc" = {
-        image = "alexxit/go2rtc:latest";
-        volumes = [
-          "/home/fred/docker/go2rtc/config.yml:/config/go2rtc.yaml"
-        ];
-        ports = [ "1984:1984" ];
+    services.go2rtc = {
+      enable = true;
+      settings = {
+        # NOTE: RTSP credentials end up in the nix store — same exposure as
+        # the old Docker bind-mount config. Acceptable for a local LAN camera.
+        streams.kids_bedroom = "rtsp://fredrik:12345678@192.168.4.39:554/stream1";
+        api.listen = ":1984";
+        webrtc.listen = ":8555";
       };
     };
 
-    # --- Create directories ---
-    systemd.tmpfiles.rules = [
-      # Local secrets & configs
-      "d /home/fred/docker/authelia/secrets 0700 fred users -"
-      "d /home/fred/docker/go2rtc 0755 fred users -"
-    ];
   };
 }
