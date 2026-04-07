@@ -79,8 +79,9 @@ in
       recommendedOptimisation = true;
       recommendedGzipSettings = true;
 
-      # File-based access log for fail2ban
+      # File-based access log for fail2ban + fix proxy_headers_hash warning
       appendHttpConfig = ''
+        proxy_headers_hash_max_size 1024;
         access_log /var/log/nginx/access.log;
       '';
 
