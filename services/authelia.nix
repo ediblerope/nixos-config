@@ -10,6 +10,7 @@ let
     STATE_DIR="/var/lib/authelia-main"
 
     mkdir -p "$SECRETS_DIR"
+    mkdir -p "$STATE_DIR"
 
     # Migrate secrets from Docker config if they haven't been extracted yet
     if [ -f "$DOCKER_CONFIG" ]; then
