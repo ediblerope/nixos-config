@@ -165,6 +165,37 @@ After this succeeds, the plain `update` alias works from then on.
 | nix-flatpak | `github:gmodena/nix-flatpak` |
 | nix-cachyos-kernel | `github:xddxdd/nix-cachyos-kernel/release` |
 
+## Mediaserver secrets
+
+Several services on FredOS-Mediaserver require secrets that are stored on the machine (not in the repo). After a fresh deploy, create these before running `update`:
+
+```bash
+# Cloudflare API token (used by DDNS and ACME wildcard cert)
+# See services/cloudflare-ddns.md for token permissions
+echo -n 'your-cloudflare-api-token' | sudo tee /var/secrets/cloudflare-token
+sudo chmod 600 /var/secrets/cloudflare-token
+
+# go2rtc RTSP camera URL
+echo -n 'rtsp://username:password@camera-ip:554/stream1' | sudo tee /var/secrets/go2rtc-rtsp-url
+sudo chmod 600 /var/secrets/go2rtc-rtsp-url
+
+# Authelia secrets — auto-migrated from Docker on first deploy
+# If migrating from Docker, ensure these exist at /home/fred/docker/authelia/:
+#   - configuration.yml (jwt_secret, session secret, storage key are extracted)
+#   - users_database.yml (copied to /var/lib/authelia-main/)
+# For a fresh install, create manually:
+sudo mkdir -p /var/secrets/authelia
+echo -n 'random-jwt-secret'              | sudo tee /var/secrets/authelia/jwt_secret
+echo -n 'random-session-secret'          | sudo tee /var/secrets/authelia/session_secret
+echo -n 'random-storage-encryption-key'  | sudo tee /var/secrets/authelia/storage_encryption_key
+sudo chmod 600 /var/secrets/authelia/*
+
+# Authelia user database (for a fresh install)
+sudo mkdir -p /var/lib/authelia-main
+sudo cp users_database.yml /var/lib/authelia-main/
+sudo chown authelia-main:authelia-main /var/lib/authelia-main/users_database.yml
+```
+
 ## Notes
 
 - `hosts/hardware/` files are committed to the repo — they contain UUIDs and disk layout but no sensitive credentials
