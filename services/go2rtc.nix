@@ -12,7 +12,6 @@ let
   injectSecrets = pkgs.writeShellScript "go2rtc-inject-secrets" ''
     set -euo pipefail
     SECRETS="/var/secrets/go2rtc-rtsp-url"
-    mkdir -p /run/go2rtc
     if [ -f "$SECRETS" ]; then
       RTSP_URL=$(tr -d '\n' < "$SECRETS")
       ${pkgs.gnused}/bin/sed "s|@RTSP_URL@|$RTSP_URL|g" ${configTemplate} > /run/go2rtc/config.yaml
@@ -35,6 +34,7 @@ in
 
     # Override to use runtime-templated config with secrets
     systemd.services.go2rtc.serviceConfig = {
+      RuntimeDirectory = "go2rtc";
       ExecStartPre = [ "!${injectSecrets}" ];
       ExecStart = lib.mkForce "${config.services.go2rtc.package}/bin/go2rtc -config /run/go2rtc/config.yaml";
     };
