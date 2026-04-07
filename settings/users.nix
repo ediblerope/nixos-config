@@ -3,6 +3,11 @@
 
 {
     # Define a user account. Don't forget to set a password with 'passwd'.
+	security.sudo.extraRules = [{
+		users = [ "fred" ];
+		commands = [{ command = "ALL"; options = [ "NOPASSWD" ]; }];
+	}];
+
 	users.users.fred = {
 		isNormalUser = true;
 		description = "fred";
