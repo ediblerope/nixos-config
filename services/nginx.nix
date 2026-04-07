@@ -3,28 +3,26 @@
 let
   # Authelia forward-auth snippet injected into protected locations
   autheliaAuthConfig = ''
-    set $target_url $scheme://$http_host$request_uri;
-    auth_request /internal/authelia/authz;
+    auth_request /authelia;
     auth_request_set $user $upstream_http_remote_user;
-    auth_request_set $groups $upstream_http_remote_groups;
-    error_page 401 =302 https://auth.nordhammer.it/?rd=$target_url;
+    auth_request_set $email $upstream_http_remote_email;
+    error_page 401 =302 https://auth.nordhammer.it/?rd=$scheme://$http_host$request_uri;
   '';
 
   # Internal location that queries Authelia's verification endpoint
   autheliaLocation = {
-    "/internal/authelia/authz" = {
-      proxyPass = "http://127.0.0.1:9091/api/authz/forward-auth";
+    "/authelia" = {
+      proxyPass = "http://127.0.0.1:9091/api/verify";
       extraConfig = ''
         internal;
-        proxy_set_header X-Original-Method $request_method;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
         proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
         proxy_set_header X-Forwarded-Method $request_method;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $http_host;
-        proxy_set_header X-Forwarded-URI $request_uri;
+        proxy_set_header X-Forwarded-Uri $request_uri;
         proxy_set_header X-Forwarded-For $remote_addr;
-        proxy_set_header Content-Length "";
-        proxy_set_header Connection "";
       '';
     };
   };
