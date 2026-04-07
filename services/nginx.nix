@@ -64,7 +64,9 @@ in
         domain = "*.nordhammer.it";
         extraDomainNames = [ "nordhammer.it" ];
         dnsProvider = "cloudflare";
-        dnsPropagationCheck = false;
+        # Wait 30s after creating the TXT record before asking LE to validate
+        extraLegoRunFlags = [ "--dns.propagation-wait" "30s" ];
+        extraLegoRenewFlags = [ "--dns.propagation-wait" "30s" ];
         credentialFiles = {
           "CF_DNS_API_TOKEN_FILE" = "/var/secrets/cloudflare-token";
         };
