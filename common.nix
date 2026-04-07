@@ -31,6 +31,7 @@
     ./services/cloudflare-ddns.nix
     ./services/fail2ban.nix
     ./services/homepage.nix
+    ./services/arr-interconnect.nix
   ];
 
   ### Make build time quicker
