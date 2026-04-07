@@ -191,8 +191,18 @@ echo -n 'random-storage-encryption-key'  | sudo tee /var/secrets/authelia/storag
 sudo chmod 600 /var/secrets/authelia/*
 
 # Authelia user database (for a fresh install)
+# Create users_database.yml with this structure:
+#   ---
+#   users:
+#     username:
+#       password: "$argon2id$..."    # hashed — see below
+#       displayname: Display Name
+#       email: user@example.com
+#
+# Generate a password hash with:
+#   nix-shell -p authelia --run "authelia crypto hash generate argon2"
 sudo mkdir -p /var/lib/authelia-main
-sudo cp users_database.yml /var/lib/authelia-main/
+sudo nano /var/lib/authelia-main/users_database.yml
 sudo chown authelia-main:authelia-main /var/lib/authelia-main/users_database.yml
 ```
 
