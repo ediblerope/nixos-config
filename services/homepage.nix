@@ -1,6 +1,84 @@
 { config, lib, pkgs, ... }:
+let
+  # Script that extracts API keys from all services and writes /etc/homepage-secrets
+  extractSecrets = pkgs.writeShellScript "extract-homepage-secrets" ''
+    set -euo pipefail
+
+    SECRETS_FILE="/etc/homepage-secrets"
+
+    # --- *arr apps: API keys live in config.xml as <ApiKey>...</ApiKey> ---
+    extract_arr_key() {
+      local name="$1" path="$2"
+      if [ -f "$path" ]; then
+        ${pkgs.gnused}/bin/sed -n 's/.*<ApiKey>\(.*\)<\/ApiKey>.*/\1/p' "$path"
+      fi
+    }
+
+    SONARR_KEY=$(extract_arr_key "sonarr" "/var/lib/sonarr/config.xml")
+    RADARR_KEY=$(extract_arr_key "radarr" "/var/lib/radarr/config.xml")
+    PROWLARR_KEY=$(extract_arr_key "prowlarr" "/var/lib/prowlarr/config.xml")
+
+    # --- Bazarr: API key in config.ini under [auth] section ---
+    BAZARR_KEY=""
+    if [ -f "/var/lib/bazarr/data/config/config.ini" ]; then
+      BAZARR_KEY=$(${pkgs.gnugrep}/bin/grep -oP '(?<=apikey = ).*' /var/lib/bazarr/data/config/config.ini || true)
+    fi
+    # Fallback: Bazarr sometimes stores it in config.yaml
+    if [ -z "$BAZARR_KEY" ] && [ -f "/var/lib/bazarr/config/config.yaml" ]; then
+      BAZARR_KEY=$(${pkgs.gnugrep}/bin/grep -oP '(?<=apikey: ).*' /var/lib/bazarr/config/config.yaml || true)
+    fi
+
+    # --- Jellyfin: create an API key in the DB if one doesn't exist ---
+    JELLYFIN_KEY=""
+    JELLYFIN_DB="/var/lib/jellyfin/data/jellyfin.db"
+    if [ -f "$JELLYFIN_DB" ]; then
+      # Check if a "Homepage" key already exists
+      JELLYFIN_KEY=$(${pkgs.sqlite}/bin/sqlite3 "$JELLYFIN_DB" \
+        "SELECT AccessToken FROM ApiKeys WHERE Name = 'Homepage' LIMIT 1;" 2>/dev/null || true)
+
+      if [ -z "$JELLYFIN_KEY" ]; then
+        # Generate a random 32-char hex token
+        JELLYFIN_KEY=$(${pkgs.coreutils}/bin/head -c 16 /dev/urandom | ${pkgs.coreutils}/bin/od -An -tx1 | ${pkgs.gnused}/bin/sed 's/ //g' | ${pkgs.coreutils}/bin/head -c 32)
+        NOW=$(${pkgs.coreutils}/bin/date -u '+%Y-%m-%d %H:%M:%S')
+        ${pkgs.sqlite}/bin/sqlite3 "$JELLYFIN_DB" \
+          "INSERT INTO ApiKeys (DateCreated, DateLastActivity, Name, AccessToken) VALUES ('$NOW', '0001-01-01 00:01:00', 'Homepage', '$JELLYFIN_KEY');"
+      fi
+    fi
+
+    # --- Write the secrets file ---
+    cat > "$SECRETS_FILE" <<EOF
+    HOMEPAGE_VAR_SONARR_KEY=$SONARR_KEY
+    HOMEPAGE_VAR_RADARR_KEY=$RADARR_KEY
+    HOMEPAGE_VAR_PROWLARR_KEY=$PROWLARR_KEY
+    HOMEPAGE_VAR_BAZARR_KEY=$BAZARR_KEY
+    HOMEPAGE_VAR_JELLYFIN_KEY=$JELLYFIN_KEY
+    EOF
+
+    chmod 600 "$SECRETS_FILE"
+  '';
+in
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
+
+    # Oneshot service that extracts API keys and writes /etc/homepage-secrets
+    systemd.services.homepage-extract-secrets = {
+      description = "Extract API keys for Homepage dashboard";
+      after = [
+        "jellyfin.service"
+        "sonarr.service"
+        "radarr.service"
+        "bazarr.service"
+        "prowlarr.service"
+      ];
+      requires = [ "jellyfin.service" ];
+      before = [ "homepage-dashboard.service" ];
+      requiredBy = [ "homepage-dashboard.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = extractSecrets;
+        RemainAfterExit = true;
+      };
+    };
 
     services.homepage-dashboard = {
       enable = true;
@@ -11,14 +89,7 @@
       # Add your domain here too if you expose it via Nginx Proxy Manager
       allowedHosts = "localhost:8082,127.0.0.1:8082,192.168.4.74:8082";
 
-      # API keys loaded from a file that lives outside the Nix store
-      # Create /etc/homepage-secrets with content like:
-      #   HOMEPAGE_VAR_JELLYFIN_KEY=your_api_key_here
-      #   HOMEPAGE_VAR_SONARR_KEY=your_api_key_here
-      #   HOMEPAGE_VAR_RADARR_KEY=your_api_key_here
-      #   HOMEPAGE_VAR_PROWLARR_KEY=your_api_key_here
-      #   HOMEPAGE_VAR_BAZARR_KEY=your_api_key_here
-      #   HOMEPAGE_VAR_QBIT_PASSWORD=your_password_here
+      # API keys auto-extracted by homepage-extract-secrets.service
       environmentFiles = [ "/etc/homepage-secrets" ];
 
       settings = {
@@ -126,9 +197,7 @@
                 icon = "qbittorrent.png";
                 widget = {
                   type = "qbittorrent";
-                  url = "http://192.168.4.74:8080";
-                  username = "admin";
-                  password = "{{HOMEPAGE_VAR_QBIT_PASSWORD}}";
+                  url = "http://127.0.0.1:8080";
                 };
               };
             }
