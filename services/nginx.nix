@@ -3,8 +3,8 @@
 let
   # Authelia forward-auth snippet injected into protected locations
   autheliaAuthConfig = ''
+    set $target_url $scheme://$http_host$request_uri;
     auth_request /internal/authelia/authz;
-    auth_request_set $target_url $scheme://$http_host$request_uri;
     auth_request_set $user $upstream_http_remote_user;
     auth_request_set $groups $upstream_http_remote_groups;
     error_page 401 =302 https://auth.nordhammer.it/?rd=$target_url;
