@@ -18,9 +18,6 @@
       yt-dlp
     ];
 
-    # Enable Docker
-    virtualisation.docker.enable = true;
-
     # Basic networking
     networking.useDHCP = lib.mkDefault true;
 

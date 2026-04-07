@@ -206,6 +206,39 @@ sudo nano /var/lib/authelia-main/users_database.yml
 sudo chown authelia-main:authelia-main /var/lib/authelia-main/users_database.yml
 ```
 
+## Migrating to a new server
+
+When moving FredOS-Mediaserver to new hardware, back up these state directories from the old server:
+
+```bash
+# Service databases and config (stop services first)
+/var/lib/jellyfin/          # Library database, users, metadata, API keys
+/var/lib/sonarr/            # TV library database, config.xml (API key)
+/var/lib/radarr/            # Movie library database, config.xml (API key)
+/var/lib/prowlarr/          # Indexer database, config.xml (API key)
+/var/lib/bazarr/            # Subtitle database and config
+/var/lib/qbittorrent/       # Torrent client config and state
+/var/lib/authelia-main/     # User database and session storage
+
+# Secrets
+/var/secrets/               # Cloudflare token, go2rtc RTSP URL, Authelia secrets
+
+# Media files
+/mnt/storage/               # The mergerfs pool (torrents, media libraries, audiobooks)
+```
+
+Steps:
+
+1. Install NixOS on the new server
+2. Create `hosts/hardware/FredOS-Mediaserver.nix` from the new `/etc/nixos/hardware-configuration.nix` (new disk UUIDs, bootloader config)
+3. Set up the mergerfs pool and mount at `/mnt/storage`
+4. Restore `/var/secrets/` (see Mediaserver secrets section above)
+5. Run `sudo nixos-rebuild switch --flake github:ediblerope/nixos-config#FredOS-Mediaserver`
+6. Stop all services, restore the `/var/lib/` directories listed above, then start services
+7. Update Cloudflare DNS if the server's public IP changed
+
+If starting fresh instead of migrating, the services will self-initialize with empty databases. You'll need to redo initial setup in each web UI (add media libraries in Jellyfin, set root folders in Sonarr/Radarr, configure qBittorrent download paths, etc.). The `arr-interconnect` service will auto-wire the connections between them.
+
 ## Notes
 
 - `hosts/hardware/` files are committed to the repo — they contain UUIDs and disk layout but no sensitive credentials
