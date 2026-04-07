@@ -32,13 +32,16 @@ Flake-based NixOS configuration for three machines, built and deployed directly 
 │       ├── FredOS-Macbook.nix       # Broadcom WiFi, Intel GPU, Bluetooth, filesystems, bootloader, hostname
 │       └── FredOS-Mediaserver.nix   # Intel CPU, data disks, mergerfs pool, GRUB, hostname
 ├── services
+│   ├── arr-interconnect.nix         # Cross-service API key wiring for *arr apps
+│   ├── authelia.nix                 # SSO/2FA gateway (protects homepage & camera)
 │   ├── bazarr.nix                   # Subtitle management
 │   ├── cloudflare-ddns.nix          # Cloudflare dynamic DNS
+│   ├── fail2ban.nix                 # Intrusion prevention (SSH, nginx, Authelia, *arr, etc.)
 │   ├── game-servers.nix             # Game server definitions
 │   ├── go2rtc.nix                   # Camera/RTSP streaming
+│   ├── homepage.nix                 # Homepage dashboard with auto-extracted API keys
 │   ├── jellyfin.nix                 # Media server
-│   ├── nginx.nix                    # Reverse proxy
-│   ├── omnisearch.nix               # OmniSearch service
+│   ├── nginx.nix                    # Reverse proxy + ACME wildcard cert via Cloudflare DNS-01
 │   ├── prowlarr.nix                 # Indexer manager
 │   ├── qbittorrent-nox.nix          # Torrent client
 │   ├── radarr.nix                   # Movie management
@@ -158,9 +161,9 @@ After this succeeds, the plain `update` alias works from then on.
 |---|---|
 | nixpkgs | `github:NixOS/nixpkgs/nixos-unstable` |
 | home-manager | `github:nix-community/home-manager` |
-| omnisearch | `git+https://git.bwaaa.monster/omnisearch` |
 | zen-browser | `github:0xc000022070/zen-browser-flake` |
 | nix-flatpak | `github:gmodena/nix-flatpak` |
+| nix-cachyos-kernel | `github:xddxdd/nix-cachyos-kernel/release` |
 
 ## Notes
 

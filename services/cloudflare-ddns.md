@@ -1,15 +1,23 @@
-1. Store your API key securely
+## Store your API key securely
+
 Create a file outside your /etc/nixos directory to store your Cloudflare API token:
-bashsudo mkdir -p /var/secrets
+
+```bash
+sudo mkdir -p /var/secrets
 sudo nano /var/secrets/cloudflare-token
-Put your Cloudflare API token in this file, then set appropriate permissions:
-bashsudo chmod 600 /var/secrets/cloudflare-token
+sudo chmod 600 /var/secrets/cloudflare-token
 sudo chown root:root /var/secrets/cloudflare-token
+```
 
+This token is shared by both `cloudflare-ddns.nix` (DDNS updates) and `nginx.nix` (ACME wildcard cert via DNS-01 challenge).
 
-3. Get your Cloudflare API Token
-If you haven't created one yet:
+## Get your Cloudflare API Token
 
-Go to Cloudflare Dashboard → My Profile → API Tokens
-Create a token with Zone:DNS:Edit permissions for your specific zone
-Copy the token to /var/secrets/cloudflare-token
+Go to Cloudflare Dashboard → My Profile → API Tokens and create a token with:
+
+- **Zone : Zone : Read**
+- **Zone : DNS : Edit**
+
+Both permissions are required — Zone:Read for ACME to locate the zone, DNS:Edit for DDNS updates and ACME challenge TXT records.
+
+Copy the token to `/var/secrets/cloudflare-token`.
