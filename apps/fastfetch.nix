@@ -51,47 +51,28 @@
     # Disable default greeting
     set -g fish_greeting
 
-    # Run fastfetch on terminal start
-    fastfetch --config /etc/fastfetch/config.jsonc
-
     # Custom prompt
     function fish_prompt
       set -l last_status $status
 
       # Nix-shell indicator
       if set -q IN_NIX_SHELL
-        set_color yellow
-        printf '[nix-shell] '
+        set_color -b yellow black
+        printf ' nix-shell '
         set_color normal
+        printf ' '
       end
 
       # Line 1:  hostname ~/path
-      set_color green
-      printf ' '
-      set_color yellow
-      printf '%s' (hostname)
-      set_color normal
-      printf ' '
-
+      set_color -b green black
+      printf '  '
+      set_color -b yellow black
+      printf ' %s ' (hostname)
+      set_color -b blue white
       # Path with colored segments
       set -l realhome (string escape --style=regex -- $HOME)
       set -l path (string replace -r "^$realhome" '~' $PWD)
-      set -l parts (string split '/' $path)
-      set -l colors green cyan blue
-
-      for i in (seq (count $parts))
-        set -l part $parts[$i]
-        if test -n "$part"
-          if test $i -gt 1
-            set_color brblack
-            printf '/'
-          end
-          set -l cidx (math '(' $i - 1 ')' '%' 3 + 1)
-          set_color $colors[$cidx]
-          printf '%s' $part
-        end
-      end
-
+      printf ' %s ' $path
       set_color normal
       printf '\n'
 
