@@ -66,7 +66,7 @@
       set_color 394b70
       printf ""
       set_color 7dcfff -b 394b70
-      printf "  "
+      printf " "
 
       # Arrow transition: nix -> hostname
       set_color 394b70 -b e0af68
