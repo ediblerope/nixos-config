@@ -8,6 +8,9 @@
     services.displayManager.gdm.wayland = true;
     boot.plymouth.enable = false;
     
+    # Flatpak for ad-hoc app installs via Bazaar
+    services.flatpak.enable = true;
+
     # Add extensions, packages, and terminal
     environment.systemPackages = with pkgs; [
       ghostty
