@@ -57,22 +57,22 @@
 
       # Nix-shell indicator
       if set -q IN_NIX_SHELL
-        set_color -b yellow white
-        printf ' nix-shell '
+        set_color -o yellow
+        printf '[nix-shell] '
         set_color normal
-        printf ' '
       end
 
       # Line 1:  hostname ~/path
-      set_color -b green white
-      printf '  '
-      set_color -b yellow white
-      printf ' %s ' (hostname)
-      set_color -b blue white
-      # Path with colored segments
+      set_color -o cyan
+      printf ' '
+      set_color -o yellow
+      printf ' %s' (hostname)
+      set_color normal
+      printf ' '
+      set_color -o green
       set -l realhome (string escape --style=regex -- $HOME)
       set -l path (string replace -r "^$realhome" '~' $PWD)
-      printf ' %s ' $path
+      printf '%s' $path
       set_color normal
       printf '\n'
 
