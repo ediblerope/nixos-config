@@ -14,6 +14,17 @@
     { allowUnfree = true; }
   '';
   
+  # Ghostty config
+  home.file.".config/ghostty/config".text = ''
+    font-family = FiraCode Nerd Font
+    font-size = 11
+    theme = dark:catppuccin-mocha,light:catppuccin-latte
+    window-padding-x = 10
+    window-padding-y = 10
+    confirm-close-surface = false
+    gtk-titlebar = false
+  '';
+
   # Import gnome home manager config
   imports = [ ./gnome-hm.nix ];
 }

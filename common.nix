@@ -69,7 +69,11 @@
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
-  # Shell aliases
+  # Fish shell
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
+
+  # Shell aliases (work in both bash and fish)
   environment.shellAliases = {
     update = "sudo nixos-rebuild switch --flake github:ediblerope/nixos-config";
     clean = "sudo nix-collect-garbage -d";

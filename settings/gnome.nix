@@ -8,8 +8,9 @@
     services.displayManager.gdm.wayland = true;
     boot.plymouth.enable = false;
     
-    # Add extensions and packages
+    # Add extensions, packages, and terminal
     environment.systemPackages = with pkgs; [
+      ghostty
       gnomeExtensions.blur-my-shell
       gnomeExtensions.just-perfection
       gnomeExtensions.appindicator
