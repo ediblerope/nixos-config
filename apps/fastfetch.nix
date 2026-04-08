@@ -13,7 +13,7 @@
   ];
 
   # Simple fastfetch config — run `fastfetch` manually for system info
-  environment.etc."fastfetch/config.jsonc".text = ''''''
+  environment.etc."fastfetch/config.jsonc".text = ''
     {
       "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
       "logo": {
@@ -43,10 +43,10 @@
         "memory"
       ]
     }
-  '''''';
+  '';
 
   # Fish shell settings and custom powerline prompt
-  programs.fish.interactiveShellInit = ''''''
+  programs.fish.interactiveShellInit = ''
     # Disable default greeting
     set -g fish_greeting
 
@@ -126,5 +126,5 @@
     end
 
     function fish_right_prompt; end
-  '''''';
+  '';
 }
