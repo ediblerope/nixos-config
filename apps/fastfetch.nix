@@ -52,16 +52,16 @@
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
       format = builtins.concatStringsSep "" [
-        "[](fg:#394b70)"
+        "[](fg:#394b70)"
         "$os"
-        "[](bg:#e0af68 fg:#394b70)"
+        "[](bg:#e0af68 fg:#394b70)"
         "$hostname"
-        "[](bg:#41a6b5 fg:#e0af68)"
+        "[](bg:#41a6b5 fg:#e0af68)"
         "$directory"
-        "[](fg:#41a6b5 bg:#bb9af7)"
+        "[](fg:#41a6b5 bg:#bb9af7)"
         "$git_branch"
         "$git_status"
-        "[](fg:#bb9af7)"
+        "[](fg:#bb9af7)"
         "$nix_shell"
         "\n"
         "$character"
