@@ -15,6 +15,7 @@
   '';
   
   # Ghostty config
+  home.file.".config/ghostty/config".force = true;
   home.file.".config/ghostty/config".text = ''
     font-family = FiraCode Nerd Font
     font-size = 11
