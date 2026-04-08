@@ -46,47 +46,74 @@
     }
   '';
 
-  # Fish prompt and terminal startup
+  # Starship cross-shell prompt
+  programs.starship = {
+    enable = true;
+    settings = {
+      "$schema" = "https://starship.rs/config-schema.json";
+      format = builtins.concatStringsSep "" [
+        "[](#7dcfff)"
+        "$os"
+        "[](bg:#e0af68 fg:#7dcfff)"
+        "$hostname"
+        "[](bg:#9ece6a fg:#e0af68)"
+        "$directory"
+        "[](fg:#9ece6a bg:#bb9af7)"
+        "$git_branch"
+        "$git_status"
+        "[](fg:#bb9af7)"
+        "$nix_shell"
+        "\n"
+        "$character"
+      ];
+
+      os = {
+        style = "bg:#7dcfff fg:#1a1b26";
+        format = "[ $symbol]($style)";
+        disabled = false;
+        symbols.NixOS = "";
+      };
+
+      hostname = {
+        ssh_only = false;
+        style = "bg:#e0af68 fg:#1a1b26";
+        format = "[ $hostname ]($style)";
+      };
+
+      directory = {
+        style = "bg:#9ece6a fg:#1a1b26";
+        format = "[ $path ]($style)";
+        truncation_length = 4;
+        truncation_symbol = ".../";
+      };
+
+      git_branch = {
+        symbol = "";
+        style = "bg:#bb9af7 fg:#1a1b26";
+        format = "[ $symbol $branch ]($style)";
+      };
+
+      git_status = {
+        style = "bg:#bb9af7 fg:#1a1b26";
+        format = "[$all_status$ahead_behind ]($style)";
+      };
+
+      nix_shell = {
+        symbol = " ";
+        style = "bold yellow";
+        format = " [$symbol$state]($style)";
+      };
+
+      character = {
+        success_symbol = "[❯](bold purple)";
+        error_symbol = "[❯](bold red)";
+      };
+    };
+  };
+
+  # Fish shell settings
   programs.fish.interactiveShellInit = ''
     # Disable default greeting
     set -g fish_greeting
-
-    # Custom prompt
-    function fish_prompt
-      set -l last_status $status
-
-      # Nix-shell indicator
-      if set -q IN_NIX_SHELL
-        set_color -o yellow
-        printf '[nix-shell] '
-        set_color normal
-      end
-
-      # Line 1:  hostname ~/path
-      set_color -o cyan
-      printf ' '
-      set_color -o yellow
-      printf ' %s' (hostname)
-      set_color normal
-      printf ' '
-      set_color -o green
-      set -l realhome (string escape --style=regex -- $HOME)
-      set -l path (string replace -r "^$realhome" '~' $PWD)
-      printf '%s' $path
-      set_color normal
-      printf '\n'
-
-      # Line 2: ❯
-      if test $last_status -ne 0
-        set_color red
-      else
-        set_color magenta
-      end
-      printf '❯ '
-      set_color normal
-    end
-
-    # Disable the default right prompt
-    function fish_right_prompt; end
   '';
 }
