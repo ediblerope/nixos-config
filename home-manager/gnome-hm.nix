@@ -2,8 +2,32 @@
 {
   config = lib.mkIf (lib.elem osConfig.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ]) {
 
-    home.file.".local/share/backgrounds/wallpaper.png".source = 
+    home.file.".local/share/backgrounds/wallpaper.png".source =
       "${inputs.self}/walls/wallpaper.png";
+
+    # Minimal titlebars — hide window buttons and shrink headerbar
+    home.file.".config/gtk-4.0/gtk.css".force = true;
+    home.file.".config/gtk-4.0/gtk.css".text = ''
+      headerbar {
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+      }
+      headerbar .title {
+        font-size: 0;
+      }
+    '';
+    home.file.".config/gtk-3.0/gtk.css".force = true;
+    home.file.".config/gtk-3.0/gtk.css".text = ''
+      headerbar {
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+      }
+      headerbar .title {
+        font-size: 0;
+      }
+    '';
     
     # GNOME dconf settings
     dconf.settings = {
@@ -39,6 +63,7 @@
       };
       "org/gnome/desktop/wm/preferences" = {
         resize-with-right-button = lib.hm.gvariant.mkBoolean true;
+        button-layout = "";
       };
       
       # Shell keybindings
