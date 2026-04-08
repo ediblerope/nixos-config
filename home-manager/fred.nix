@@ -22,7 +22,7 @@
     theme = dark:Catppuccin Mocha,light:Catppuccin Latte
     window-padding-x = 10
     window-padding-y = 10
-    background-opacity = 0.95
+    background-opacity = 0.98
     confirm-close-surface = false
     gtk-titlebar = false
   '';
