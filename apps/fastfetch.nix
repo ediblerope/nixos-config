@@ -52,13 +52,13 @@
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
       format = builtins.concatStringsSep "" [
-        "[](#7dcfff)"
+        "[](fg:#394b70)"
         "$os"
-        "[](bg:#e0af68 fg:#7dcfff)"
+        "[](bg:#e0af68 fg:#394b70)"
         "$hostname"
-        "[](bg:#9ece6a fg:#e0af68)"
+        "[](bg:#41a6b5 fg:#e0af68)"
         "$directory"
-        "[](fg:#9ece6a bg:#bb9af7)"
+        "[](fg:#41a6b5 bg:#bb9af7)"
         "$git_branch"
         "$git_status"
         "[](fg:#bb9af7)"
@@ -68,10 +68,10 @@
       ];
 
       os = {
-        style = "bg:#7dcfff fg:#1a1b26";
-        format = "[ $symbol]($style)";
+        style = "bg:#394b70 fg:#7dcfff";
+        format = "[$symbol ]($style)";
         disabled = false;
-        symbols.NixOS = "";
+        symbols.NixOS = " ";
       };
 
       hostname = {
@@ -81,7 +81,7 @@
       };
 
       directory = {
-        style = "bg:#9ece6a fg:#1a1b26";
+        style = "bg:#41a6b5 fg:#1a1b26";
         format = "[ $path ]($style)";
         truncation_length = 4;
         truncation_symbol = ".../";
