@@ -57,16 +57,16 @@
 
       # Nix-shell indicator
       if set -q IN_NIX_SHELL
-        set_color -b yellow black
+        set_color -b yellow white
         printf ' nix-shell '
         set_color normal
         printf ' '
       end
 
       # Line 1:  hostname ~/path
-      set_color -b green black
+      set_color -b green white
       printf '  '
-      set_color -b yellow black
+      set_color -b yellow white
       printf ' %s ' (hostname)
       set_color -b blue white
       # Path with colored segments
