@@ -17,8 +17,6 @@ Flake-based NixOS configuration for three machines, built and deployed directly 
 │   └── workflows
 │       └── update.yml               # Auto-updates flake.lock daily
 ├── apps
-│   ├── fastfetch.nix                # Fastfetch config
-│   ├── flatpaks.nix                 # Flatpak apps
 │   └── zen.nix                      # Zen browser config
 ├── home-manager
 │   ├── fred.nix                     # User-level Home Manager config
@@ -51,6 +49,7 @@ Flake-based NixOS configuration for three machines, built and deployed directly 
 │   ├── audio.nix                    # PipeWire / audio config
 │   ├── gnome.nix                    # GNOME desktop settings
 │   ├── locale.nix                   # Locale, timezone, keyboard
+│   ├── shell.nix                    # Fish shell, powerline prompt, fastfetch, nerd fonts
 │   └── users.nix                    # User accounts
 ├── walls                            # Wallpapers
 ├── common.nix                       # Shared config imported by all hosts
@@ -162,7 +161,6 @@ After this succeeds, the plain `update` alias works from then on.
 | nixpkgs | `github:NixOS/nixpkgs/nixos-unstable` |
 | home-manager | `github:nix-community/home-manager` |
 | zen-browser | `github:0xc000022070/zen-browser-flake` |
-| nix-flatpak | `github:gmodena/nix-flatpak` |
 | nix-cachyos-kernel | `github:xddxdd/nix-cachyos-kernel/release` |
 
 ## Mediaserver secrets

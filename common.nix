@@ -13,8 +13,7 @@
     ./settings/locale.nix
     ./settings/audio.nix
     ./settings/users.nix
-    ./apps/fastfetch.nix
-    ./apps/flatpaks.nix
+    ./settings/shell.nix
     ./apps/zen.nix
 
     # Services #
