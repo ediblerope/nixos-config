@@ -19,7 +19,7 @@
   home.file.".config/ghostty/config".text = ''
     font-family = FiraCode Nerd Font
     font-size = 11
-    theme = dark:catppuccin-mocha,light:catppuccin-latte
+    theme = dark:Catppuccin Mocha,light:Catppuccin Latte
     window-padding-x = 10
     window-padding-y = 10
     confirm-close-surface = false

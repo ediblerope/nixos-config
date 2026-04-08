@@ -48,6 +48,9 @@
 
   # Fish prompt and terminal startup
   programs.fish.interactiveShellInit = ''
+    # Disable default greeting
+    set -g fish_greeting
+
     # Run fastfetch on terminal start
     fastfetch --config /etc/fastfetch/config.jsonc
 
@@ -62,16 +65,15 @@
         set_color normal
       end
 
-      # Line 1:  username ~ hostname
+      # Line 1:  hostname ~/path
       set_color green
       printf ' '
       set_color yellow
-      printf '%s' $USER
+      printf '%s' (hostname)
       set_color normal
       printf ' '
 
       # Path with colored segments
-      set -l gitdir (command git rev-parse --show-toplevel 2>/dev/null)
       set -l realhome (string escape --style=regex -- $HOME)
       set -l path (string replace -r "^$realhome" '~' $PWD)
       set -l parts (string split '/' $path)
@@ -90,11 +92,6 @@
         end
       end
 
-      # Hostname
-      set_color brblack
-      printf ' '
-      set_color magenta
-      printf '%s' (hostname)
       set_color normal
       printf '\n'
 
