@@ -27,6 +27,4 @@
     gtk-titlebar = false
   '';
 
-  # Import gnome home manager config
-  imports = [ ./gnome-hm.nix ];
 }
