@@ -10,16 +10,12 @@
       #  ];
       #})
       mangohud
-      (pkgs.symlinkJoin {
-        name = "goofcord-wrapped";
-        paths = [ goofcord ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          rm $out/bin/goofcord
-          makeWrapper ${goofcord}/bin/goofcord $out/bin/goofcord \
-            --add-flags "--class=GoofCord"
+      (goofcord.overrideAttrs (old: {
+        postFixup = (old.postFixup or "") + ''
+          substituteInPlace $out/bin/goofcord \
+            --replace-fail '/bin/electron"' '/bin/electron" --class=GoofCord'
         '';
-      })
+      }))
       lsfg-vk
       lsfg-vk-ui
       faugus-launcher
