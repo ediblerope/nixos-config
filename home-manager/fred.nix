@@ -29,7 +29,6 @@
     gtk-titlebar = false
     cursor-style = bar
     cursor-style-blink = true
-    custom-shader = ~/.config/ghostty/shaders/bloom-subtle.glsl
   '';
 
 }

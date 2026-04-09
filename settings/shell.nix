@@ -71,7 +71,7 @@
       # Arrow transition: nix -> hostname
       set_color 394b70 -b e0af68
       printf ""
-      set_color 1a1b26 -b e0af68
+      set_color ffffff -b e0af68
       printf " %s " (hostname)
 
       # Path segments - each folder gets its own color
