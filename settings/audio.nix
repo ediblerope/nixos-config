@@ -16,6 +16,14 @@
             matches = [ { "application.name" = "~Chromium.*"; } ];
             actions = { quirks = [ "block-source-volume" ]; };
           }
+          {
+            matches = [ { "application.name" = "~Electron.*"; } ];
+            actions = { quirks = [ "block-source-volume" ]; };
+          }
+          {
+            matches = [ { "application.name" = "~vesktop.*"; } ];
+            actions = { quirks = [ "block-source-volume" ]; };
+          }
         ];
       };
     };
