@@ -13,7 +13,7 @@
       (goofcord.overrideAttrs (old: {
         postFixup = (old.postFixup or "") + ''
           substituteInPlace $out/bin/goofcord \
-            --replace-fail '/bin/electron"' '/bin/electron" --class=GoofCord'
+            --replace-fail 'exec -a "$0"' 'NIXOS_OZONE_WL=1 exec -a "$0"'
         '';
       }))
       lsfg-vk
