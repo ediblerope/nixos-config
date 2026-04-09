@@ -17,7 +17,7 @@
   # Ghostty config
   home.file.".config/ghostty/config".force = true;
   home.file.".config/ghostty/config".text = ''
-    font-family = MesloLGS Nerd Font
+    font-family = FiraMono Nerd Font
     font-size = 11
     font-thicken = true
     theme = dark:Catppuccin Mocha,light:Catppuccin Latte
