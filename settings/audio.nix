@@ -10,6 +10,13 @@
       alsa.support32Bit = true;
       pulse.enable = true;
 
+      wireplumber.extraConfig."10-mic-boost" = {
+        "monitor.alsa.rules" = [{
+          matches = [{ "node.name" = "~alsa_input.*"; }];
+          actions.update-props."audio.volume" = 1.5;
+        }];
+      };
+
       extraConfig."pipewire-pulse"."10-quirk-rules" = {
         "pulse.rules" = [
           {
