@@ -10,7 +10,7 @@
       #  ];
       #})
       mangohud
-      goofcord
+      vesktop
       lsfg-vk
       lsfg-vk-ui
       faugus-launcher
