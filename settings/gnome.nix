@@ -52,7 +52,7 @@
     programs.dconf.enable = true;
 
     # Home Manager GNOME settings
-    home-manager.users.fred = { config, ... }: {
+    home-manager.users.fred = { config, lib, ... }: {
       home.file.".local/share/backgrounds/wallpaper.png".source =
         "${inputs.self}/walls/wallpaper.png";
 
