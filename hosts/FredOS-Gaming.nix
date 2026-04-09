@@ -10,14 +10,7 @@
       #  ];
       #})
       mangohud
-      (goofcord.overrideAttrs (old: {
-        postFixup = (old.postFixup or "") + ''
-          substituteInPlace $out/bin/goofcord \
-            --replace-fail 'exec -a "$0"' 'NIXOS_OZONE_WL=1 exec -a "$0"'
-          substituteInPlace $out/share/applications/goofcord.desktop \
-            --replace-fail 'StartupWMClass=GoofCord' 'StartupWMClass=goofcord'
-        '';
-      }))
+      #goofcord
       lsfg-vk
       lsfg-vk-ui
       faugus-launcher
