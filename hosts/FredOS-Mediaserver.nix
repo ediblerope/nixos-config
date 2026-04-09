@@ -16,6 +16,7 @@
       unzip
       screen
       yt-dlp
+      ghostty.terminfo
     ];
 
     # Basic networking
