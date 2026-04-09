@@ -19,12 +19,17 @@
   home.file.".config/ghostty/config".text = ''
     font-family = JetBrainsMono Nerd Font
     font-size = 11
+    font-thicken = true
     theme = dark:Catppuccin Mocha,light:Catppuccin Latte
     window-padding-x = 10
     window-padding-y = 10
+    window-padding-balance = true
     background-opacity = 0.98
     confirm-close-surface = false
     gtk-titlebar = false
+    cursor-style = bar
+    cursor-style-blink = true
+    custom-shader = ~/.config/ghostty/shaders/bloom.glsl
   '';
 
 }
