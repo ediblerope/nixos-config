@@ -19,6 +19,7 @@
 			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEOgQQ9aO8Ri5oL2c3QntSk05PkryfLNsJQqIcjfKFqL fredrik@nordhammer.it" # FredOS-Gaming
 			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTLAr9hSWW5PerZJmDZwmB5sa0DBTe2mM4IwTtcCfX3 fredrik@nordhammer.it" # phone
 			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwgOCdueMygza3LoBhs+fdIyKDnNXPz2AwZTXpah/jz fredrik@nordhammer.it" # FredOS-Macbook
+			"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDAzC48hiN+LrKrcn3yzYU1LbB4ylufnH2lJXW0NNjSV fredrik@nordhammer.it" # Work PC maybe
 		];
 	};
 }
