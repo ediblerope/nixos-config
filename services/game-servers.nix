@@ -14,6 +14,8 @@
       backend = "docker";
       containers.v-rising = {
         image = "trueosiris/vrising:latest";
+        entrypoint = "/bin/bash";
+        cmd = [ "-c" "sed -i 's/\\r$//' /start.sh && /start.sh" ];
 
         volumes = [
           "/var/lib/v-rising/server:/mnt/vrising/server"
