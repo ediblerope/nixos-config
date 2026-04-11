@@ -18,7 +18,7 @@
 
     # Services #
     ./services/server-permissions.nix
-    #./services/game-servers.nix
+    ./services/game-servers.nix
     ./services/qbittorrent-nox.nix
     ./services/nginx.nix
     ./services/go2rtc.nix
@@ -32,7 +32,6 @@
     ./services/authelia.nix
     ./services/homepage.nix
     ./services/arr-interconnect.nix
-    ./services/v-rising.nix
   ];
 
   ### Make build time quicker
