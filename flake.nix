@@ -15,8 +15,12 @@
     };
   
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    helium = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, home-manager, zen-browser, nix-cachyos-kernel, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, zen-browser, nix-cachyos-kernel, helium, ... } @ inputs:
   let
     system = "x86_64-linux";
     mkHost = hostname: nixpkgs.lib.nixosSystem {

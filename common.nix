@@ -15,6 +15,7 @@
     ./settings/users.nix
     ./settings/shell.nix
     ./apps/zen.nix
+    ./apps/helium.nix
 
     # Services #
     ./services/server-permissions.nix
