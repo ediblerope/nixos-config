@@ -79,8 +79,9 @@ done
 # Copy Papirus mimetype icons at all available sizes
 for size in 16x16 22x22 32x32 48x48 64x64 96x96 128x128; do
   if [ -d "$PAPIRUS/$size/mimetypes" ]; then
+    rm -rf "$ICON_DIR/$size/mimetypes"
     mkdir -p "$ICON_DIR/$size/mimetypes"
-    cp -a "$PAPIRUS/$size/mimetypes"/* "$ICON_DIR/$size/mimetypes/"
+    cp -rL "$PAPIRUS/$size/mimetypes"/* "$ICON_DIR/$size/mimetypes/"
   fi
 done
 
