@@ -12,4 +12,12 @@
   --arrowpanel-background: {{colors.surface_container.default.hex}} !important;
   --arrowpanel-color: {{colors.on_surface.default.hex}} !important;
   --urlbar-box-bgcolor: {{colors.surface_container_low.default.hex}} !important;
+  --zen-themed-toolbar-bg: {{colors.surface_container.default.hex}} !important;
+  --zen-themed-toolbar-fg: {{colors.on_surface.default.hex}} !important;
+  --zen-themed-toolbar-border: {{colors.outline_variant.default.hex}} !important;
+  --sidebar-background-color: {{colors.surface_container_low.default.hex}} !important;
+  --newtab-background-color: {{colors.surface.default.hex}} !important;
+  --lwt-sidebar-background-color: {{colors.surface_container_low.default.hex}} !important;
+  --lwt-sidebar-text-color: {{colors.on_surface.default.hex}} !important;
+  --lwt-toolbar-body-color: {{colors.on_surface.default.hex}} !important;
 }

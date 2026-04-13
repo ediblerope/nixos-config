@@ -79,6 +79,19 @@
         headerbar .title {
           font-size: 0;
         }
+        /* Keep wallpaper colors when window loses focus */
+        window:backdrop {
+          background-color: @window_bg_color;
+          color: @window_fg_color;
+        }
+        window:backdrop headerbar {
+          background-color: @headerbar_bg_color;
+          color: @headerbar_fg_color;
+        }
+        window:backdrop .navigation-sidebar {
+          background-color: @sidebar_bg_color;
+          color: @sidebar_fg_color;
+        }
       '';
       home.file.".config/gtk-3.0/gtk.css".force = true;
       home.file.".config/gtk-3.0/gtk.css".text = ''
