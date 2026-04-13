@@ -54,7 +54,7 @@
 
     [templates.zen]
     input_path = "${inputs.self}/templates/zen-userChrome.css"
-    output_path = "${config.home.homeDirectory}/.zen/fraudek5.Default Profile/chrome/userChrome.css"
+    output_path = "${config.home.homeDirectory}/.zen/mpege0em.Default (release)/chrome/userChrome.css"
 
     [templates.vscodium]
     input_path = "${inputs.self}/templates/vscodium-colors.json"

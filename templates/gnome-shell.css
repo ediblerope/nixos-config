@@ -182,6 +182,30 @@ stage {
   color: {{colors.on_surface.default.hex}} !important;
 }
 
+/* Search result items */
+.list-search-result, .search-provider-icon {
+  background-color: {{colors.surface_container.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+}
+
+.list-search-result:hover, .search-provider-icon:hover {
+  background-color: {{colors.surface_container_high.default.hex}} !important;
+}
+
+/* Selected/focused search result highlight */
+.overview-tile:focus, .grid-search-result:focus {
+  background-color: {{colors.surface_container_high.default.hex}} !important;
+}
+
+.overview-tile, .grid-search-result {
+  background-color: {{colors.surface_container.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+}
+
+.overview-tile:hover, .grid-search-result:hover {
+  background-color: {{colors.surface_container_high.default.hex}} !important;
+}
+
 /* App grid / app drawer */
 .app-folder {
   background-color: {{colors.surface_container_high.default.hex}} !important;
