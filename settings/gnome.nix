@@ -88,9 +88,14 @@
           background-color: @headerbar_bg_color;
           color: @headerbar_fg_color;
         }
-        window:backdrop .navigation-sidebar {
+        window:backdrop .navigation-sidebar,
+        window:backdrop .sidebar-pane {
           background-color: @sidebar_bg_color;
           color: @sidebar_fg_color;
+        }
+        window:backdrop .top-bar {
+          background-color: @headerbar_bg_color;
+          color: @headerbar_fg_color;
         }
       '';
       home.file.".config/gtk-3.0/gtk.css".force = true;
