@@ -74,7 +74,7 @@
 
   # Shell aliases (work in both bash and fish)
   environment.shellAliases = {
-    update = "sudo nixos-rebuild build --flake github:ediblerope/nixos-config && nvd diff /run/current-system result && sudo nixos-rebuild switch --flake github:ediblerope/nixos-config";
+    update = "OLD_SYSTEM=$(readlink /run/current-system) && sudo nixos-rebuild build --flake github:ediblerope/nixos-config && sudo nixos-rebuild switch --flake github:ediblerope/nixos-config && nvd diff $OLD_SYSTEM /run/current-system";
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
     clear = "command clear";
