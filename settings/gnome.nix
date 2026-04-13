@@ -48,6 +48,12 @@
       };
     }];
 
+    qt = {
+      enable = true;
+      platformTheme = "gnome";
+      style = "adwaita-dark";
+    };
+
     programs.xwayland.enable = true;
     programs.dconf.enable = true;
 
