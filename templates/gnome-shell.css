@@ -192,17 +192,20 @@ stage {
   background-color: {{colors.surface_container_high.default.hex}} !important;
 }
 
-/* Selected/focused search result highlight */
-.overview-tile:focus, .grid-search-result:focus {
-  background-color: {{colors.surface_container_high.default.hex}} !important;
-}
-
-.overview-tile, .grid-search-result {
+/* Search result tiles (scoped to search section to avoid dash) */
+.search-section-content .overview-tile,
+.search-section-content .grid-search-result {
   background-color: {{colors.surface_container.default.hex}} !important;
   color: {{colors.on_surface.default.hex}} !important;
 }
 
-.overview-tile:hover, .grid-search-result:hover {
+.search-section-content .overview-tile:hover,
+.search-section-content .grid-search-result:hover {
+  background-color: {{colors.surface_container_high.default.hex}} !important;
+}
+
+.search-section-content .overview-tile:focus,
+.search-section-content .grid-search-result:focus {
   background-color: {{colors.surface_container_high.default.hex}} !important;
 }
 
