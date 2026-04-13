@@ -21,7 +21,7 @@
       #gnomeExtensions.rounded-window-corners-reborn
       adwaita-icon-theme
       gnome-themes-extra
-      papirus-icon-theme
+      morewaita-icon-theme
       adw-gtk3
       matugen
     ];
@@ -41,7 +41,7 @@
     programs.dconf.profiles.user.databases = [{
       settings = {
         "org/gnome/desktop/interface" = {
-          icon-theme = "Papirus";
+          icon-theme = "MoreWaita";
           cursor-theme = "Adwaita";
         };
         "org/gnome/mutter" = {
