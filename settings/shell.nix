@@ -139,9 +139,8 @@
         echo "File not found: $img"
         return 1
       end
-      cp "$img" ~/.local/share/backgrounds/wallpaper.png
-      gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper.png"
-      gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/wallpaper.png"
+      gsettings set org.gnome.desktop.background picture-uri "file://$img"
+      gsettings set org.gnome.desktop.background picture-uri-dark "file://$img"
       matugen image "$img" --source-color-index 0 -m dark
       echo "Wallpaper and colors updated!"
     end
