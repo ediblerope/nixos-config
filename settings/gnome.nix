@@ -18,6 +18,7 @@
       gnomeExtensions.just-perfection
       gnomeExtensions.appindicator
       gnomeExtensions.hot-edge
+      gnomeExtensions.user-themes
       #gnomeExtensions.rounded-window-corners-reborn
       adwaita-icon-theme
       gnome-themes-extra
@@ -156,6 +157,11 @@
         # Just Perfection extension
         "org/gnome/shell/extensions/just-perfection" = {
           window-demands-attention-focus = true;
+        };
+
+        # User themes extension — load wallpaper shell theme
+        "org/gnome/shell/extensions/user-theme" = {
+          name = "WallpaperShell";
         };
       };
     };

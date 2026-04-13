@@ -48,6 +48,10 @@
     input_path = "${inputs.self}/templates/gtk4-colors.css"
     output_path = "${config.home.homeDirectory}/.config/gtk-4.0/colors.css"
 
+    [templates.gnome-shell]
+    input_path = "${inputs.self}/templates/gnome-shell.css"
+    output_path = "${config.home.homeDirectory}/.local/share/matugen/gnome-shell.css"
+
     [templates.zen]
     input_path = "${inputs.self}/templates/zen-userChrome.css"
     output_path = "${config.home.homeDirectory}/.zen/fraudek5.Default Profile/chrome/userChrome.css"
