@@ -88,11 +88,6 @@ done
 # Update icon cache
 gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
 
-# Install GNOME Shell theme
-SHELL_THEME="$HOME/.local/share/themes/WallpaperShell/gnome-shell"
-mkdir -p "$SHELL_THEME"
-cp "$HOME/.local/share/matugen/gnome-shell.css" "$SHELL_THEME/gnome-shell.css" 2>/dev/null
-
 # Map wallpaper palette to closest GNOME accent color
 # Primary color RGB: {{colors.primary.default.red}}, {{colors.primary.default.green}}, {{colors.primary.default.blue}}
 R={{colors.primary.default.red}}

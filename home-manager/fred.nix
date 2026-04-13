@@ -50,7 +50,7 @@
 
     [templates.gnome-shell]
     input_path = "${inputs.self}/templates/gnome-shell.css"
-    output_path = "${config.home.homeDirectory}/.local/share/matugen/gnome-shell.css"
+    output_path = "${config.home.homeDirectory}/.local/share/themes/WallpaperShell/gnome-shell/gnome-shell.css"
 
     [templates.zen]
     input_path = "${inputs.self}/templates/zen-userChrome.css"
