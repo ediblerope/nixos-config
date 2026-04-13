@@ -14,6 +14,9 @@
     { allowUnfree = true; }
   '';
   
+  # Ensure Ghostty themes directory exists for matugen
+  home.file.".config/ghostty/themes/.keep".text = "";
+
   # Ghostty config
   home.file.".config/ghostty/config".force = true;
   home.file.".config/ghostty/config".text = ''
