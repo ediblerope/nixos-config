@@ -1,5 +1,5 @@
 # settings/fred.nix
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   # Define the state version for Home Manager
   home.stateVersion = "25.11";
@@ -20,7 +20,7 @@
     font-family = FiraMono Nerd Font
     font-size = 11
     font-thicken = true
-    theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+    theme = wallpaper
     window-padding-x = 10
     window-padding-y = 10
     window-padding-balance = true
@@ -29,6 +29,21 @@
     gtk-titlebar = false
     cursor-style = bar
     cursor-style-blink = true
+  '';
+
+  # Matugen config — templates for wallpaper-based color generation
+  home.file.".config/matugen/config.toml".text = ''
+    [config]
+    reload_apps = true
+    reload_apps_list = { ghostty = "" }
+
+    [templates.ghostty]
+    input_path = "${inputs.self}/templates/ghostty-colors"
+    output_path = "~/.config/ghostty/themes/wallpaper"
+
+    [templates.gtk4]
+    input_path = "${inputs.self}/templates/gtk4-colors.css"
+    output_path = "~/.config/gtk-4.0/colors.css"
   '';
 
 }

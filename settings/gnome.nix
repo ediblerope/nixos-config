@@ -67,6 +67,7 @@
       # Minimal titlebars — hide window buttons and shrink headerbar
       home.file.".config/gtk-4.0/gtk.css".force = true;
       home.file.".config/gtk-4.0/gtk.css".text = ''
+        @import url("colors.css");
         headerbar {
           min-height: 0;
           padding: 0;
