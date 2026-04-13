@@ -21,7 +21,7 @@
       #gnomeExtensions.rounded-window-corners-reborn
       adwaita-icon-theme
       gnome-themes-extra
-      morewaita-icon-theme
+      adwaita-icon-theme-legacy
       adw-gtk3
       matugen
     ];
@@ -41,7 +41,7 @@
     programs.dconf.profiles.user.databases = [{
       settings = {
         "org/gnome/desktop/interface" = {
-          icon-theme = "MoreWaita";
+          icon-theme = "Adwaita";
           cursor-theme = "Adwaita";
         };
         "org/gnome/mutter" = {
