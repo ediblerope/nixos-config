@@ -22,6 +22,7 @@
       adwaita-icon-theme
       gnome-themes-extra
       adwaita-icon-theme-legacy
+      papirus-icon-theme
       adw-gtk3
       matugen
     ];
@@ -41,7 +42,7 @@
     programs.dconf.profiles.user.databases = [{
       settings = {
         "org/gnome/desktop/interface" = {
-          icon-theme = "Adwaita";
+          icon-theme = "WallpaperAdwaita";
           cursor-theme = "Adwaita";
         };
         "org/gnome/mutter" = {
