@@ -22,6 +22,8 @@
       adwaita-icon-theme
       gnome-themes-extra
       papirus-icon-theme
+      adw-gtk3
+      matugen
     ];
 
     # Set cursor theme
@@ -91,7 +93,7 @@
         # Interface / theme
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
-          gtk-theme = "Adwaita-dark";
+          gtk-theme = "adw-gtk3-dark";
           enable-hot-corners = false;
           accent-color = "purple";
           cursor-theme = "Adwaita";
