@@ -39,11 +39,11 @@
 
     [templates.ghostty]
     input_path = "${inputs.self}/templates/ghostty-colors"
-    output_path = "~/.config/ghostty/themes/wallpaper"
+    output_path = "${config.home.homeDirectory}/.config/ghostty/themes/wallpaper"
 
     [templates.gtk4]
     input_path = "${inputs.self}/templates/gtk4-colors.css"
-    output_path = "~/.config/gtk-4.0/colors.css"
+    output_path = "${config.home.homeDirectory}/.config/gtk-4.0/colors.css"
   '';
 
 }
