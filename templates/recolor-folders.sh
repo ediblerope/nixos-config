@@ -7,7 +7,7 @@ PAPIRUS="/run/current-system/sw/share/icons/Papirus-Dark"
 
 mkdir -p "$ICON_DIR/scalable/places"
 
-# Create index.theme
+# Create index.theme with all mimetype sizes
 cat > "$ICON_DIR/index.theme" << 'THEME'
 [Icon Theme]
 Name=WallpaperAdwaita
@@ -22,9 +22,43 @@ MaxSize=512
 Type=Scalable
 Context=Places
 
+[16x16/mimetypes]
+Size=16
+Type=Fixed
+Context=MimeTypes
+
+[22x22/mimetypes]
+Size=22
+Type=Fixed
+Context=MimeTypes
+
+[32x32/mimetypes]
+Size=32
+Type=Fixed
+Context=MimeTypes
+
+[48x48/mimetypes]
+Size=48
+Type=Fixed
+Context=MimeTypes
+
 [64x64/mimetypes]
 Size=64
-MinSize=16
+MinSize=32
+MaxSize=128
+Type=Scalable
+Context=MimeTypes
+
+[96x96/mimetypes]
+Size=96
+MinSize=64
+MaxSize=256
+Type=Scalable
+Context=MimeTypes
+
+[128x128/mimetypes]
+Size=128
+MinSize=64
 MaxSize=512
 Type=Scalable
 Context=MimeTypes
@@ -42,11 +76,13 @@ for svg in "$ADWAITA/scalable/places"/*.svg; do
     "$svg" > "$ICON_DIR/scalable/places/$name"
 done
 
-# Copy Papirus mimetype icons for better file type distinction
-if [ -d "$PAPIRUS/64x64/mimetypes" ]; then
-  mkdir -p "$ICON_DIR/64x64/mimetypes"
-  cp -a "$PAPIRUS/64x64/mimetypes"/* "$ICON_DIR/64x64/mimetypes/"
-fi
+# Copy Papirus mimetype icons at all available sizes
+for size in 16x16 22x22 32x32 48x48 64x64 96x96 128x128; do
+  if [ -d "$PAPIRUS/$size/mimetypes" ]; then
+    mkdir -p "$ICON_DIR/$size/mimetypes"
+    cp -a "$PAPIRUS/$size/mimetypes"/* "$ICON_DIR/$size/mimetypes/"
+  fi
+done
 
 # Update icon cache
 gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
