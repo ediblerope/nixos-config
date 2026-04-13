@@ -87,3 +87,52 @@ done
 
 # Update icon cache
 gtk-update-icon-cache -f "$ICON_DIR" 2>/dev/null || true
+
+# Map wallpaper palette to closest GNOME accent color
+# Primary color RGB: {{colors.primary.default.red}}, {{colors.primary.default.green}}, {{colors.primary.default.blue}}
+R={{colors.primary.default.red}}
+G={{colors.primary.default.green}}
+B={{colors.primary.default.blue}}
+
+# Simple hue-based mapping to GNOME accent presets
+if [ "$R" -gt "$G" ] && [ "$R" -gt "$B" ]; then
+  if [ "$B" -gt "$((G + 30))" ]; then
+    ACCENT="purple"
+  elif [ "$G" -gt "$((R / 2))" ]; then
+    ACCENT="orange"
+  else
+    if [ "$B" -gt "$((R / 3))" ]; then
+      ACCENT="pink"
+    else
+      ACCENT="red"
+    fi
+  fi
+elif [ "$G" -gt "$R" ] && [ "$G" -gt "$B" ]; then
+  if [ "$B" -gt "$((R + 20))" ]; then
+    ACCENT="teal"
+  else
+    ACCENT="green"
+  fi
+elif [ "$B" -gt "$R" ] && [ "$B" -gt "$G" ]; then
+  if [ "$R" -gt "$((B / 2))" ]; then
+    ACCENT="purple"
+  else
+    ACCENT="blue"
+  fi
+else
+  ACCENT="slate"
+fi
+
+gsettings set org.gnome.desktop.interface accent-color "$ACCENT"
+
+# Merge VSCodium color customizations into settings.json
+VSCODE_SETTINGS="$HOME/.config/VSCodium/User/settings.json"
+VSCODE_COLORS="$HOME/.local/share/matugen/vscodium-colors.json"
+if [ -f "$VSCODE_SETTINGS" ] && [ -f "$VSCODE_COLORS" ]; then
+  COLORS=$(cat "$VSCODE_COLORS")
+  # Remove existing workbench.colorCustomizations and merge new ones
+  TMP=$(mktemp)
+  if command -v jq &>/dev/null; then
+    jq --argjson colors "$COLORS" '. * $colors' "$VSCODE_SETTINGS" > "$TMP" && mv "$TMP" "$VSCODE_SETTINGS"
+  fi
+fi

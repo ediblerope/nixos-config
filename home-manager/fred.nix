@@ -48,6 +48,14 @@
     input_path = "${inputs.self}/templates/gtk4-colors.css"
     output_path = "${config.home.homeDirectory}/.config/gtk-4.0/colors.css"
 
+    [templates.zen]
+    input_path = "${inputs.self}/templates/zen-userChrome.css"
+    output_path = "${config.home.homeDirectory}/.zen/fraudek5.Default Profile/chrome/userChrome.css"
+
+    [templates.vscodium]
+    input_path = "${inputs.self}/templates/vscodium-colors.json"
+    output_path = "${config.home.homeDirectory}/.local/share/matugen/vscodium-colors.json"
+
     [templates.recolor-folders]
     input_path = "${inputs.self}/templates/recolor-folders.sh"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"

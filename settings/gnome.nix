@@ -25,6 +25,7 @@
       papirus-icon-theme
       adw-gtk3
       matugen
+      jq
     ];
 
     # Set cursor theme
