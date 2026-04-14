@@ -62,8 +62,7 @@ in
         domain = "*.nordhammer.it";
         extraDomainNames = [ "nordhammer.it" ];
         dnsProvider = "cloudflare";
-        extraLegoRunFlags = [ "--dns.resolvers" "1.1.1.1:53" ];
-        extraLegoRenewFlags = [ "--dns.resolvers" "1.1.1.1:53" ];
+        extraLegoFlags = [ "--dns.resolvers" "1.1.1.1:53" ];
         credentialFiles = {
           "CF_DNS_API_TOKEN_FILE" = "/var/secrets/cloudflare-token";
         };
