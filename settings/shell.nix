@@ -128,21 +128,10 @@
 
     function fish_right_prompt; end
 
-    # Set wallpaper and regenerate color theme
+    # Regenerate wallpaper color theme
     function wallpaper
-      if test (count $argv) -ne 1
-        echo "Usage: wallpaper <path-to-image>"
-        return 1
-      end
-      set -l img (realpath "$argv[1]")
-      if not test -f "$img"
-        echo "File not found: $img"
-        return 1
-      end
-      gsettings set org.gnome.desktop.background picture-uri "file://$img"
-      gsettings set org.gnome.desktop.background picture-uri-dark "file://$img"
-      matugen image "$img" --source-color-index 0 -m dark
-      echo "Wallpaper and colors updated! Shell theme reloaded."
+      matugen image ~/.local/share/backgrounds/wallpaper.png --source-color-index 0 -m dark
+      echo "Wallpaper colors updated! Shell theme reloaded."
     end
   '';
 }
