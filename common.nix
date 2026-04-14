@@ -20,16 +20,17 @@
     ./services/server-permissions.nix
     ./services/game-servers.nix
     ./services/qbittorrent-nox.nix
-    ./services/nginx.nix
-    ./services/go2rtc.nix
+    #./services/nginx.nix
+    #./services/go2rtc.nix
     ./services/sonarr.nix
     ./services/radarr.nix
     ./services/prowlarr.nix
     ./services/jellyfin.nix
     ./services/bazarr.nix
-    ./services/cloudflare-ddns.nix
-    ./services/fail2ban.nix
-    ./services/authelia.nix
+    # TODO: Re-enable after migrating secrets to new server
+    #./services/cloudflare-ddns.nix
+    #./services/fail2ban.nix
+    #./services/authelia.nix
     ./services/homepage.nix
     ./services/arr-interconnect.nix
   ];
