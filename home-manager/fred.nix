@@ -48,6 +48,10 @@
     input_path = "${inputs.self}/templates/gtk4-colors.css"
     output_path = "${config.home.homeDirectory}/.config/gtk-4.0/colors.css"
 
+    [templates.gtk3]
+    input_path = "${inputs.self}/templates/gtk3-colors.css"
+    output_path = "${config.home.homeDirectory}/.config/gtk-3.0/colors.css"
+
     [templates.gnome-shell]
     input_path = "${inputs.self}/templates/gnome-shell.css"
     output_path = "${config.home.homeDirectory}/.local/share/themes/WallpaperShell/gnome-shell/gnome-shell.css"

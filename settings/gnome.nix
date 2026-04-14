@@ -100,6 +100,7 @@
       '';
       home.file.".config/gtk-3.0/gtk.css".force = true;
       home.file.".config/gtk-3.0/gtk.css".text = ''
+        @import url("colors.css");
         headerbar {
           min-height: 0;
           padding: 0;
