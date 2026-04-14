@@ -62,12 +62,14 @@ in
         domain = "*.nordhammer.it";
         extraDomainNames = [ "nordhammer.it" ];
         dnsProvider = "cloudflare";
-        extraLegoFlags = [ "--dns.resolvers" "1.1.1.1:53" ];
         credentialFiles = {
           "CF_DNS_API_TOKEN_FILE" = "/var/secrets/cloudflare-token";
         };
       };
     };
+
+    # Give Cloudflare authoritative NS more time to propagate TXT records
+    systemd.services."acme-order-renew-nordhammer.it".environment.CLOUDFLARE_PROPAGATION_TIMEOUT = "600";
 
     users.users.nginx.extraGroups = [ "acme" ];
 
