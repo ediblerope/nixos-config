@@ -15,6 +15,17 @@ stage {
   color: {{colors.on_surface.default.hex}} !important;
 }
 
+#panel .panel-button:hover, #panel .panel-button:focus {
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 100px {{colors.surface_container_high.default.hex}} !important;
+}
+
+#panel .panel-button:active, #panel .panel-button:checked,
+#panel .panel-button:checked:hover {
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 100px {{colors.surface_container_highest.default.hex}} !important;
+}
+
 .quick-settings {
   background-color: {{colors.surface_container.default.hex}} !important;
 }
@@ -271,6 +282,17 @@ stage {
 /* Popup menus */
 .popup-menu {
   color: {{colors.on_surface.default.hex}} !important;
+}
+
+/* Window close button in overview */
+.window-close {
+  background-color: {{colors.surface_container_highest.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+}
+
+.window-close:hover {
+  background-color: {{colors.primary_container.default.hex}} !important;
+  color: {{colors.on_primary_container.default.hex}} !important;
 }
 
 /* Page navigation arrows (next/prev page in app drawer) */
