@@ -136,3 +136,8 @@ if [ -f "$VSCODE_SETTINGS" ] && [ -f "$VSCODE_COLORS" ]; then
     jq --argjson colors "$COLORS" '. * $colors' "$VSCODE_SETTINGS" > "$TMP" && mv "$TMP" "$VSCODE_SETTINGS"
   fi
 fi
+
+# Reload GNOME Shell theme to apply new colors
+dconf write /org/gnome/shell/extensions/user-theme/name "''"
+sleep 1
+dconf write /org/gnome/shell/extensions/user-theme/name "'WallpaperShell'"

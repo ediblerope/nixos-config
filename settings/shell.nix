@@ -142,7 +142,7 @@
       gsettings set org.gnome.desktop.background picture-uri "file://$img"
       gsettings set org.gnome.desktop.background picture-uri-dark "file://$img"
       matugen image "$img" --source-color-index 0 -m dark
-      echo "Wallpaper and colors updated!"
+      echo "Wallpaper and colors updated! Shell theme reloaded."
     end
   '';
 }

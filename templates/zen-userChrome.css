@@ -26,8 +26,13 @@
   background-color: {{colors.surface_container_high.default.hex}} !important;
 }
 
-/* URL bar */
+/* URL bar — override Zen's color-mix background */
+#urlbar .urlbar-background,
 #urlbar-background {
+  background-color: {{colors.surface_container.default.hex}} !important;
+}
+
+#urlbar[focused="true"] .urlbar-background {
   background-color: {{colors.surface_container_high.default.hex}} !important;
 }
 
@@ -35,9 +40,9 @@
   color: {{colors.on_surface.default.hex}} !important;
 }
 
-/* Nav bar and toolbar */
+/* Nav bar and toolbar — match the toolbar background */
 #nav-bar {
-  background-color: {{colors.surface_container.default.hex}} !important;
+  background-color: transparent !important;
 }
 
 /* Sidebar text and icons */
