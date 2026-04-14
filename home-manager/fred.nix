@@ -64,6 +64,10 @@
     input_path = "${inputs.self}/templates/vscodium-colors.json"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/vscodium-colors.json"
 
+    [templates.vesktop]
+    input_path = "${inputs.self}/templates/vesktop-quickCss.css"
+    output_path = "${config.home.homeDirectory}/.config/vesktop/settings/quickCss.css"
+
     [templates.recolor-folders]
     input_path = "${inputs.self}/templates/recolor-folders.sh"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"
