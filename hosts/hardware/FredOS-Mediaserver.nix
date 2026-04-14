@@ -21,6 +21,36 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  # Data disks
+  fileSystems."/mnt/disk1" = {
+    device = "/dev/disk/by-uuid/90ae3493-38c1-4473-b409-e9d99c3b315e";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/disk2" = {
+    device = "/dev/disk/by-uuid/58cecfd5-2fd7-4c4b-b3a1-0bf5e9d0beab";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/disk3" = {
+    device = "/dev/disk/by-uuid/317660ef-bd75-4fa4-bd20-f96a3926bf7b";
+    fsType = "ext4";
+  };
+
+  # Combined MergerFS pool
+  fileSystems."/mnt/storage" = {
+    device = "/mnt/disk1:/mnt/disk2:/mnt/disk3";
+    fsType = "fuse.mergerfs";
+    options = [
+      "defaults"
+      "allow_other"
+      "use_ino"
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=mfs"
+    ];
+  };
+
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
