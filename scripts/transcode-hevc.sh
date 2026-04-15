@@ -229,7 +229,7 @@ while IFS= read -r -d '' file; do
 
     if "$FFMPEG" -nostdin -y \
         -i "$file" \
-        -map 0 \
+        -map 0:v:0 -map 0:a -map 0:s? \
         -c:v libx265 -crf "$CRF" -preset "$PRESET" \
         -c:a copy \
         -c:s copy \
