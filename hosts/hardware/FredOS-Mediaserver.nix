@@ -55,6 +55,15 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # NVIDIA Quadro M2000 (Maxwell/GM206) — for Jellyfin NVENC hardware transcoding
+  hardware.graphics.enable = true;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false; # Maxwell architecture does not support the open kernel module
+    nvidiaSettings = false; # headless server, no settings GUI needed
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
   networking.hostName = "FredOS-Mediaserver";
 
   boot.loader.systemd-boot.enable = true;

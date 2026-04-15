@@ -8,6 +8,6 @@
 			openFirewall = true;
     	};
 		  
-    	users.users.jellyfin.extraGroups = [ "media" ];
+    	users.users.jellyfin.extraGroups = [ "media" "video" "render" ];
 	};
 }
