@@ -21,9 +21,39 @@ LOG_FILE="/var/log/transcode-hevc.log"
 CRF="${TRANSCODE_CRF:-24}"
 PRESET="${TRANSCODE_PRESET:-medium}"
 DRY_RUN="${DRY_RUN:-0}"
+QB_URL="${QB_URL:-http://localhost:8080}"
 
 # Duration tolerance in seconds (allow 1s difference)
 DURATION_TOLERANCE=1
+
+# Build a set of file sizes actively seeded in qBittorrent.
+# Queries each torrent's individual files for accurate per-file sizes.
+# Radarr/Sonarr may rename files but preserve size, so matching by size
+# reliably detects copies of seeded content across filesystems.
+build_seeded_sizes() {
+    local sizes_file="/tmp/transcode-hevc-seeded-sizes"
+    rm -f "$sizes_file"
+    touch "$sizes_file"
+
+    local hashes
+    hashes=$(curl -sf "${QB_URL}/api/v2/torrents/info" \
+        | tr '}' '\n' | grep -o '"hash":"[^"]*"' | cut -d'"' -f4) || return 1
+
+    for hash in $hashes; do
+        curl -sf "${QB_URL}/api/v2/torrents/files?hash=${hash}" \
+            | tr '}' '\n' | grep -o '"size":[0-9]*' | cut -d: -f2 \
+            >> "$sizes_file" 2>/dev/null || true
+    done
+
+    sort -u -o "$sizes_file" "$sizes_file"
+    echo "$sizes_file"
+}
+
+is_seeded_size() {
+    local size="$1"
+    local sizes_file="$2"
+    [[ -n "$sizes_file" ]] && grep -Fxq "$size" "$sizes_file" 2>/dev/null
+}
 
 usage() {
     echo "Usage: transcode-hevc [OPTIONS] <directory>"
@@ -116,6 +146,16 @@ touch "$DONE_LOG"
 
 log "Starting transcode run on: $SEARCH_DIR (CRF=$CRF, preset=$PRESET)"
 
+# Build lookup of file sizes currently being seeded in qBittorrent
+SEEDED_SIZES=""
+if SEEDED_SIZES=$(build_seeded_sizes); then
+    seeded_count=$(wc -l < "$SEEDED_SIZES")
+    log "Loaded $seeded_count unique file sizes from qBittorrent (will skip matches)"
+else
+    log "WARNING: Could not reach qBittorrent API — seeded file detection disabled"
+    SEEDED_SIZES=""
+fi
+
 # Counters
 total=0
 skipped_hevc=0
@@ -160,6 +200,13 @@ while IFS= read -r -d '' file; do
     fi
 
     original_size=$(stat -c%s "$file")
+
+    # Skip files whose size matches an actively seeded torrent file in qBittorrent
+    # (catches cross-filesystem copies where hardlink detection doesn't work)
+    if is_seeded_size "$original_size" "$SEEDED_SIZES"; then
+        log "Skipping (size matches seeded torrent): $file"
+        continue
+    fi
     original_size_h=$(get_size_human "$file")
     original_duration=$(get_duration "$file")
 
