@@ -7,7 +7,10 @@
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "ata_generic" "ehci_pci" "usbhid" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  # nvidia_uvm is required for CUDA (used by NVENC/NVDEC in Jellyfin).
+  # The other nvidia modules are loaded via services.xserver.videoDrivers but
+  # nvidia_uvm is not pulled in automatically on a headless system.
+  boot.kernelModules = [ "kvm-intel" "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
