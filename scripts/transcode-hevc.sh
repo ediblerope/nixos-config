@@ -156,6 +156,12 @@ else
     SEEDED_SIZES=""
 fi
 
+# Clean up leftover temp files from interrupted runs
+while IFS= read -r -d '' tmpfile; do
+    log "Cleaning up leftover temp file: $tmpfile"
+    rm -f "$tmpfile"
+done < <(find "$SEARCH_DIR" -type f -name ".transcode-*" -print0)
+
 # Counters
 total=0
 skipped_hevc=0
