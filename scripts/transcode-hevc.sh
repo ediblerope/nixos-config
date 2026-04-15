@@ -1,0 +1,220 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# transcode-hevc — Batch re-encode H.264 video files to HEVC (x265)
+#
+# Usage:
+#   transcode-hevc /mnt/disk1          # process all video files on disk1
+#   transcode-hevc /mnt/storage/torrents/shows  # process a specific directory
+#
+# Features:
+#   - Skips files already encoded as HEVC
+#   - Tracks completed files in a log so it can resume after reboot
+#   - Verifies output duration matches input before replacing
+#   - Logs all activity to /var/log/transcode-hevc.log
+
+FFMPEG="${FFMPEG_PATH:-$(command -v ffmpeg)}"
+FFPROBE="${FFPROBE_PATH:-$(command -v ffprobe)}"
+
+DONE_LOG="/var/lib/transcode-hevc/completed.log"
+LOG_FILE="/var/log/transcode-hevc.log"
+CRF="${TRANSCODE_CRF:-24}"
+PRESET="${TRANSCODE_PRESET:-medium}"
+DRY_RUN="${DRY_RUN:-0}"
+
+# Duration tolerance in seconds (allow 1s difference)
+DURATION_TOLERANCE=1
+
+usage() {
+    echo "Usage: transcode-hevc [OPTIONS] <directory>"
+    echo ""
+    echo "Options:"
+    echo "  --dry-run     Show what would be done without encoding"
+    echo "  --crf N       Set CRF value (default: 24)"
+    echo "  --preset P    Set x265 preset (default: medium)"
+    echo "  --status      Show progress stats and exit"
+    echo "  -h, --help    Show this help"
+    exit 0
+}
+
+log() {
+    local msg="[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+    echo "$msg"
+    echo "$msg" >> "$LOG_FILE"
+}
+
+get_codec() {
+    "$FFPROBE" -v quiet -select_streams v:0 \
+        -show_entries stream=codec_name -of csv=p=0 "$1" 2>/dev/null || echo "unknown"
+}
+
+get_duration() {
+    "$FFPROBE" -v quiet -show_entries format=duration \
+        -of csv=p=0 "$1" 2>/dev/null || echo "0"
+}
+
+get_size_human() {
+    du -h "$1" 2>/dev/null | cut -f1
+}
+
+is_done() {
+    grep -Fxq "$1" "$DONE_LOG" 2>/dev/null
+}
+
+mark_done() {
+    echo "$1" >> "$DONE_LOG"
+}
+
+show_status() {
+    if [[ ! -f "$DONE_LOG" ]]; then
+        echo "No transcoding has been done yet."
+        exit 0
+    fi
+    local done_count
+    done_count=$(wc -l < "$DONE_LOG")
+    echo "Completed files: $done_count"
+    if [[ -f "$LOG_FILE" ]]; then
+        local saved
+        saved=$(grep "Saved:" "$LOG_FILE" | tail -20)
+        if [[ -n "$saved" ]]; then
+            echo ""
+            echo "Recent savings:"
+            echo "$saved"
+        fi
+    fi
+    exit 0
+}
+
+# Parse arguments
+SEARCH_DIR=""
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --dry-run)  DRY_RUN=1; shift ;;
+        --crf)      CRF="$2"; shift 2 ;;
+        --preset)   PRESET="$2"; shift 2 ;;
+        --status)   show_status ;;
+        -h|--help)  usage ;;
+        *)          SEARCH_DIR="$1"; shift ;;
+    esac
+done
+
+if [[ -z "$SEARCH_DIR" ]]; then
+    echo "Error: No directory specified."
+    echo ""
+    usage
+fi
+
+if [[ ! -d "$SEARCH_DIR" ]]; then
+    echo "Error: '$SEARCH_DIR' is not a directory."
+    exit 1
+fi
+
+# Ensure state directories exist
+mkdir -p "$(dirname "$DONE_LOG")"
+mkdir -p "$(dirname "$LOG_FILE")"
+touch "$DONE_LOG"
+
+log "Starting transcode run on: $SEARCH_DIR (CRF=$CRF, preset=$PRESET)"
+
+# Counters
+total=0
+skipped_hevc=0
+skipped_done=0
+encoded=0
+failed=0
+saved_bytes=0
+
+# Find all video files
+while IFS= read -r -d '' file; do
+    total=$((total + 1))
+
+    # Skip if already processed
+    if is_done "$file"; then
+        skipped_done=$((skipped_done + 1))
+        continue
+    fi
+
+    # Check codec
+    codec=$(get_codec "$file")
+    if [[ "$codec" == "hevc" || "$codec" == "h265" ]]; then
+        skipped_hevc=$((skipped_hevc + 1))
+        mark_done "$file"
+        continue
+    fi
+
+    if [[ "$codec" != "h264" ]]; then
+        log "Skipping (codec=$codec): $file"
+        continue
+    fi
+
+    original_size=$(stat -c%s "$file")
+    original_size_h=$(get_size_human "$file")
+    original_duration=$(get_duration "$file")
+
+    if [[ "$DRY_RUN" == "1" ]]; then
+        log "[DRY RUN] Would encode: $file ($original_size_h)"
+        continue
+    fi
+
+    log "Encoding: $file ($original_size_h)"
+
+    # Encode to temp file in same directory (same filesystem for atomic move)
+    dir=$(dirname "$file")
+    base=$(basename "$file")
+    ext="${base##*.}"
+    name="${base%.*}"
+    tmp_file="${dir}/.transcode-${name}.${ext}"
+
+    # Clean up any leftover temp file from a previous interrupted run
+    rm -f "$tmp_file"
+
+    if "$FFMPEG" -nostdin -y \
+        -i "$file" \
+        -map 0 \
+        -c:v libx265 -crf "$CRF" -preset "$PRESET" \
+        -c:a copy \
+        -c:s copy \
+        "$tmp_file" \
+        </dev/null 2>> "$LOG_FILE"; then
+
+        # Verify duration matches
+        new_duration=$(get_duration "$tmp_file")
+        duration_diff=$(echo "$original_duration $new_duration" | awk '{d=$1-$2; print (d<0?-d:d)}')
+
+        if (( $(echo "$duration_diff > $DURATION_TOLERANCE" | bc -l) )); then
+            log "FAILED (duration mismatch: ${original_duration}s vs ${new_duration}s): $file"
+            rm -f "$tmp_file"
+            failed=$((failed + 1))
+            continue
+        fi
+
+        new_size=$(stat -c%s "$tmp_file")
+        new_size_h=$(get_size_human "$tmp_file")
+        diff_bytes=$((original_size - new_size))
+        saved_bytes=$((saved_bytes + diff_bytes))
+        diff_h=$(numfmt --to=iec "$diff_bytes" 2>/dev/null || echo "${diff_bytes}B")
+
+        # Replace original
+        mv "$tmp_file" "$file"
+        mark_done "$file"
+        encoded=$((encoded + 1))
+
+        log "Done: $file ($original_size_h -> $new_size_h) Saved: $diff_h"
+    else
+        log "FAILED (ffmpeg error): $file"
+        rm -f "$tmp_file"
+        failed=$((failed + 1))
+    fi
+
+done < <(find "$SEARCH_DIR" -type f \( -name "*.mkv" -o -name "*.mp4" -o -name "*.avi" \) -print0 | sort -z)
+
+saved_total=$(numfmt --to=iec "$saved_bytes" 2>/dev/null || echo "${saved_bytes}B")
+
+log ""
+log "=== Transcode complete ==="
+log "Total files found:    $total"
+log "Already HEVC:         $skipped_hevc"
+log "Previously completed: $skipped_done"
+log "Encoded this run:     $encoded"
+log "Failed:               $failed"
+log "Space saved this run: $saved_total"

@@ -17,6 +17,10 @@
       screen
       yt-dlp
       ghostty.terminfo
+      (pkgs.writeShellScriptBin "transcode-hevc" ''
+        export PATH="${pkgs.jellyfin-ffmpeg}/bin:${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gawk}/bin:${pkgs.bc}/bin:$PATH"
+        exec ${pkgs.bash}/bin/bash ${../scripts/transcode-hevc.sh} "$@"
+      '')
     ];
 
     # Basic networking
