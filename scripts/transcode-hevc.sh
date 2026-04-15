@@ -163,12 +163,12 @@ while IFS= read -r -d '' file; do
 
     log "Encoding: $file ($original_size_h)"
 
-    # Encode to temp file in same directory (same filesystem for atomic move)
+    # Always output as MKV — it supports all codecs/subtitle formats
     dir=$(dirname "$file")
     base=$(basename "$file")
-    ext="${base##*.}"
     name="${base%.*}"
-    tmp_file="${dir}/.transcode-${name}.${ext}"
+    tmp_file="${dir}/.transcode-${name}.mkv"
+    final_file="${dir}/${name}.mkv"
 
     # Clean up any leftover temp file from a previous interrupted run
     rm -f "$tmp_file"
@@ -199,9 +199,13 @@ while IFS= read -r -d '' file; do
         saved_bytes=$((saved_bytes + diff_bytes))
         diff_h=$(numfmt --to=iec "$diff_bytes" 2>/dev/null || echo "${diff_bytes}B")
 
-        # Replace original
-        mv "$tmp_file" "$file"
-        mark_done "$file"
+        # Move temp to final destination
+        mv "$tmp_file" "$final_file"
+        # Remove original if it was a different format (e.g. .mp4 -> .mkv)
+        if [[ "$file" != "$final_file" ]]; then
+            rm -f "$file"
+        fi
+        mark_done "$final_file"
         encoded=$((encoded + 1))
 
         log "Done: $file ($original_size_h -> $new_size_h) Saved: $diff_h"
