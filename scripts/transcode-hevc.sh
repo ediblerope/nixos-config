@@ -128,6 +128,11 @@ saved_bytes=0
 while IFS= read -r -d '' file; do
     total=$((total + 1))
 
+    # Never touch files in downloads directories (still being seeded)
+    if [[ "$file" == */downloads/* ]]; then
+        continue
+    fi
+
     # Skip if already processed
     if is_done "$file"; then
         skipped_done=$((skipped_done + 1))
