@@ -11,6 +11,9 @@
       user = "bazarr";
       group = "media";
     };
+
+    # Ensure subtitles written by bazarr are group-writable
+    systemd.services.bazarr.serviceConfig.UMask = "0002";
     
     users.users.bazarr = {
       isSystemUser = true;

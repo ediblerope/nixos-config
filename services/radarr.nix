@@ -11,6 +11,9 @@
       user = "radarr";
       group = "media";
     };
+
+    # Ensure files created by radarr are group-writable
+    systemd.services.radarr.serviceConfig.UMask = "0002";
     
     # Media group is already created in qbittorrent-nox.nix
     # Just make sure radarr is in it
@@ -23,8 +26,8 @@
     # Set up directory structure with proper permissions
     systemd.tmpfiles.rules = [
       # Media folders - radarr writes here
-      "d /mnt/storage/torrents/movies 0775 radarr media -"
-      "Z /mnt/storage/torrents/movies 0775 radarr media -"
+      "d /mnt/storage/torrents/movies 2775 radarr media -"
+      "Z /mnt/storage/torrents/movies 2775 radarr media -"
     ];
   };
 }

@@ -7,7 +7,10 @@
       		enable = true;
 			openFirewall = true;
     	};
-		  
+
+    	# Ensure Jellyfin can write thumbnails/artwork to media directories
+    	systemd.services.jellyfin.serviceConfig.UMask = "0002";
+
     	users.users.jellyfin.extraGroups = [ "media" "video" "render" ];
 	};
 }

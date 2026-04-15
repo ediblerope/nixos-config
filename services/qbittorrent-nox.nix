@@ -43,7 +43,8 @@
 				Group = "media";
 				ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --confirm-legal-notice";
 				Restart = "on-failure";
-				
+				UMask = "0002";
+
 				# Security hardening - FIXED
 				NoNewPrivileges = true;
 				PrivateTmp = true;

@@ -11,6 +11,9 @@
       user = "sonarr";
       group = "media";
     };
+
+    # Ensure files created by sonarr are group-writable
+    systemd.services.sonarr.serviceConfig.UMask = "0002";
     
     # Media group is already created in qbittorrent-nox.nix
     # Just make sure sonarr is in it
