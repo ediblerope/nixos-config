@@ -78,7 +78,7 @@
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
     clear = "command clear";
-    reboot = "systemctl reboot";
+    reboot = "sudo systemctl reboot";
   };
 
   # Add packages

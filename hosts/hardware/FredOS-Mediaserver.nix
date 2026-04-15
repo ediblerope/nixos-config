@@ -67,6 +67,7 @@
     nvidiaSettings = false; # headless server, no settings GUI needed
   };
   services.xserver.videoDrivers = [ "nvidia" ];
+
   networking.hostName = "FredOS-Mediaserver";
 
   boot.loader.systemd-boot.enable = true;
