@@ -31,6 +31,7 @@
     ./services/fail2ban.nix
     ./services/authelia.nix
     ./services/homepage.nix
+    ./services/tdarr.nix
     ./services/arr-interconnect.nix
   ];
 
