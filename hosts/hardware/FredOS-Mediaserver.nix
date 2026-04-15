@@ -65,6 +65,7 @@
     modesetting.enable = true;
     open = false; # Maxwell architecture does not support the open kernel module
     nvidiaSettings = false; # headless server, no settings GUI needed
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
