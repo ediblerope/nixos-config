@@ -103,7 +103,6 @@ in
         # --- Other ---
         "games.nordhammer.it"  = proxy 8787;
         "search.nordhammer.it" = proxy 8087;
-        "tdarr.nordhammer.it"  = proxy 8265;
 
         # --- Protected by Authelia ---
         "camera.nordhammer.it"   = protectedProxy 1984;
