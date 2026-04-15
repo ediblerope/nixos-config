@@ -152,6 +152,13 @@ while IFS= read -r -d '' file; do
         continue
     fi
 
+    # Skip files with hardlinks (likely still linked to downloads for seeding)
+    link_count=$(stat -c%h "$file")
+    if [[ "$link_count" -gt 1 ]]; then
+        log "Skipping (hardlinked, likely still seeding): $file"
+        continue
+    fi
+
     original_size=$(stat -c%s "$file")
     original_size_h=$(get_size_human "$file")
     original_duration=$(get_duration "$file")
