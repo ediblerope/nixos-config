@@ -1,5 +1,8 @@
 # settings/fred.nix
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, osConfig, ... }:
+let
+  isDesktop = lib.elem osConfig.networking.hostName [ "FredOS-Gaming" "FredOS-Macbook" ];
+in
 {
   # Define the state version for Home Manager
   home.stateVersion = "25.11";
@@ -53,6 +56,11 @@
     reload_apps = true
     reload_apps_list = { ghostty = "" }
 
+    [templates.btop]
+    input_path = "${inputs.self}/templates/btop.theme"
+    output_path = "${config.home.homeDirectory}/.config/btop/themes/matugen.theme"
+  '' + lib.optionalString isDesktop ''
+
     [templates.ghostty]
     input_path = "${inputs.self}/templates/ghostty-colors"
     output_path = "${config.home.homeDirectory}/.config/ghostty/themes/wallpaper"
@@ -86,10 +94,7 @@
     input_path = "${inputs.self}/templates/recolor-folders.sh"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"
     post_hook = "bash ${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"
-
-    [templates.btop]
-    input_path = "${inputs.self}/templates/btop.theme"
-    output_path = "${config.home.homeDirectory}/.config/btop/themes/matugen.theme"
+  '' + lib.optionalString (osConfig.networking.hostName == "FredOS-Mediaserver") ''
 
     [templates.homepage]
     input_path = "${inputs.self}/templates/homepage.css"
