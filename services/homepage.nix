@@ -60,6 +60,32 @@ in
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
+    # Writable location for matugen-generated custom.css; bind-mounted into
+    # the homepage service namespace over the Nix-managed /etc path.
+    systemd.tmpfiles.rules = [
+      "d /var/lib/homepage-custom-css 0755 fred users -"
+      "f /var/lib/homepage-custom-css/custom.css 0644 fred users -"
+    ];
+
+    systemd.services.homepage-dashboard.serviceConfig.BindPaths = [
+      "/var/lib/homepage-custom-css/custom.css:/etc/homepage-dashboard/custom.css"
+    ];
+
+    # Auto-restart homepage when matugen rewrites the custom.css
+    systemd.paths.homepage-css-reload = {
+      description = "Watch matugen custom.css for changes";
+      wantedBy = [ "multi-user.target" ];
+      pathConfig.PathChanged = "/var/lib/homepage-custom-css/custom.css";
+    };
+
+    systemd.services.homepage-css-reload = {
+      description = "Restart homepage after custom.css changes";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.systemd}/bin/systemctl restart homepage-dashboard.service";
+      };
+    };
+
     # Oneshot service that extracts API keys and writes /etc/homepage-secrets
     systemd.services.homepage-extract-secrets = {
       description = "Extract API keys for Homepage dashboard";

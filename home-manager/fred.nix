@@ -13,9 +13,21 @@
   home.file.".config/nixpkgs/config.nix".text = ''
     { allowUnfree = true; }
   '';
-  
+
+  # Wallpaper — source of truth for matugen on all hosts
+  home.file.".local/share/backgrounds/wallpaper.png".source =
+    "${inputs.self}/walls/wallpaper.png";
+
   # Ensure Ghostty themes directory exists for matugen
   home.file.".config/ghostty/themes/.keep".text = "";
+
+  # btop config — use matugen-generated theme
+  home.file.".config/btop/btop.conf".text = ''
+    color_theme = "matugen"
+    theme_background = False
+    vim_keys = False
+  '';
+  home.file.".config/btop/themes/.keep".text = "";
 
   # Ghostty config
   home.file.".config/ghostty/config".force = true;
@@ -73,6 +85,14 @@
     input_path = "${inputs.self}/templates/recolor-folders.sh"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"
     post_hook = "bash ${config.home.homeDirectory}/.local/share/matugen/recolor-folders.sh"
+
+    [templates.btop]
+    input_path = "${inputs.self}/templates/btop.theme"
+    output_path = "${config.home.homeDirectory}/.config/btop/themes/matugen.theme"
+
+    [templates.homepage]
+    input_path = "${inputs.self}/templates/homepage.css"
+    output_path = "/var/lib/homepage-custom-css/custom.css"
   '';
 
 }

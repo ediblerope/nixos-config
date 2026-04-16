@@ -1,0 +1,69 @@
+/* Matugen-generated Homepage theme based on wallpaper */
+
+/* Background + text for the whole dashboard */
+html, body, main, .information-widget {
+  background-color: {{colors.surface.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+}
+
+/* Service and widget cards */
+#information-widgets > *,
+.services-group .service,
+.bookmark-group .bookmark,
+.information-widget-datetime,
+.information-widget-resources,
+.information-widget-search {
+  background-color: {{colors.surface_container.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+  border-color: {{colors.outline_variant.default.hex}} !important;
+}
+
+/* Group headings */
+h1, h2, h3, .services-group h2, .bookmark-group h2 {
+  color: {{colors.on_surface.default.hex}} !important;
+}
+
+/* Muted / secondary text */
+.service-description, .bookmark-description,
+.service .service-sub, .information-widget .label {
+  color: {{colors.on_surface_variant.default.hex}} !important;
+}
+
+/* Search input */
+input, .search input[type="text"] {
+  background-color: {{colors.surface_container_high.default.hex}} !important;
+  color: {{colors.on_surface.default.hex}} !important;
+  border-color: {{colors.outline.default.hex}} !important;
+}
+
+/* Accent — used on highlights, progress bars, links */
+a, .service a:hover, .bookmark a:hover,
+.resources .resource .progress .progress-bar,
+button:hover, .service-container:hover {
+  color: {{colors.primary.default.hex}} !important;
+}
+
+.resources .resource .progress .progress-bar,
+.resources .resource .usage-bar-fill {
+  background-color: {{colors.primary.default.hex}} !important;
+}
+
+/* Dividers */
+hr, .service-container, .bookmark-container {
+  border-color: {{colors.outline_variant.default.hex}} !important;
+}
+
+/* Override Tailwind's slate palette so built-in theme uses wallpaper colors */
+:root {
+  --color-slate-50: {{colors.on_surface.default.hex}};
+  --color-slate-100: {{colors.on_surface.default.hex}};
+  --color-slate-200: {{colors.on_surface.default.hex}};
+  --color-slate-300: {{colors.on_surface_variant.default.hex}};
+  --color-slate-400: {{colors.on_surface_variant.default.hex}};
+  --color-slate-500: {{colors.outline.default.hex}};
+  --color-slate-600: {{colors.outline_variant.default.hex}};
+  --color-slate-700: {{colors.surface_container_high.default.hex}};
+  --color-slate-800: {{colors.surface_container.default.hex}};
+  --color-slate-900: {{colors.surface.default.hex}};
+  --color-slate-950: {{colors.surface.default.hex}};
+}

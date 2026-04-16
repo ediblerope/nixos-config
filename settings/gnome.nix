@@ -64,9 +64,6 @@
 
     # Home Manager GNOME settings
     home-manager.users.fred = { config, lib, ... }: {
-      home.file.".local/share/backgrounds/wallpaper.png".source =
-        "${inputs.self}/walls/wallpaper.png";
-
       # Minimal titlebars — hide window buttons and shrink headerbar
       home.file.".config/gtk-4.0/gtk.css".force = true;
       home.file.".config/gtk-4.0/gtk.css".text = ''
