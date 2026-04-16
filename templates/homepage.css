@@ -1,69 +1,53 @@
 /* Matugen-generated Homepage theme based on wallpaper */
 
-/* Background + text for the whole dashboard */
-html, body, main, .information-widget {
+/* Page background — overrides body default */
+html, body, #__next, main {
   background-color: {{colors.surface.default.hex}} !important;
   color: {{colors.on_surface.default.hex}} !important;
 }
 
-/* Service and widget cards */
-#information-widgets > *,
-.services-group .service,
-.bookmark-group .bookmark,
-.information-widget-datetime,
-.information-widget-resources,
-.information-widget-search {
-  background-color: {{colors.surface_container.default.hex}} !important;
-  color: {{colors.on_surface.default.hex}} !important;
-  border-color: {{colors.outline_variant.default.hex}} !important;
-}
+/* Override Tailwind's slate palette (homepage's default color scheme).
+   Each slate shade maps to the closest matugen surface/text color so
+   the built-in theme classes render with wallpaper colors. */
+.bg-slate-50, .dark\:bg-slate-50 { background-color: {{colors.surface_container_high.default.hex}} !important; }
+.bg-slate-100, .dark\:bg-slate-100 { background-color: {{colors.surface_container_high.default.hex}} !important; }
+.bg-slate-200, .dark\:bg-slate-200 { background-color: {{colors.surface_container.default.hex}} !important; }
+.bg-slate-300, .dark\:bg-slate-300 { background-color: {{colors.surface_container.default.hex}} !important; }
+.bg-slate-400, .dark\:bg-slate-400 { background-color: {{colors.surface_container_low.default.hex}} !important; }
+.bg-slate-500, .dark\:bg-slate-500 { background-color: {{colors.surface_container_low.default.hex}} !important; }
+.bg-slate-600, .dark\:bg-slate-600 { background-color: {{colors.surface_container_low.default.hex}} !important; }
+.bg-slate-700, .dark\:bg-slate-700 { background-color: {{colors.surface_container.default.hex}} !important; }
+.bg-slate-800, .dark\:bg-slate-800 { background-color: {{colors.surface_container.default.hex}} !important; }
+.bg-slate-900, .dark\:bg-slate-900 { background-color: {{colors.surface.default.hex}} !important; }
+.bg-slate-950, .dark\:bg-slate-950 { background-color: {{colors.surface.default.hex}} !important; }
 
-/* Group headings */
-h1, h2, h3, .services-group h2, .bookmark-group h2 {
-  color: {{colors.on_surface.default.hex}} !important;
-}
+.text-slate-50, .dark\:text-slate-50 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-100, .dark\:text-slate-100 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-200, .dark\:text-slate-200 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-300, .dark\:text-slate-300 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-400, .dark\:text-slate-400 { color: {{colors.on_surface_variant.default.hex}} !important; }
+.text-slate-500, .dark\:text-slate-500 { color: {{colors.on_surface_variant.default.hex}} !important; }
+.text-slate-600, .dark\:text-slate-600 { color: {{colors.outline.default.hex}} !important; }
+.text-slate-700, .dark\:text-slate-700 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-800, .dark\:text-slate-800 { color: {{colors.on_surface.default.hex}} !important; }
+.text-slate-900, .dark\:text-slate-900 { color: {{colors.on_surface.default.hex}} !important; }
 
-/* Muted / secondary text */
-.service-description, .bookmark-description,
-.service .service-sub, .information-widget .label {
-  color: {{colors.on_surface_variant.default.hex}} !important;
-}
+.border-slate-50, .dark\:border-slate-50,
+.border-slate-100, .dark\:border-slate-100,
+.border-slate-200, .dark\:border-slate-200,
+.border-slate-300, .dark\:border-slate-300,
+.border-slate-400, .dark\:border-slate-400,
+.border-slate-500, .dark\:border-slate-500,
+.border-slate-600, .dark\:border-slate-600,
+.border-slate-700, .dark\:border-slate-700,
+.border-slate-800, .dark\:border-slate-800 { border-color: {{colors.outline_variant.default.hex}} !important; }
 
-/* Search input */
-input, .search input[type="text"] {
-  background-color: {{colors.surface_container_high.default.hex}} !important;
-  color: {{colors.on_surface.default.hex}} !important;
-  border-color: {{colors.outline.default.hex}} !important;
-}
-
-/* Accent — used on highlights, progress bars, links */
-a, .service a:hover, .bookmark a:hover,
-.resources .resource .progress .progress-bar,
-button:hover, .service-container:hover {
+/* Accent — used on links, active states, progress bars */
+a:hover, .service-container:hover .service-name,
+.resources .progress-bar, .resources .usage-bar-fill {
   color: {{colors.primary.default.hex}} !important;
 }
 
-.resources .resource .progress .progress-bar,
-.resources .resource .usage-bar-fill {
+.bg-theme-500, .bg-theme-600, .bg-theme-400 {
   background-color: {{colors.primary.default.hex}} !important;
-}
-
-/* Dividers */
-hr, .service-container, .bookmark-container {
-  border-color: {{colors.outline_variant.default.hex}} !important;
-}
-
-/* Override Tailwind's slate palette so built-in theme uses wallpaper colors */
-:root {
-  --color-slate-50: {{colors.on_surface.default.hex}};
-  --color-slate-100: {{colors.on_surface.default.hex}};
-  --color-slate-200: {{colors.on_surface.default.hex}};
-  --color-slate-300: {{colors.on_surface_variant.default.hex}};
-  --color-slate-400: {{colors.on_surface_variant.default.hex}};
-  --color-slate-500: {{colors.outline.default.hex}};
-  --color-slate-600: {{colors.outline_variant.default.hex}};
-  --color-slate-700: {{colors.surface_container_high.default.hex}};
-  --color-slate-800: {{colors.surface_container.default.hex}};
-  --color-slate-900: {{colors.surface.default.hex}};
-  --color-slate-950: {{colors.surface.default.hex}};
 }
