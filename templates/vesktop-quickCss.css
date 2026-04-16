@@ -37,3 +37,8 @@
 [class*="toolbar_"] {
   padding-right: 0 !important;
 }
+
+/* Collapse Midnight's 32px title bar grid row, keep 12px to match bottom window edge */
+[class*="base__"] {
+  grid-template-rows: [top] 12px [titleBarEnd] 0px [noticeEnd] 1fr [end] !important;
+}
