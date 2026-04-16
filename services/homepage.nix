@@ -66,6 +66,7 @@ in
       "d /var/lib/homepage-custom-css 0755 fred users -"
       "f /var/lib/homepage-custom-css/custom.css 0644 fred users -"
       "d /var/lib/homepage-updates 0755 fred users -"
+      ''f /var/lib/homepage-updates/latest.json 0644 fred users - {\x22date\x22:\x22pending\x22,\x22changes\x22:\x22run update\x22,\x22closure\x22:\x22+0B\x22,\x22kernel\x22:\x22-\x22}''
     ];
 
     systemd.services.homepage-dashboard.serviceConfig.BindPaths = [
