@@ -21,7 +21,15 @@
       adwsteamgtk
       proton-vpn
       onlyoffice-desktopeditors
-      vscodium
+      (vscodium.overrideAttrs (old: {
+        postFixup = (old.postFixup or "") + ''
+          workbenchHtml="$out/lib/vscode/resources/app/out/vs/code/electron-browser/workbench/workbench.html"
+          if [ -f "$workbenchHtml" ]; then
+            substituteInPlace "$workbenchHtml" \
+              --replace-fail '</head>' '<style>.monaco-workbench .part.titlebar { display: none !important; }</style></head>'
+          fi
+        '';
+      }))
     ];
 
     programs.nix-ld.enable = true;
