@@ -22,3 +22,18 @@
   --accent-5: {{colors.primary_container.default.hex}};
   --accent-new: {{colors.primary.default.hex}};
 }
+
+/* Hide Midnight's custom title bar and trailing section — GNOME handles window decorations */
+[class*="titleBar_"],
+[class*="winButton_"],
+[class*="wordmarkWindows_"],
+[class*="trailing_"] {
+  display: none !important;
+  width: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Remove Midnight's padding reserved for hidden window buttons */
+[class*="toolbar_"] {
+  padding-right: 0 !important;
+}
