@@ -22,6 +22,7 @@
   home.file.".config/ghostty/themes/.keep".text = "";
 
   # btop config — use matugen-generated theme
+  home.file.".config/btop/btop.conf".force = true;
   home.file.".config/btop/btop.conf".text = ''
     color_theme = "matugen"
     theme_background = False
