@@ -104,13 +104,22 @@ show_status() {
     done_count=$(wc -l < "$DONE_LOG")
     echo "Completed files: $done_count"
     if [[ -f "$LOG_FILE" ]]; then
-        local saved
-        saved=$(grep "Saved:" "$LOG_FILE" | tail -20)
-        if [[ -n "$saved" ]]; then
-            echo ""
-            echo "Recent savings:"
-            echo "$saved"
-        fi
+        echo ""
+        echo "Total savings:"
+        awk '
+          match($0, /\(([^ ]+) -> ([^)]+)\) Saved:/, a) {
+            cmd = "numfmt --from=iec " a[1]; cmd | getline o; close(cmd)
+            cmd = "numfmt --from=iec " a[2]; cmd | getline n; close(cmd)
+            orig += o
+            new += n
+          }
+          END {
+            if (orig == 0) { print "  No completed encodes yet."; exit }
+            saved = orig - new
+            printf "  Original: %.2f GB\n  New:      %.2f GB\n  Saved:    %.2f GB (%.1f%%)\n",
+              orig/1073741824, new/1073741824, saved/1073741824, (saved/orig)*100
+          }
+        ' "$LOG_FILE"
     fi
     exit 0
 }
