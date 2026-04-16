@@ -2,8 +2,8 @@
 
 /* Override system accent color variables */
 stage {
-  -st-accent-color: {{colors.primary_container.default.hex}} !important;
-  -st-accent-fg-color: {{colors.on_primary_container.default.hex}} !important;
+  -st-accent-color: {{colors.primary.default.hex}} !important;
+  -st-accent-fg-color: {{colors.on_primary.default.hex}} !important;
 }
 
 #panel {
