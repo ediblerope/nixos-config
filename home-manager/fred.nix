@@ -63,6 +63,7 @@
     [templates.vscodium]
     input_path = "${inputs.self}/templates/vscodium-colors.json"
     output_path = "${config.home.homeDirectory}/.local/share/matugen/vscodium-colors.json"
+    post_hook = "jq -s '.[0] * .[1]' ${config.home.homeDirectory}/.config/VSCodium/User/settings.json ${config.home.homeDirectory}/.local/share/matugen/vscodium-colors.json > ${config.home.homeDirectory}/.config/VSCodium/User/settings.json.tmp && mv ${config.home.homeDirectory}/.config/VSCodium/User/settings.json.tmp ${config.home.homeDirectory}/.config/VSCodium/User/settings.json"
 
     [templates.vesktop]
     input_path = "${inputs.self}/templates/vesktop-quickCss.css"
