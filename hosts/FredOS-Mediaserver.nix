@@ -22,6 +22,10 @@
         export PATH="${pkgs.jellyfin-ffmpeg}/bin:${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gawk}/bin:${pkgs.bc}/bin:${pkgs.curl}/bin:$PATH"
         exec ${pkgs.bash}/bin/bash ${../scripts/transcode-hevc.sh} "$@"
       '')
+      (pkgs.writeShellScriptBin "record-update" ''
+        export PATH="${pkgs.nvd}/bin:${pkgs.coreutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gnused}/bin:$PATH"
+        exec ${pkgs.bash}/bin/bash ${../scripts/record-update.sh} "$@"
+      '')
     ];
 
     # Basic networking

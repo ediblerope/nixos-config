@@ -107,6 +107,16 @@ in
         # --- Protected by Authelia ---
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
+
+        # --- Local-only: serves update history JSON to Homepage's customapi widget ---
+        "homepage-updates.local" = {
+          listen = [ { addr = "127.0.0.1"; port = 8083; } ];
+          locations."/".root = "/var/lib/homepage-updates";
+          extraConfig = ''
+            default_type application/json;
+            add_header Access-Control-Allow-Origin *;
+          '';
+        };
       };
     };
 

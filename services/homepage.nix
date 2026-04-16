@@ -65,6 +65,7 @@ in
     systemd.tmpfiles.rules = [
       "d /var/lib/homepage-custom-css 0755 fred users -"
       "f /var/lib/homepage-custom-css/custom.css 0644 fred users -"
+      "d /var/lib/homepage-updates 0755 fred users -"
     ];
 
     systemd.services.homepage-dashboard.serviceConfig.BindPaths = [
@@ -255,6 +256,25 @@ in
                 href = "https://camera.nordhammer.it";
                 description = "Camera streams";
                 icon = "go2rtc.png";
+              };
+            }
+            {
+              "Last Update" = {
+                description = "Most recent nixos-rebuild switch";
+                icon = "mdi-history";
+                widget = {
+                  type = "customapi";
+                  url = "http://127.0.0.1:8083/latest.json";
+                  refreshInterval = 60000;
+                  method = "GET";
+                  display = "list";
+                  mappings = [
+                    { field = "date";    label = "Date"; }
+                    { field = "changes"; label = "Changes"; }
+                    { field = "closure"; label = "Closure"; }
+                    { field = "kernel";  label = "Kernel"; }
+                  ];
+                };
               };
             }
           ];
