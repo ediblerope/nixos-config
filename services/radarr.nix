@@ -13,7 +13,7 @@
     };
 
     # Ensure files created by radarr are group-writable
-    systemd.services.radarr.serviceConfig.UMask = "0002";
+    systemd.services.radarr.serviceConfig.UMask = lib.mkForce "0002";
     
     # Media group is already created in qbittorrent-nox.nix
     # Just make sure radarr is in it

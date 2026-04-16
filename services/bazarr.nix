@@ -13,7 +13,7 @@
     };
 
     # Ensure subtitles written by bazarr are group-writable
-    systemd.services.bazarr.serviceConfig.UMask = "0002";
+    systemd.services.bazarr.serviceConfig.UMask = lib.mkForce "0002";
     
     users.users.bazarr = {
       isSystemUser = true;
