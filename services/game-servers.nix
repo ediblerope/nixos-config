@@ -75,6 +75,7 @@
         set_prop WorldGenSize        "8192"
         set_prop GameName            "Nordhammer"
         set_prop WebDashboardEnabled "true"
+        set_prop EACEnabled          "false"
 
         touch "$MARKER"
         echo "Patched; restarting container to apply."
