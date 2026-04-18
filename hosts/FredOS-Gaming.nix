@@ -10,6 +10,7 @@
       #  ];
       #})
       mangohud
+      gamescope
       vesktop
       lsfg-vk
       lsfg-vk-ui
