@@ -29,6 +29,8 @@
           "26900:26900/udp"
           "26901:26901/udp"
           "26902:26902/udp"
+          # WebDashboard — localhost-only; nginx reverse-proxies it with Authelia
+          "127.0.0.1:8090:8080/tcp"
         ];
         environment = {
           START_MODE = "1";
@@ -66,12 +68,13 @@
           sed -i "s|<property name=\"$1\"[^/]*value=\"[^\"]*\"|<property name=\"$1\" value=\"$2\"|" "$CONFIG"
         }
 
-        set_prop ServerName     "Nordhammer.it"
-        set_prop ServerPassword "DaveSmells"
-        set_prop GameWorld      "RWG"
-        set_prop WorldGenSeed   "Nordhammer"
-        set_prop WorldGenSize   "8192"
-        set_prop GameName       "Nordhammer"
+        set_prop ServerName          "Nordhammer.it"
+        set_prop ServerPassword      "DaveSmells"
+        set_prop GameWorld           "RWG"
+        set_prop WorldGenSeed        "Nordhammer"
+        set_prop WorldGenSize        "8192"
+        set_prop GameName            "Nordhammer"
+        set_prop WebDashboardEnabled "true"
 
         touch "$MARKER"
         echo "Patched; restarting container to apply."

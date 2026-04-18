@@ -107,6 +107,7 @@ in
         # --- Protected by Authelia ---
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
+        "7dtd.nordhammer.it"     = protectedProxy 8090;
 
         # --- Local-only: serves update history JSON to Homepage's customapi widget ---
         "homepage-updates.local" = {
