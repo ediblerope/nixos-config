@@ -71,7 +71,8 @@ in
           default_policy = "deny";
           rules = [
             { domain = "camera.nordhammer.it";   policy = "one_factor"; }
-            { domain = "homepage.nordhammer.it";  policy = "one_factor"; }
+            { domain = "homepage.nordhammer.it"; policy = "one_factor"; }
+            { domain = "7dtd.nordhammer.it";     policy = "one_factor"; }
           ];
         };
 
