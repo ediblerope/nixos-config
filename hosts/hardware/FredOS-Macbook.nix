@@ -37,7 +37,7 @@
   # wait_prepare/wait_finish were removed from struct vb2_ops in Linux 6.8
   nixpkgs.overlays = [
     (final: prev: {
-      linuxPackagesFor = kernel: (prev.linuxPackagesFor kernel).extend (lpFinal: lpPrev: {
+      linuxPackages_latest = prev.linuxPackages_latest.extend (lpFinal: lpPrev: {
         facetimehd = lpPrev.facetimehd.overrideAttrs (old: {
           postPatch = (old.postPatch or "") + ''
             sed -i '/\.wait_prepare[[:space:]]*=.*vb2_ops_wait_prepare/d' fthd_v4l2.c
