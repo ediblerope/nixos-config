@@ -20,7 +20,6 @@ DONE_LOG="/var/lib/transcode-hevc/completed.log"
 LOG_FILE="/var/log/transcode-hevc.log"
 CRF="${TRANSCODE_CRF:-24}"
 PRESET="${TRANSCODE_PRESET:-medium}"
-THREADS="${TRANSCODE_THREADS:-8}"
 DRY_RUN="${DRY_RUN:-0}"
 QB_URL="${QB_URL:-http://localhost:8080}"
 
@@ -244,11 +243,9 @@ while IFS= read -r -d '' file; do
     rm -f "$tmp_file"
 
     if "$FFMPEG" -nostdin -y \
-        -threads "$THREADS" \
         -i "$file" \
         -map 0:v:0 -map 0:a -map 0:s? \
         -c:v libx265 -crf "$CRF" -preset "$PRESET" \
-        -x265-params "pools=$THREADS" \
         -c:a copy \
         -c:s copy \
         "$tmp_file" \
