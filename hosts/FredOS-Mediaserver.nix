@@ -19,7 +19,7 @@
       ghostty.terminfo
       matugen
       usbutils
-      lm-sensors
+      lm_sensors
       (pkgs.writeShellScriptBin "transcode-hevc" ''
         export PATH="${pkgs.jellyfin-ffmpeg}/bin:${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.gnugrep}/bin:${pkgs.gawk}/bin:${pkgs.bc}/bin:${pkgs.curl}/bin:$PATH"
         exec ${pkgs.bash}/bin/bash ${../scripts/transcode-hevc.sh} "$@"
