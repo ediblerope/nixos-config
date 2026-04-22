@@ -2,7 +2,7 @@
 let
   interconnectScript = pkgs.writeShellScript "arr-interconnect" ''
     set -euo pipefail
-    PATH="${lib.makeBinPath [ pkgs.curl pkgs.jq pkgs.gnused pkgs.gnugrep pkgs.coreutils ]}:$PATH"
+    PATH="${lib.makeBinPath [ pkgs.curl pkgs.jq pkgs.gnused pkgs.gnugrep pkgs.gawk pkgs.coreutils ]}:$PATH"
 
     BASE="http://127.0.0.1"
 
