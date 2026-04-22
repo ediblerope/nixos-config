@@ -8,8 +8,8 @@
       # Web UI bound to localhost; nginx reverse-proxies at adguard.nordhammer.it
       host = "127.0.0.1";
       port = 3000;
-      # Allow UI changes (blocklists, rules, clients) to persist
-      mutableSettings = true;
+      # Nix is authoritative: settings below overwrite UI-made changes on rebuild
+      mutableSettings = false;
       settings = {
         dns = {
           bind_hosts = [ "0.0.0.0" ];

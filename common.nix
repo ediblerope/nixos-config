@@ -67,7 +67,6 @@
 
   # Enable network-manager
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   # Fish shell
   programs.fish.enable = true;
@@ -87,5 +86,6 @@
       git
       localsend
       nvd
+      busybox
   ];
 }
