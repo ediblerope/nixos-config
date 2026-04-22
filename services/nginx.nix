@@ -101,14 +101,14 @@ in
         "torrent.nordhammer.it"  = proxy 8080;
 
         # --- Other ---
-        "games.nordhammer.it"   = proxy 8787;
-        "search.nordhammer.it"  = proxy 8087;
-        "adguard.nordhammer.it" = proxy 3000;
+        "games.nordhammer.it"  = proxy 8787;
+        "search.nordhammer.it" = proxy 8087;
 
         # --- Protected by Authelia ---
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
         "7dtd.nordhammer.it"     = protectedProxy 8090;
+        "adguard.nordhammer.it"  = protectedProxy 3000;
 
         # --- Local-only: serves update history JSON to Homepage's customapi widget ---
         "homepage-updates.local" = {
