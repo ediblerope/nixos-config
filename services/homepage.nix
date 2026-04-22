@@ -260,6 +260,17 @@ in
               };
             }
             {
+              "AdGuard Home" = {
+                href = "https://adguard.nordhammer.it";
+                description = "Network DNS ad blocker";
+                icon = "adguard-home.png";
+                widget = {
+                  type = "adguard";
+                  url = "http://127.0.0.1:3000";
+                };
+              };
+            }
+            {
               "Last Update" = {
                 description = "Most recent nixos-rebuild switch";
                 icon = "mdi-history";
