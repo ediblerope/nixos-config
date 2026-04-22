@@ -32,6 +32,7 @@
     ./services/authelia.nix
     ./services/homepage.nix
     ./services/arr-interconnect.nix
+    ./services/adguard.nix
   ];
 
   ### Make build time quicker

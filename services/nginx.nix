@@ -101,8 +101,9 @@ in
         "torrent.nordhammer.it"  = proxy 8080;
 
         # --- Other ---
-        "games.nordhammer.it"  = proxy 8787;
-        "search.nordhammer.it" = proxy 8087;
+        "games.nordhammer.it"   = proxy 8787;
+        "search.nordhammer.it"  = proxy 8087;
+        "adguard.nordhammer.it" = proxy 3000;
 
         # --- Protected by Authelia ---
         "camera.nordhammer.it"   = protectedProxy 1984;
