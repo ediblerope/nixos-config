@@ -14,10 +14,14 @@
         dns = {
           bind_hosts = [ "0.0.0.0" ];
           port = 53;
-          # DNS-over-HTTPS upstreams — encrypts queries to resolvers
+          # Query all upstreams in parallel; take the fastest response
+          upstream_mode = "parallel";
+          # Mix of DoH (encrypted) and plain UDP (low-latency) upstreams
           upstream_dns = [
             "https://dns.cloudflare.com/dns-query"
             "https://dns.quad9.net/dns-query"
+            "1.1.1.1"
+            "9.9.9.9"
           ];
           bootstrap_dns = [ "1.1.1.1" "9.9.9.9" ];
           cache_size = 4194304;
