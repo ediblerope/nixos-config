@@ -255,6 +255,54 @@ let
       fi
     fi
 
+    ##########################################################################
+    # Quality Definitions — floor 1080p sources at 10 MB/min (~1.3 Mbps)
+    # so sub-bitrate releases (e.g. 163 MiB 40-min garbage) get rejected.
+    ##########################################################################
+    set_quality_floor() {
+      local base="$1" key="$2" title="$3" min_size="$4"
+      local current
+      current=$(curl -sf -H "X-Api-Key: $key" "$base/api/v3/qualitydefinition" \
+        | jq --arg t "$title" '.[] | select(.title == $t)')
+      if [ -z "$current" ]; then
+        echo "  $title: not found, skipping"
+        return 0
+      fi
+      local cur_min
+      cur_min=$(echo "$current" | jq -r '.minSize')
+      if awk -v a="$cur_min" -v b="$min_size" 'BEGIN{exit !(a==b)}'; then
+        echo "  $title: already at min=$min_size"
+        return 0
+      fi
+      local id updated
+      id=$(echo "$current" | jq -r '.id')
+      updated=$(echo "$current" | jq --argjson min "$min_size" '.minSize = $min')
+      curl -sf -X PUT \
+        -H "Content-Type: application/json" \
+        -H "X-Api-Key: $key" \
+        "$base/api/v3/qualitydefinition/$id" \
+        -d "$updated" > /dev/null \
+        && echo "  $title: min=$cur_min → $min_size" \
+        || echo "  $title: update failed"
+    }
+
+    QUALITY_FLOOR=10
+    QUALITY_TITLES=("HDTV-1080p" "WEBDL-1080p" "WEBRip-1080p" "Bluray-1080p")
+
+    if [ -n "$SONARR_KEY" ]; then
+      echo "Setting Sonarr 1080p quality floors..."
+      for title in "''${QUALITY_TITLES[@]}"; do
+        set_quality_floor "$BASE:8989" "$SONARR_KEY" "$title" "$QUALITY_FLOOR"
+      done
+    fi
+
+    if [ -n "$RADARR_KEY" ]; then
+      echo "Setting Radarr 1080p quality floors..."
+      for title in "''${QUALITY_TITLES[@]}"; do
+        set_quality_floor "$BASE:7878" "$RADARR_KEY" "$title" "$QUALITY_FLOOR"
+      done
+    fi
+
     echo "Interconnect setup complete."
   '';
 in
