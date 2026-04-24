@@ -17,6 +17,17 @@ let
   portsData = builtins.fromTOML (builtins.readFile ../ports.toml);
   destDefault = portsData.dest_default;
 
+  # Phase 1 transition: the mediaserver is still a DHCP client on the eero's
+  # network (192.168.4.0/22), and existing clients reach it via eno1. Trust
+  # those subnets as input sources so SSH + AdGuard DNS keep working.
+  # After cutover to eero bridge mode (phase 2), set this to [] — eno1
+  # becomes strictly WAN-only.
+  trustedLegacyCidrs = [ "192.168.4.0/22" ];
+
+  legacyTrustRules = lib.concatMapStringsSep "\n            "
+    (cidr: ''iifname "eno1" ip saddr ${cidr} accept'')
+    trustedLegacyCidrs;
+
   # Expand "both" into [tcp, udp]; normalise port vs ports; default dest.
   expandForward = entry:
     let
@@ -95,6 +106,9 @@ in
             iifname "lo" accept
             # LAN is trusted
             iifname "eth0" accept
+            # Phase 1: also trust the existing eero subnet on eno1 so SSH
+            # and AdGuard DNS keep working during the transition.
+            ${legacyTrustRules}
             # ICMP from anywhere (ping, path-MTU)
             icmp type echo-request accept
             icmpv6 type echo-request accept
