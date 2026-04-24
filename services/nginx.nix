@@ -96,10 +96,13 @@ in
         "sonarr.nordhammer.it"   = protectedProxy 8989;
         "radarr.nordhammer.it"   = protectedProxy 7878;
         "prowlarr.nordhammer.it" = protectedProxy 9696;
-        # qBit trips its own session auth on any SID cookie the browser
-        # has cached; strip cookies so localhost-bypass always wins.
+        # qBit's CSRF check rejects any request whose Referer origin differs
+        # from the Host — after Authelia's redirect the Referer is
+        # auth.nordhammer.it, which trips the check. Strip it so qBit skips.
+        # Cookie stripped too so cached SID cookies don't fight localhost-bypass.
         "torrent.nordhammer.it"  = lib.recursiveUpdate (protectedProxy 8080) {
           locations."/".extraConfig = autheliaAuthConfig + ''
+            proxy_set_header Referer "";
             proxy_set_header Cookie "";
             proxy_hide_header Set-Cookie;
           '';

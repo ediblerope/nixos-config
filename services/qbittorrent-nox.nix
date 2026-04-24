@@ -20,13 +20,10 @@
 		};
 		
 		systemd.tmpfiles.rules = [
-			# qbittorrent app data
+			# qbittorrent app data — Z recursively enforces ownership/perms on boot
+			# (self-heals UID/GID drift from migrations etc.)
 			"d /var/lib/qbittorrent 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.config 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.config/qBittorrent 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local/share 0755 qbittorrent media -"
-			"d /var/lib/qbittorrent/.local/share/qBittorrent 0755 qbittorrent media -"
+			"Z /var/lib/qbittorrent 0755 qbittorrent media -"
 
 			# Storage - qbittorrent downloads here
 			"d /mnt/storage/torrents/downloads 2775 qbittorrent media -"
