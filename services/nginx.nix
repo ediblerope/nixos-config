@@ -96,7 +96,14 @@ in
         "sonarr.nordhammer.it"   = protectedProxy 8989;
         "radarr.nordhammer.it"   = protectedProxy 7878;
         "prowlarr.nordhammer.it" = protectedProxy 9696;
-        "torrent.nordhammer.it"  = protectedProxy 8080;
+        # qBit trips its own session auth on any SID cookie the browser
+        # has cached; strip cookies so localhost-bypass always wins.
+        "torrent.nordhammer.it"  = lib.recursiveUpdate (protectedProxy 8080) {
+          locations."/".extraConfig = autheliaAuthConfig + ''
+            proxy_set_header Cookie "";
+            proxy_hide_header Set-Cookie;
+          '';
+        };
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
         "7dtd.nordhammer.it"     = protectedProxy 8090;
