@@ -35,6 +35,12 @@
           { enabled = true; id = 3; name = "OISD Big";
             url = "https://big.oisd.nl/"; }
         ];
+        # Resolve our own hostnames to the mediaserver's LAN IP so LAN
+        # clients bypass eero hairpin NAT. Update to 10.0.0.1 in phase 2.
+        filtering.rewrites = [
+          { domain = "nordhammer.it";   answer = "192.168.4.25"; }
+          { domain = "*.nordhammer.it"; answer = "192.168.4.25"; }
+        ];
       };
     };
 

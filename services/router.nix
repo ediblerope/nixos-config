@@ -47,6 +47,14 @@ let
     (f: ''${f.proto} dport ${f.port} dnat to ${f.dest} comment "${f.name}"'')
     forwards;
 
+  # Input-chain accept rules so WAN traffic to forwarded ports reaches the
+  # mediaserver. Works in both phases:
+  #   phase 1: eero DNATs to 192.168.4.25, arrives on eno1 — matched here.
+  #   phase 2: our DNAT rewrites dst to 10.0.0.1 (local), arrives on eno1 — matched here.
+  wanPortInputRules = lib.concatMapStringsSep "\n            "
+    (f: ''iifname "eno1" ${f.proto} dport ${f.port} accept comment "${f.name}"'')
+    forwards;
+
 in
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
@@ -109,6 +117,8 @@ in
             # Phase 1: also trust the existing eero subnet on eno1 so SSH
             # and AdGuard DNS keep working during the transition.
             ${legacyTrustRules}
+            # Accept WAN traffic for ports we publicly expose (ports.toml).
+            ${wanPortInputRules}
             # ICMP from anywhere (ping, path-MTU)
             icmp type echo-request accept
             icmpv6 type echo-request accept
