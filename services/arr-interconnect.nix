@@ -2,7 +2,7 @@
 let
   interconnectScript = pkgs.writeShellScript "arr-interconnect" ''
     set -euo pipefail
-    PATH="${lib.makeBinPath [ pkgs.curl pkgs.jq pkgs.gnused pkgs.gnugrep pkgs.gawk pkgs.coreutils ]}:$PATH"
+    PATH="${lib.makeBinPath [ pkgs.curl pkgs.jq pkgs.gnused pkgs.gnugrep pkgs.gawk pkgs.coreutils pkgs.systemd ]}:$PATH"
 
     BASE="http://127.0.0.1"
 
@@ -301,6 +301,21 @@ let
       for title in "''${QUALITY_TITLES[@]}"; do
         set_quality_floor "$BASE:7878" "$RADARR_KEY" "$title" "$QUALITY_FLOOR"
       done
+    fi
+
+    ##########################################################################
+    # Prowlarr auth — trust localhost so Authelia is the only gate. Other
+    # *arr apps default to this; Prowlarr does not.
+    ##########################################################################
+    PROWLARR_CONFIG=/var/lib/prowlarr/config.xml
+    if [ -f "$PROWLARR_CONFIG" ]; then
+      if grep -q "<AuthenticationRequired>Enabled</AuthenticationRequired>" "$PROWLARR_CONFIG"; then
+        echo "Prowlarr auth: switching to DisabledForLocalAddresses..."
+        sed -i 's|<AuthenticationRequired>Enabled</AuthenticationRequired>|<AuthenticationRequired>DisabledForLocalAddresses</AuthenticationRequired>|' "$PROWLARR_CONFIG"
+        systemctl restart prowlarr
+      else
+        echo "Prowlarr auth: already DisabledForLocalAddresses"
+      fi
     fi
 
     echo "Interconnect setup complete."
