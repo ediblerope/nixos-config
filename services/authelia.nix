@@ -74,6 +74,13 @@ in
             { domain = "homepage.nordhammer.it"; policy = "one_factor"; }
             { domain = "7dtd.nordhammer.it";     policy = "one_factor"; }
             { domain = "adguard.nordhammer.it";  policy = "one_factor"; }
+            { domain = "sonarr.nordhammer.it";   policy = "one_factor"; }
+            { domain = "radarr.nordhammer.it";   policy = "one_factor"; }
+            { domain = "bazarr.nordhammer.it";   policy = "one_factor"; }
+            { domain = "prowlarr.nordhammer.it"; policy = "one_factor"; }
+            { domain = "torrent.nordhammer.it";  policy = "one_factor"; }
+            { domain = "games.nordhammer.it";    policy = "one_factor"; }
+            { domain = "search.nordhammer.it";   policy = "one_factor"; }
           ];
         };
 

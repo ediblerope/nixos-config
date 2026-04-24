@@ -87,24 +87,18 @@ in
       '';
 
       virtualHosts = {
-        # --- Authelia portal (not behind auth itself) ---
-        "auth.nordhammer.it" = proxy 9091;
-
-        # --- Media ---
-        "jellyfin.nordhammer.it" = proxy 8096;
-        "bazarr.nordhammer.it"  = proxy 6767;
-        "sonarr.nordhammer.it"  = proxy 8989;
-        "radarr.nordhammer.it"  = proxy 7878;
-
-        # --- Downloads ---
-        "prowlarr.nordhammer.it" = proxy 9696;
-        "torrent.nordhammer.it"  = proxy 8080;
-
-        # --- Other ---
-        "games.nordhammer.it"  = proxy 8787;
-        "search.nordhammer.it" = proxy 8087;
+        # --- Unprotected (own auth, or by design) ---
+        "auth.nordhammer.it"     = proxy 9091;  # Authelia portal itself
+        "jellyfin.nordhammer.it" = proxy 8096;  # streaming to external clients
 
         # --- Protected by Authelia ---
+        "bazarr.nordhammer.it"   = protectedProxy 6767;
+        "sonarr.nordhammer.it"   = protectedProxy 8989;
+        "radarr.nordhammer.it"   = protectedProxy 7878;
+        "prowlarr.nordhammer.it" = protectedProxy 9696;
+        "torrent.nordhammer.it"  = protectedProxy 8080;
+        "games.nordhammer.it"    = protectedProxy 8787;
+        "search.nordhammer.it"   = protectedProxy 8087;
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
         "7dtd.nordhammer.it"     = protectedProxy 8090;
