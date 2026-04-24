@@ -33,6 +33,7 @@
     ./services/homepage.nix
     ./services/arr-interconnect.nix
     ./services/adguard.nix
+    ./services/router.nix
   ];
 
   ### Make build time quicker

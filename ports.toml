@@ -1,0 +1,36 @@
+# ports.toml — WAN → LAN port forwards for the router (services/router.nix)
+#
+# Each [[forward]] block adds a DNAT rule from WAN to the LAN IP below.
+# Fields:
+#   name     — human label, appears in journal logs
+#   port     — single port (number), e.g. 443
+#   ports    — port range as a string, e.g. "26901-26902"
+#   protocol — "tcp", "udp", or "both"
+#   dest     — LAN IP to forward to (optional; defaults to 10.0.0.1)
+
+dest_default = "10.0.0.1"
+
+[[forward]]
+name = "HTTP"
+port = 80
+protocol = "tcp"
+
+[[forward]]
+name = "HTTPS"
+port = 443
+protocol = "tcp"
+
+[[forward]]
+name = "SSH"
+port = 22
+protocol = "tcp"
+
+[[forward]]
+name = "7DTD game"
+port = 26900
+protocol = "both"
+
+[[forward]]
+name = "7DTD voice/dynamic"
+ports = "26901-26902"
+protocol = "udp"
