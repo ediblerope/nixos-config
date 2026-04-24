@@ -97,8 +97,6 @@ in
         "radarr.nordhammer.it"   = protectedProxy 7878;
         "prowlarr.nordhammer.it" = protectedProxy 9696;
         "torrent.nordhammer.it"  = protectedProxy 8080;
-        "games.nordhammer.it"    = protectedProxy 8787;
-        "search.nordhammer.it"   = protectedProxy 8087;
         "camera.nordhammer.it"   = protectedProxy 1984;
         "homepage.nordhammer.it" = protectedProxy 8082;
         "7dtd.nordhammer.it"     = protectedProxy 8090;
