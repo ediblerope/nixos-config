@@ -13,7 +13,7 @@
       wireplumber.extraConfig."10-mic-boost" = {
         "monitor.alsa.rules" = [{
           matches = [{ "node.name" = "~alsa_input.*"; }];
-          actions.update-props."audio.volume" = 2.0;
+          actions.update-props."audio.volume" = 1.5;
         }];
       };
 
