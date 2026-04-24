@@ -34,6 +34,7 @@
     ./services/arr-interconnect.nix
     ./services/adguard.nix
     ./services/router.nix
+    ./services/crowdsec.nix
   ];
 
   ### Make build time quicker
