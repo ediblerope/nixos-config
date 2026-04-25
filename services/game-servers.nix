@@ -10,6 +10,12 @@
       "d /var/lib/7dtd/lgsm        0755 root root -"
       "d /var/lib/7dtd/log         0755 root root -"
       "d /var/lib/7dtd/backups     0755 root root -"
+      "d /var/lib/7dtd-coop             0755 root root -"
+      "d /var/lib/7dtd-coop/saves       0755 root root -"
+      "d /var/lib/7dtd-coop/serverfiles 0755 root root -"
+      "d /var/lib/7dtd-coop/lgsm        0755 root root -"
+      "d /var/lib/7dtd-coop/log         0755 root root -"
+      "d /var/lib/7dtd-coop/backups     0755 root root -"
     ];
 
     ## <----- 7 DAYS TO DIE ----> ##
@@ -31,6 +37,30 @@
           "26902:26902/udp"
           # WebDashboard — localhost-only; nginx reverse-proxies it with Authelia
           "127.0.0.1:8090:8080/tcp"
+        ];
+        environment = {
+          START_MODE = "1";
+          VERSION    = "stable";
+          TimeZone   = "Europe/Stockholm";
+          TEST_ALERT = "NO";
+        };
+      };
+
+      containers."7dtd-coop" = {
+        image = "vinanrra/7dtd-server:latest";
+        volumes = [
+          "/var/lib/7dtd-coop/saves:/home/sdtdserver/.local/share/7DaysToDie"
+          "/var/lib/7dtd-coop/serverfiles:/home/sdtdserver/serverfiles"
+          "/var/lib/7dtd-coop/lgsm:/home/sdtdserver/lgsm/config-lgsm/sdtdserver"
+          "/var/lib/7dtd-coop/log:/home/sdtdserver/log"
+          "/var/lib/7dtd-coop/backups:/home/sdtdserver/lgsm/backup"
+        ];
+        ports = [
+          "26910:26900/tcp"
+          "26910:26900/udp"
+          "26911:26901/udp"
+          "26912:26902/udp"
+          "127.0.0.1:8091:8080/tcp"
         ];
         environment = {
           START_MODE = "1";
@@ -87,7 +117,55 @@
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 26900 ];
-    networking.firewall.allowedUDPPorts = [ 26900 26901 26902 ];
+    systemd.services."7dtd-coop-configure" = {
+      description = "Patch 7DTD-coop sdtdserver.xml on first install";
+      after = [ "docker-7dtd-coop.service" ];
+      wants = [ "docker-7dtd-coop.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = with pkgs; [ gnused coreutils systemd ];
+      script = ''
+        MARKER=/var/lib/7dtd-coop/.configured
+        CONFIG=/var/lib/7dtd-coop/serverfiles/sdtdserver.xml
+        if [ -f "$MARKER" ]; then
+          echo "Already configured; skipping."
+          exit 0
+        fi
+        echo "Waiting for $CONFIG (install can take 15+ minutes on first boot)..."
+        for i in $(seq 1 180); do
+          [ -f "$CONFIG" ] && break
+          sleep 10
+        done
+        if [ ! -f "$CONFIG" ]; then
+          echo "Timed out waiting for $CONFIG; will retry next boot."
+          exit 1
+        fi
+
+        set_prop() {
+          sed -i "s|<property name=\"$1\"[^/]*value=\"[^\"]*\"|<property name=\"$1\" value=\"$2\"|" "$CONFIG"
+        }
+
+        set_prop ServerName             "Nordhammer Co-op"
+        set_prop ServerPassword         "DaveSmells"
+        set_prop ServerVisibility       "0"
+        set_prop ServerMaxPlayerCount   "2"
+        set_prop GameWorld              "RWG"
+        set_prop WorldGenSeed           "NordhammerCoop"
+        set_prop WorldGenSize           "8192"
+        set_prop GameName               "NordhammerCoop"
+        set_prop WebDashboardEnabled    "true"
+        set_prop EACEnabled             "false"
+
+        touch "$MARKER"
+        echo "Patched; restarting container to apply."
+        systemctl restart docker-7dtd-coop.service
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+    };
+
+    networking.firewall.allowedTCPPorts = [ 26900 26910 ];
+    networking.firewall.allowedUDPPorts = [ 26900 26901 26902 26910 26911 26912 ];
   };
 }
