@@ -126,6 +126,8 @@ in
             ct state invalid drop
             # LAN → anywhere
             iifname "eth0" accept
+            # Docker containers → anywhere (needed for image pulls, LinuxGSM bootstrap, etc.)
+            iifname "docker0" accept
             # WAN → LAN only if it was DNAT'd by a port-forward rule
             iifname "eno1" oifname "eth0" ct status dnat accept
           }

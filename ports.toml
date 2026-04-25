@@ -34,3 +34,13 @@ protocol = "both"
 name = "7DTD voice/dynamic"
 ports = "26901-26902"
 protocol = "udp"
+
+[[forward]]
+name = "7DTD-coop game"
+port = 26910
+protocol = "both"
+
+[[forward]]
+name = "7DTD-coop voice/dynamic"
+ports = "26911-26912"
+protocol = "udp"
