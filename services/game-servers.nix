@@ -63,10 +63,11 @@
           "127.0.0.1:8091:8080/tcp"
         ];
         environment = {
-          # Start-only — serverfiles are seeded by rsync from the main
-          # 7dtd install (SteamCMD anonymous install fails for new installs
-          # on this image; sharing the existing binaries sidesteps it).
-          START_MODE = "2";
+          # Start-only. Serverfiles are seeded by rsync from the main 7dtd
+          # install — SteamCMD anonymous install fails on a fresh dir, so
+          # we share the binaries and skip the update path here. (Mode 2
+          # is "Update + STOP", mode 0/2/4 all stop after their action.)
+          START_MODE = "1";
           VERSION    = "stable";
           TimeZone   = "Europe/Stockholm";
           TEST_ALERT = "NO";
