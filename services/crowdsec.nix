@@ -62,8 +62,11 @@ in
         "crowdsecurity/whitelist-good-actors" # don't ban legit crawlers
       ];
 
-      # Allow the agent to read nginx logs (it runs as DynamicUser).
+      # Allow the agent (DynamicUser) to read nginx logs:
+      # readOnlyPaths makes the dir visible inside the sandbox; extraGroups
+      # gets it past Unix perms (access.log is nginx:nginx 640).
       readOnlyPaths = [ "/var/log/nginx" ];
+      extraGroups = [ "nginx" ];
 
       settings = {
         # config.yaml — main agent + LAPI configuration
