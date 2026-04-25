@@ -12,13 +12,29 @@
 # Before first deploy, create /var/secrets/ntfy-url with your topic URL:
 #   echo 'https://ntfy.sh/nordhammer-<random>' | sudo tee /var/secrets/ntfy-url
 #   sudo chmod 640 /var/secrets/ntfy-url
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   ntfyUrlFile = "/var/secrets/ntfy-url";
   ntfyUrl =
     if builtins.pathExists ntfyUrlFile
     then lib.removeSuffix "\n" (builtins.readFile ntfyUrlFile)
     else "https://ntfy.sh/CHANGE-ME-CREATE-VAR-SECRETS-NTFY-URL";
+
+  # nixpkgs only builds the agent + cscli; the new module also expects
+  # notification plugins at $out/libexec/crowdsec/plugins/. Compile them
+  # from the same source tree (cmd/notification-*) and move them there.
+  pluginNames = [ "dummy" "email" "file" "http" "sentinel" "slack" "splunk" ];
+  crowdsecWithPlugins = pkgs.crowdsec.overrideAttrs (old: {
+    subPackages = (old.subPackages or [ ]) ++ map (p: "cmd/notification-${p}") pluginNames;
+    postInstall = (old.postInstall or "") + ''
+      mkdir -p $out/libexec/crowdsec/plugins
+      for p in ${lib.concatStringsSep " " pluginNames}; do
+        if [ -f $out/bin/notification-$p ]; then
+          mv $out/bin/notification-$p $out/libexec/crowdsec/plugins/notification-$p
+        fi
+      done
+    '';
+  });
 in
 {
   disabledModules = [
@@ -36,6 +52,7 @@ in
     services.crowdsec = {
       enable = true;
       name = "fredos-mediaserver";
+      package = crowdsecWithPlugins;
 
       hub.collections = [
         "crowdsecurity/linux"                 # sshd + linux LPE
