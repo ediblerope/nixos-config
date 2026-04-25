@@ -62,11 +62,13 @@ in
         "crowdsecurity/whitelist-good-actors" # don't ban legit crawlers
       ];
 
-      # Allow the agent (DynamicUser) to read nginx logs:
-      # readOnlyPaths makes the dir visible inside the sandbox; extraGroups
-      # gets it past Unix perms (access.log is nginx:nginx 640).
+      # Allow the agent (DynamicUser) to read its acquisition sources:
+      #  - nginx group → /var/log/nginx/access.log (nginx:nginx 640)
+      #  - systemd-journal → journald entries from sshd + authelia
+      #    (without it, journalctl returns "insufficient permissions" and
+      #    the entire ssh-bf / authelia-bf detection chain runs blind)
       readOnlyPaths = [ "/var/log/nginx" ];
-      extraGroups = [ "nginx" ];
+      extraGroups = [ "nginx" "systemd-journal" ];
 
       settings = {
         # config.yaml — main agent + LAPI configuration
