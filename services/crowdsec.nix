@@ -1,13 +1,17 @@
-# services/crowdsec.nix — Community-driven IDS/IPS for the mediaserver.
+# services/crowdsec.nix — Vendors the crowdsec module rewrite from
+# https://github.com/NixOS/nixpkgs/pull/446307 (TornaxO7's branch) until
+# it lands upstream. The upstream module in nixpkgs at the pinned revision
+# is broken for first-time bootstrap (no auto cscli machines add, DynamicUser
+# state ownership wedges).
 #
-# Removes cleanly: delete this file + its import from common.nix, then
-# on the server: `sudo rm -rf /var/lib/crowdsec /etc/crowdsec` after a
-# final rebuild.
+# When PR #446307 merges to nixpkgs unstable:
+#   1. Bump flake.lock past the merge commit
+#   2. Delete ../modules/crowdsec/ and the disabledModules + imports lines below
+#   3. The settings/option API is the same as the PR's, so config below is forward-compatible
 #
-# Before first deploy, create /var/secrets/ntfy-url with your ntfy topic URL:
+# Before first deploy, create /var/secrets/ntfy-url with your topic URL:
 #   echo 'https://ntfy.sh/nordhammer-<random>' | sudo tee /var/secrets/ntfy-url
 #   sudo chmod 640 /var/secrets/ntfy-url
-# Then subscribe to the same URL in the ntfy Android/iOS app.
 { config, lib, ... }:
 let
   ntfyUrlFile = "/var/secrets/ntfy-url";
@@ -17,22 +21,38 @@ let
     else "https://ntfy.sh/CHANGE-ME-CREATE-VAR-SECRETS-NTFY-URL";
 in
 {
+  disabledModules = [
+    "services/security/crowdsec.nix"
+    "services/security/crowdsec-firewall-bouncer.nix"
+  ];
+
+  imports = [
+    ../modules/crowdsec/crowdsec.nix
+    ../modules/crowdsec/crowdsec-firewall-bouncer.nix
+  ];
+
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
     services.crowdsec = {
       enable = true;
+      name = "fredos-mediaserver";
 
-      # Hub collections — parsers + scenarios, pulled from the community hub.
       hub.collections = [
-        "crowdsecurity/linux"                 # sshd + linux privilege escalation
-        "crowdsecurity/nginx"                 # nginx log parser
-        "crowdsecurity/base-http-scenarios"   # generic HTTP attack patterns
+        "crowdsecurity/linux"                 # sshd + linux LPE
+        "crowdsecurity/nginx"                 # nginx parser
+        "crowdsecurity/base-http-scenarios"   # generic HTTP attacks
         "crowdsecurity/http-cve"              # known-CVE fingerprints
         "crowdsecurity/whitelist-good-actors" # don't ban legit crawlers
       ];
 
-      localConfig = {
-        # Log sources to ingest. Labels drive which parsers apply.
+      # Allow the agent to read nginx logs (it runs as DynamicUser).
+      readOnlyPaths = [ "/var/log/nginx" ];
+
+      settings = {
+        # config.yaml — main agent + LAPI configuration
+        config.api.server.listen_uri = "127.0.0.1:8081";  # 8080 is qBit
+
+        # Log sources to ingest
         acquisitions = [
           {
             source = "file";
@@ -51,7 +71,7 @@ in
           }
         ];
 
-        # Push phone notifications via ntfy.sh.
+        # Push notifications via ntfy.sh
         notifications = [
           {
             name = "ntfy_http";
@@ -72,7 +92,7 @@ in
           }
         ];
 
-        # Override the default profile to attach the ntfy notifier.
+        # Override default profiles to attach the ntfy notifier
         profiles = [
           {
             name = "default_ip_remediation";
@@ -92,7 +112,7 @@ in
       };
     };
 
-    # Enforce CrowdSec decisions at the firewall level via nftables.
+    # Firewall bouncer enforces decisions via nftables; auto-registers with LAPI
     services.crowdsec-firewall-bouncer = {
       enable = true;
       registerBouncer.enable = true;
