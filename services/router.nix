@@ -136,7 +136,12 @@ in
           }
         '';
       };
-      tables.nat = {
+      # Use a distinct table name so we don't share `ip nat` with Docker —
+      # Docker manages its own DOCKER/PREROUTING chains in `ip nat`, and
+      # NixOS's nftables module rebuilds whichever tables it owns on every
+      # activation, which would wipe Docker's rules. Hooks at the same
+      # priority across separate tables coexist fine.
+      tables.router-nat = {
         family = "ip";
         content = ''
           chain prerouting {
