@@ -28,7 +28,6 @@
     ./services/jellyfin.nix
     ./services/bazarr.nix
     ./services/cloudflare-ddns.nix
-    ./services/fail2ban.nix
     ./services/authelia.nix
     ./services/homepage.nix
     ./services/arr-interconnect.nix
