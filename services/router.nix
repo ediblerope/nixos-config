@@ -128,8 +128,8 @@ in
             iifname "eth0" accept
             # Docker containers → anywhere (needed for image pulls, LinuxGSM bootstrap, etc.)
             iifname "docker0" accept
-            # WAN → LAN only if it was DNAT'd by a port-forward rule
-            iifname "eno1" oifname "eth0" ct status dnat accept
+            # WAN → any port-forward target (LAN host or docker container)
+            iifname "eno1" ct status dnat accept
           }
           chain output {
             type filter hook output priority 0; policy accept;
