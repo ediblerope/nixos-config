@@ -38,6 +38,7 @@
         "separator",
         "os",
         "kernel",
+        "de",
         "shell",
         "terminal",
         "uptime",
