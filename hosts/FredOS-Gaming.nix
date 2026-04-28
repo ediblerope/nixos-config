@@ -39,5 +39,10 @@
 
     boot.loader.systemd-boot.configurationLimit = 5;
     boot.initrd.systemd.enable = true;
+
+    # LAN has no IPv6 route — AAAA lookups succeed but connect fails, which
+    # made NetworkManager's connectivity probe report "limited" at boot
+    # (GNOME's "?" icon) until the next 5-min repoll.
+    networking.enableIPv6 = false;
   };
 }
