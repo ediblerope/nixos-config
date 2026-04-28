@@ -66,6 +66,16 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # openldap 2.6.13's test017-syncreplication-refresh is timing-flaky and
+  # fails reliably on local builds when the binary cache hasn't yet served
+  # the upstream-built artifact. Skip its test phase. Remove this overlay
+  # once Hydra's substituter has populated openldap for the pinned nixpkgs.
+  nixpkgs.overlays = [
+    (final: prev: {
+      openldap = prev.openldap.overrideAttrs (_: { doCheck = false; });
+    })
+  ];
+
   # Enable network-manager
   networking.networkmanager.enable = true;
 
