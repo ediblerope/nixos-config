@@ -36,10 +36,11 @@
             url = "https://big.oisd.nl/"; }
         ];
         # Resolve our own hostnames to the router's LAN IP so LAN clients
-        # bypass any NAT reflection.
+        # bypass any NAT reflection. `enabled` was added in AdGuard's recent
+        # schema and defaults to false — must be set explicitly.
         filtering.rewrites = [
-          { domain = "nordhammer.it";   answer = "10.0.0.1"; }
-          { domain = "*.nordhammer.it"; answer = "10.0.0.1"; }
+          { domain = "nordhammer.it";   answer = "10.0.0.1"; enabled = true; }
+          { domain = "*.nordhammer.it"; answer = "10.0.0.1"; enabled = true; }
         ];
       };
     };
