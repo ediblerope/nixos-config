@@ -86,7 +86,7 @@ let
               - dc98083864ea246d05a42df0d05f81cc
             assign_scores_to:
               - name: HD Bluray + WEB
-                score: 500
+                score: 2000
   '';
 
   syncScript = pkgs.writeShellScript "recyclarr-sync" ''
