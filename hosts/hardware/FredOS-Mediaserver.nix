@@ -65,7 +65,10 @@
     modesetting.enable = true;
     open = false; # Maxwell architecture does not support the open kernel module
     nvidiaSettings = false; # headless server, no settings GUI needed
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+    # legacy_535 is the latest branch that still supports Maxwell GM206 (M2000)
+    # and is the newest available on the stable nixpkgs channel. Newer "legacy"
+    # branches (e.g. 580) only exist on unstable.
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
