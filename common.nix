@@ -59,12 +59,24 @@
   boot.initrd.verbose = false;
 #############################################################################
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    # Default max-jobs is the host's core count, which on the 56-core
+    # mediaserver was launching ~56 parallel gcc builds and blowing past
+    # 30 GiB RAM during gnupg/openldap. Cap parallel builds and per-build
+    # cores so a local rebuild storm can't OOM the box.
+    max-jobs = 4;
+    cores = 8;
+  };
 
-  # Keep services responsive while heavy local builds run (gnupg/openldap
-  # checkPhase etc. were starving AdGuard until the binary cache catches up).
-  # Default CPUWeight is 100; halving the daemon's share lets latency-sensitive
-  # services breathe without meaningfully slowing builds on an idle box.
+  # Compressed in-memory swap as a safety net during local build storms.
+  # Without it, OOM stalls AdGuard/Jellyfin to the point of freezing the box.
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
+  # Keep services responsive when nix-daemon is contending for CPU.
   systemd.services.nix-daemon.serviceConfig.CPUWeight = 50;
 
   # Use latest kernel
