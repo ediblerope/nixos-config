@@ -104,7 +104,7 @@
 
   # Shell aliases (work in both bash and fish)
   environment.shellAliases = {
-    update = "bash -c 'OLD_SYSTEM=$(readlink /run/current-system) && sudo nixos-rebuild build $@ --impure --flake github:ediblerope/nixos-config && sudo nixos-rebuild switch $@ --impure --flake github:ediblerope/nixos-config && nvd diff $OLD_SYSTEM /run/current-system && (command -v record-update &>/dev/null && record-update $OLD_SYSTEM /run/current-system || true) && command -v matugen &>/dev/null && matugen image ~/.local/share/backgrounds/wallpaper.png --source-color-index 0 -m dark || true' --";
+    update = "bash -c 'OLD_SYSTEM=$(readlink /run/current-system) && sudo nixos-rebuild build $@ --impure --flake github:ediblerope/nixos-config && sudo nixos-rebuild switch $@ --impure --flake github:ediblerope/nixos-config && nvd diff $OLD_SYSTEM /run/current-system && (command -v record-update &>/dev/null && record-update $OLD_SYSTEM /run/current-system || true) && command -v matugen &>/dev/null && matugen image ~/.local/share/backgrounds/wallpaper.png -m dark || true' --";
     clean = "sudo nix-collect-garbage -d";
     ll = "ls -alh";
     clear = "command clear";
