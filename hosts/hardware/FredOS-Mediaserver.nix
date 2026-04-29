@@ -59,6 +59,11 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  # NVIDIA driver 535 doesn't compile against kernel 7.x (nv-dma.c API change),
+  # so override common.nix's linuxPackages_latest with the 6.12 LTS branch.
+  # 6.12 LTS + NVIDIA 535.x is a well-tested combination.
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
+
   # NVIDIA Quadro M2000 (Maxwell/GM206) — for Jellyfin NVENC hardware transcoding
   hardware.graphics.enable = true;
   hardware.nvidia = {
