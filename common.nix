@@ -61,6 +61,12 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Keep services responsive while heavy local builds run (gnupg/openldap
+  # checkPhase etc. were starving AdGuard until the binary cache catches up).
+  # Default CPUWeight is 100; halving the daemon's share lets latency-sensitive
+  # services breathe without meaningfully slowing builds on an idle box.
+  systemd.services.nix-daemon.serviceConfig.CPUWeight = 50;
+
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
