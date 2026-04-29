@@ -49,6 +49,19 @@ in
 
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
+    # Static user/group for crowdsec. The vendored module relies on
+    # DynamicUser=true plus a chown hack in crowdsec-setup's ExecStartPre,
+    # which broke on stable's systemd because the dynamic user isn't
+    # visible to NSS at chown time. Declaring the user statically makes
+    # systemd use it (DynamicUser becomes a no-op) and chown succeeds.
+    users.users.crowdsec = {
+      isSystemUser = true;
+      group = "crowdsec";
+      home = "/var/lib/crowdsec";
+      description = "CrowdSec security agent";
+    };
+    users.groups.crowdsec = { };
+
     services.crowdsec = {
       enable = true;
       name = "fredos-mediaserver";

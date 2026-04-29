@@ -2,14 +2,9 @@
 { config, pkgs, lib, ... }:
 
 {
-# Set your time zone.
-#time.timeZone = "Europe/London";
-services.automatic-timezoned.enable = true;
-services.geoclue2 = {
-  enable = true;
-  enableDemoAgent = lib.mkForce true;
-  geoProviderUrl = "https://api.beacondb.net/v1/geolocate?key=geoclue";
-};
+# Static timezone — automatic-timezoned needs polkit rules to call timedate1
+# and was failing on every host. Override on the laptop if it ever moves.
+time.timeZone = "Europe/London";
 
 # Select internationalisation properties.
 i18n.defaultLocale = "en_GB.UTF-8";
