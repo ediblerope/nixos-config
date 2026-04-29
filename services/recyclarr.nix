@@ -43,6 +43,16 @@ let
               - name: WEB-2160p
                 score: -10000
 
+          # x265 (HD) preference — TRaSH defaults this to -10000 because
+          # most x265-1080p is lazy re-encodes. We override to +500 to
+          # actively prefer HEVC for disk space. Bad encodes are still
+          # filtered by Scene/No-RlsGroup/Retags/Obfuscated (each -10000).
+          - trash_ids:
+              - 47435ece6b99a0b477caf360e79ba0bb
+            assign_scores_to:
+              - name: WEB-1080p
+                score: 500
+
     radarr:
       radarr-main:
         base_url: http://127.0.0.1:7878
@@ -62,6 +72,7 @@ let
           - template: radarr-custom-formats-uhd-bluray-web
 
         custom_formats:
+          # AV1 ban
           - trash_ids:
               - cae4ca30163749b891686f95532519bd
             assign_scores_to:
@@ -69,6 +80,13 @@ let
                 score: -10000
               - name: UHD Bluray + WEB
                 score: -10000
+
+          # x265 (HD) preference — same rationale as Sonarr above.
+          - trash_ids:
+              - dc98083864ea246d05a42df0d05f81cc
+            assign_scores_to:
+              - name: HD Bluray + WEB
+                score: 500
   '';
 
   syncScript = pkgs.writeShellScript "recyclarr-sync" ''
