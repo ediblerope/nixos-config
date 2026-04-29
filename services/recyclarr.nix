@@ -6,7 +6,7 @@
 # secret to manage. Runs weekly via systemd timer; idempotent.
 #
 # Profiles installed:
-#   Sonarr:  WEB-1080p (default)         |  UHD Bluray + WEB (per-show opt-in)
+#   Sonarr:  WEB-1080p (default)         |  WEB-2160p (per-show opt-in, WEB only)
 #   Radarr:  HD Bluray + WEB (default)   |  UHD Bluray + WEB (per-movie opt-in)
 #
 # AV1 is banned across all 4 profiles (GPU lacks hardware decode).
@@ -30,8 +30,8 @@ let
           - template: sonarr-quality-definition-series
           - template: sonarr-v4-quality-profile-web-1080p
           - template: sonarr-v4-custom-formats-web-1080p
-          - template: sonarr-v4-quality-profile-uhd-bluray-web
-          - template: sonarr-v4-custom-formats-uhd-bluray-web
+          - template: sonarr-v4-quality-profile-web-2160p
+          - template: sonarr-v4-custom-formats-web-2160p
 
         custom_formats:
           # AV1 ban — GPU has no hardware decode for AV1.
@@ -40,7 +40,7 @@ let
             assign_scores_to:
               - name: WEB-1080p
                 score: -10000
-              - name: UHD Bluray + WEB
+              - name: WEB-2160p
                 score: -10000
 
     radarr:
