@@ -85,11 +85,11 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # openldap 2.6.13's test017-syncreplication-refresh is timing-flaky and
-  # fails reliably on local builds when the binary cache hasn't yet served
-  # the upstream-built artifact. Skip its test phase. Remove this overlay
-  # once Hydra's substituter has populated openldap for the pinned nixpkgs.
-  nixpkgs.overlays = [
+  # openldap 2.6.13's test017-syncreplication-refresh is timing-flaky on
+  # unstable's freshly-bumped revisions before Hydra has cached them. The
+  # mediaserver runs on the stable channel where openldap is always cached,
+  # so don't change its hash there — that would force a local rebuild.
+  nixpkgs.overlays = lib.optionals (config.networking.hostName != "FredOS-Mediaserver") [
     (final: prev: {
       openldap = prev.openldap.overrideAttrs (_: { doCheck = false; });
     })

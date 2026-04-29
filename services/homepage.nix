@@ -118,7 +118,7 @@ in
       allowedHosts = "localhost:8082,127.0.0.1:8082,homepage.nordhammer.it";
 
       # API keys auto-extracted by homepage-extract-secrets.service
-      environmentFiles = [ "/etc/homepage-secrets" ];
+      environmentFile = "/etc/homepage-secrets";
 
       settings = {
         title = "FredOS Mediaserver";
