@@ -31,6 +31,7 @@
     ./services/authelia.nix
     ./services/homepage.nix
     ./services/arr-interconnect.nix
+    ./services/recyclarr.nix
     ./services/adguard.nix
     ./services/router.nix
     ./services/crowdsec.nix
