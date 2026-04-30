@@ -111,6 +111,11 @@ in
             iifname "lo" accept
             # LAN is trusted
             iifname "eth0" accept
+            # Docker containers reaching host services (e.g. Profilarr → Radarr
+            # on 10.0.0.1:7878). The forward chain already trusts docker0 for
+            # outbound; this is the matching INPUT rule for traffic landing on
+            # the host's own LAN/bridge IPs from a container.
+            iifname "docker0" accept
             # Phase 1: also trust the existing eero subnet on eno1 so SSH
             # and AdGuard DNS keep working during the transition.
             ${legacyTrustRules}
