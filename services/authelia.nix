@@ -79,6 +79,7 @@ in
             { domain = "bazarr.nordhammer.it";   policy = "one_factor"; }
             { domain = "prowlarr.nordhammer.it"; policy = "one_factor"; }
             { domain = "torrent.nordhammer.it";  policy = "one_factor"; }
+            { domain = "profilarr.nordhammer.it"; policy = "one_factor"; }
           ];
         };
 
