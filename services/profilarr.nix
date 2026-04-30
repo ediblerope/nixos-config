@@ -14,7 +14,9 @@
     ];
 
     virtualisation.oci-containers.containers.profilarr = {
-      image = "ghcr.io/dictionarry-hub/profilarr:latest";
+      # Canonical image lives on Docker Hub (santiagosayshey is the maintainer);
+      # the Dictionarry-Hub GHCR path that some docs mention isn't publicly pullable.
+      image = "santiagosayshey/profilarr:latest";
       volumes = [
         "/var/lib/profilarr:/config"
       ];
