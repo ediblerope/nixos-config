@@ -59,6 +59,14 @@
   boot.initrd.verbose = false;
 #############################################################################
 
+  # Compressed in-memory swap as a safety net during local build storms.
+  # Cheap when idle; without it a transient OOM during an uncached build
+  # can stall AdGuard/Jellyfin to the point of freezing the box.
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

@@ -20,7 +20,7 @@
       geary
       wowup-cf
       adwsteamgtk
-      proton-vpn
+      protonvpn-gui
       onlyoffice-desktopeditors
       vscodium
     ];
