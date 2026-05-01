@@ -59,41 +59,11 @@
   boot.initrd.verbose = false;
 #############################################################################
 
-  nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    # Default max-jobs is the host's core count, which on the 56-core
-    # mediaserver was launching ~56 parallel gcc builds and blowing past
-    # 30 GiB RAM during gnupg/openldap. Cap parallel builds and per-build
-    # cores so a local rebuild storm can't OOM the box.
-    max-jobs = 4;
-    cores = 8;
-  };
-
-  # Compressed in-memory swap as a safety net during local build storms.
-  # Without it, OOM stalls AdGuard/Jellyfin to the point of freezing the box.
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50;
-  };
-
-  # Keep services responsive when nix-daemon is contending for CPU.
-  systemd.services.nix-daemon.serviceConfig.CPUWeight = 50;
-
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # openldap 2.6.13's test017-syncreplication-refresh is timing-flaky on
-  # unstable's freshly-bumped revisions before Hydra has cached them. The
-  # mediaserver runs on the stable channel where openldap is always cached,
-  # so don't change its hash there — that would force a local rebuild.
-  nixpkgs.overlays = lib.optionals (config.networking.hostName != "FredOS-Mediaserver") [
-    (final: prev: {
-      openldap = prev.openldap.overrideAttrs (_: { doCheck = false; });
-    })
-  ];
 
   # Enable network-manager
   networking.networkmanager.enable = true;
