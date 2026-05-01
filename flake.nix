@@ -51,7 +51,7 @@
     in
     {
       nixosConfigurations = {
-        FredOS-Gaming      = mkHost "FredOS-Gaming"      nixpkgs        home-manager;
+        FredOS-Gaming      = mkHost "FredOS-Gaming"      nixpkgs-stable home-manager-stable;
         FredOS-Mediaserver = mkHost "FredOS-Mediaserver" nixpkgs-stable home-manager-stable;
         FredOS-Macbook     = mkHost "FredOS-Macbook"     nixpkgs-stable home-manager-stable;
       };
