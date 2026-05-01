@@ -53,7 +53,7 @@
       nixosConfigurations = {
         FredOS-Gaming      = mkHost "FredOS-Gaming"      nixpkgs        home-manager;
         FredOS-Mediaserver = mkHost "FredOS-Mediaserver" nixpkgs-stable home-manager-stable;
-        FredOS-Macbook     = mkHost "FredOS-Macbook"     nixpkgs        home-manager;
+        FredOS-Macbook     = mkHost "FredOS-Macbook"     nixpkgs-stable home-manager-stable;
       };
     };
 }
