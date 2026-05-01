@@ -9,7 +9,7 @@
       mission-center
       vlc
       geary
-      proton-vpn
+      protonvpn-gui
       onlyoffice-desktopeditors
     ];
 
