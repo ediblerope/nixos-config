@@ -17,7 +17,7 @@ c = configparser.RawConfigParser()
 c.read(config_file)
 if not c.has_section('misc'):
     c.add_section('misc')
-wl = c.get('misc', 'host_whitelist', fallback='')
+wl = c.get('misc', 'host_whitelist', fallback="")
 entries = [h.strip() for h in wl.split(',') if h.strip()]
 if hostname not in entries:
     entries.append(hostname)
