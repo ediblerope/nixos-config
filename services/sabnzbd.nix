@@ -1,4 +1,32 @@
 { config, pkgs, lib, ... }:
+let
+  patchConfig = pkgs.writeShellScript "sabnzbd-patch-config" ''
+    CONFIG=/var/lib/sabnzbd/sabnzbd.ini
+    HOSTNAME=sabnzbd.nordhammer.it
+
+    if [ ! -f "$CONFIG" ]; then
+      printf '[misc]\nhost_whitelist = %s\nport = 8085\n' "$HOSTNAME" > "$CONFIG"
+      exit 0
+    fi
+
+    ${pkgs.python3}/bin/python3 - <<'EOF'
+import configparser, os, sys
+config_file = '/var/lib/sabnzbd/sabnzbd.ini'
+hostname = 'sabnzbd.nordhammer.it'
+c = configparser.RawConfigParser()
+c.read(config_file)
+if not c.has_section('misc'):
+    c.add_section('misc')
+wl = c.get('misc', 'host_whitelist', fallback='')
+entries = [h.strip() for h in wl.split(',') if h.strip()]
+if hostname not in entries:
+    entries.append(hostname)
+    c.set('misc', 'host_whitelist', ','.join(entries))
+    with open(config_file, 'w') as f:
+        c.write(f)
+EOF
+  '';
+in
 {
   config = lib.mkIf (config.networking.hostName == "FredOS-Mediaserver") {
 
@@ -24,7 +52,7 @@
         Type = "simple";
         User = "sabnzbd";
         Group = "media";
-        # --server overrides the port in sabnzbd.ini on each start
+        ExecStartPre = patchConfig;
         ExecStart = "${pkgs.sabnzbd}/bin/sabnzbd --config-file /var/lib/sabnzbd/sabnzbd.ini --server 127.0.0.1:8085";
         Restart = "on-failure";
         UMask = "0002";

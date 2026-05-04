@@ -112,13 +112,7 @@ in
         "7dtd.nordhammer.it"     = protectedProxy 8090;
         "adguard.nordhammer.it"  = protectedProxy 3000;
         "profilarr.nordhammer.it" = protectedProxy 6868;
-        # SABnzbd hostname check compares the Host header against its whitelist
-        # (default: localhost/127.0.0.1). Override Host so it passes.
-        "sabnzbd.nordhammer.it"  = lib.recursiveUpdate (protectedProxy 8085) {
-          locations."/".extraConfig = autheliaAuthConfig + ''
-            proxy_set_header Host "127.0.0.1:8085";
-          '';
-        };
+        "sabnzbd.nordhammer.it"  = protectedProxy 8085;
 
         # --- Local-only: serves update history JSON to Homepage's customapi widget ---
         "homepage-updates.local" = {
