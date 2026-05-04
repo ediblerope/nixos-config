@@ -35,6 +35,7 @@
     ./services/adguard.nix
     ./services/router.nix
     ./services/crowdsec.nix
+    ./services/sabnzbd.nix
   ];
 
   ### Make build time quicker

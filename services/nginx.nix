@@ -112,6 +112,7 @@ in
         "7dtd.nordhammer.it"     = protectedProxy 8090;
         "adguard.nordhammer.it"  = protectedProxy 3000;
         "profilarr.nordhammer.it" = protectedProxy 6868;
+        "sabnzbd.nordhammer.it"  = protectedProxy 8085;
 
         # --- Local-only: serves update history JSON to Homepage's customapi widget ---
         "homepage-updates.local" = {
