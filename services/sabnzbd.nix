@@ -9,22 +9,11 @@ let
       exit 0
     fi
 
-    ${pkgs.python3}/bin/python3 - <<'EOF'
-import configparser, os, sys
-config_file = '/var/lib/sabnzbd/sabnzbd.ini'
-hostname = 'sabnzbd.nordhammer.it'
-c = configparser.RawConfigParser()
-c.read(config_file)
-if not c.has_section('misc'):
-    c.add_section('misc')
-wl = c.get('misc', 'host_whitelist', fallback="")
-entries = [h.strip() for h in wl.split(',') if h.strip()]
-if hostname not in entries:
-    entries.append(hostname)
-    c.set('misc', 'host_whitelist', ','.join(entries))
-    with open(config_file, 'w') as f:
-        c.write(f)
-EOF
+    if ${pkgs.gnugrep}/bin/grep -q "^host_whitelist" "$CONFIG"; then
+      ${pkgs.gnused}/bin/sed -i "s/^host_whitelist =.*/host_whitelist = $HOSTNAME/" "$CONFIG"
+    else
+      ${pkgs.gnused}/bin/sed -i "/^\[misc\]/a host_whitelist = $HOSTNAME" "$CONFIG"
+    fi
   '';
 in
 {
